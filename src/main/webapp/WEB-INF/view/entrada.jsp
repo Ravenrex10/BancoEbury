@@ -13,7 +13,7 @@
 </head>
 <body>
     <h1>Iniciar sesión:</h1>
-    <form action="/" metgid="post">
+    <form action="/" method="post">
         <label>Usuario: </label>
         <input type="text" name="usuario">
         <label>Contraseña: </label>
