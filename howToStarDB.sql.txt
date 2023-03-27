@@ -1,0 +1,18 @@
+-- IMPORTANTE: NO EJECUTAR ESTE SCRIPT
+--Ejecutar estos comandos antes de trabajar con la base de datos:
+sudo mariadb -u root -p
+
+--Presiona enter en la contraseña sin poner nada
+CREATE DATABASE BancoEbury;
+
+-- Importar base de datos
+sudo mariadb -u root -p BancoEbury < script.sql
+
+-- Crear usuario
+sudo mariadb -u root
+
+USE BancoEbury;
+CREATE OR REPLACE USER user IDENTIFIED BY '';
+GRANT ALL PRIVILEGES ON BancoEbury.* TO 'user';
+GRANT ALL PRIVILEGES ON BancoEbury.* TO ''@'localhost';
+
