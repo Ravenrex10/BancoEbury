@@ -12,12 +12,13 @@
     <title>Title</title>
 </head>
 <body>
-        <h1>Usuarios:</h1>
-        <%
-            List<UsuarioEntity> usuarios = (List<UsuarioEntity>) request.getAttribute("usuarios");
-            for(UsuarioEntity user : usuarios){
-            %>
-                <%=user.getPrimerNombre()%>
-            <% }%>
+    <h1>Iniciar sesión:</h1>
+    <form action="/" metgid="post">
+        <label>Usuario: </label>
+        <input type="text" name="usuario">
+        <label>Contraseña: </label>
+        <input type ="text" name="clave">
+        <button type="submit">Enviar</button>
+    </form>
 </body>
 </html>
