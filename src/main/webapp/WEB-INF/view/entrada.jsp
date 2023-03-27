@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Log in</title>
 </head>
 <body>
     <h1>Iniciar sesión:</h1>

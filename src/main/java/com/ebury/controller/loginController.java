@@ -31,13 +31,13 @@ public class loginController {
             session.setAttribute("usuario", usuario);
             switch (rol){
                 case 1: //Usuario es cliente
-                    urlTo+="usuario/";
+                    urlTo+="cliente/";
                     break;
                 case 2: //Usuario es empresa
-                    urlTo+="empresa/";
+                    urlTo+="empresaHome";
                     break;
                 case 3: //Usuario es gestor
-                    urlTo+="gestor/";
+                    urlTo+="gestorHome";
                     break;
                 case 4: //Usuario es asistente
                     urlTo+="asistente/";
