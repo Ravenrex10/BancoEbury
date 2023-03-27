@@ -15,4 +15,3 @@ USE BancoEbury;
 CREATE OR REPLACE USER user IDENTIFIED BY '';
 GRANT ALL PRIVILEGES ON BancoEbury.* TO 'user';
 GRANT ALL PRIVILEGES ON BancoEbury.* TO ''@'localhost';
-
