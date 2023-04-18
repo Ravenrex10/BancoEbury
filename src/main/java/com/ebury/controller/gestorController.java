@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RequestMapping("/gestorHome")
 @Controller
 public class gestorController {
 
@@ -23,7 +25,7 @@ public class gestorController {
     @Autowired
     protected CuentaRepository cuentaRepo;
 
-    @GetMapping("/gestorHome")
+    @GetMapping("/")
     public String doGestor(Model model){
         model.addAttribute("usuarios", userRepo.findAll());
         return "gestorHome";
@@ -36,8 +38,14 @@ public class gestorController {
         return "gestorAlta";
     }
 
-    @PostMapping("/darDeAlta")
+    @GetMapping("/darDeAlta")
     public String darDeAlta(Model model, @RequestParam("usuario") String usuario){
-        return "gestorAlta";
+        UsuarioEntity usuarioEntity = userRepo.getById(Integer.parseInt(usuario));
+
+        usuarioEntity.setAlta(true);
+
+        userRepo.save(usuarioEntity);
+
+        return "redirect:/gestorHome/gestorAlta";
     }
 }

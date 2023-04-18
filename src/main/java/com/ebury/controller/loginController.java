@@ -37,7 +37,7 @@ public class loginController {
                     urlTo+="empresaHome";
                     break;
                 case "Gestor": //Usuario es gestor
-                    urlTo+="gestorHome";
+                    urlTo+="gestorHome/";
                     break;
                 case "Asistente": //Usuario es asistente
                     urlTo+="asistente/";

@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="gestorHome">Usuarios</a>
+                    <a class="nav-link" href="/gestorHome/">Usuarios</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">Solicitud de alta</a>
@@ -54,7 +54,7 @@
             <%=usuario.getFechaNacimiento()%>
         </div>
         <div class="col-auto">
-            <button action = "/darDeAlta" class="btn btn-primary">Validar</button>
+            <a href="darDeAlta?usuario=<%=usuario.getId()%>" class="btn btn-primary">Validar</a>
             <button action = "/noDarDeAlta" class="btn btn-danger">No validar</button>
         </div>
     </div>

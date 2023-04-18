@@ -48,6 +48,9 @@ public class UsuarioEntity {
     @ManyToOne
     @JoinColumn(name = "rol", referencedColumnName = "id")
     private RolEntity rolByRol;
+    @Basic
+    @Column(name = "fechaUltimaOperacion")
+    private Date fechaUltimaOperacion;
 
     public int getId() {
         return id;
@@ -197,5 +200,13 @@ public class UsuarioEntity {
 
     public void setRolByRol(RolEntity rolByRol) {
         this.rolByRol = rolByRol;
+    }
+
+    public Date getFechaUltimaOperacion() {
+        return fechaUltimaOperacion;
+    }
+
+    public void setFechaUltimaOperacion(Date fechaUltimaOperacion) {
+        this.fechaUltimaOperacion = fechaUltimaOperacion;
     }
 }
