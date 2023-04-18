@@ -10,14 +10,14 @@ public class SaldoEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "cuenta")
-    private Integer cuenta;
-    @Basic
     @Column(name = "cantidad")
     private Double cantidad;
-    @Basic
-    @Column(name = "divisa")
-    private Integer divisa;
+    @ManyToOne
+    @JoinColumn(name = "cuenta", referencedColumnName = "id")
+    private CuentaEntity cuentaByCuenta;
+    @ManyToOne
+    @JoinColumn(name = "divisa", referencedColumnName = "id")
+    private DivisaEntity divisaByDivisa;
 
     public int getId() {
         return id;
@@ -25,14 +25,6 @@ public class SaldoEntity {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Integer getCuenta() {
-        return cuenta;
-    }
-
-    public void setCuenta(Integer cuenta) {
-        this.cuenta = cuenta;
     }
 
     public Double getCantidad() {
@@ -43,14 +35,6 @@ public class SaldoEntity {
         this.cantidad = cantidad;
     }
 
-    public Integer getDivisa() {
-        return divisa;
-    }
-
-    public void setDivisa(Integer divisa) {
-        this.divisa = divisa;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,9 +43,7 @@ public class SaldoEntity {
         SaldoEntity that = (SaldoEntity) o;
 
         if (id != that.id) return false;
-        if (cuenta != null ? !cuenta.equals(that.cuenta) : that.cuenta != null) return false;
         if (cantidad != null ? !cantidad.equals(that.cantidad) : that.cantidad != null) return false;
-        if (divisa != null ? !divisa.equals(that.divisa) : that.divisa != null) return false;
 
         return true;
     }
@@ -69,9 +51,23 @@ public class SaldoEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (cuenta != null ? cuenta.hashCode() : 0);
         result = 31 * result + (cantidad != null ? cantidad.hashCode() : 0);
-        result = 31 * result + (divisa != null ? divisa.hashCode() : 0);
         return result;
+    }
+
+    public CuentaEntity getCuentaByCuenta() {
+        return cuentaByCuenta;
+    }
+
+    public void setCuentaByCuenta(CuentaEntity cuentaByCuenta) {
+        this.cuentaByCuenta = cuentaByCuenta;
+    }
+
+    public DivisaEntity getDivisaByDivisa() {
+        return divisaByDivisa;
+    }
+
+    public void setDivisaByDivisa(DivisaEntity divisaByDivisa) {
+        this.divisaByDivisa = divisaByDivisa;
     }
 }

@@ -2,6 +2,8 @@ package com.ebury.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+
 @Entity
 @Table(name = "Empresa", schema = "BancoEbury", catalog = "")
 public class EmpresaEntity {
@@ -12,9 +14,11 @@ public class EmpresaEntity {
     @Basic
     @Column(name = "nombre")
     private String nombre;
-    @Basic
-    @Column(name = "direccion")
-    private Integer direccion;
+    @ManyToOne
+    @JoinColumn(name = "direccion", referencedColumnName = "id")
+    private DireccionEntity direccionByDireccion;
+    @OneToMany(mappedBy = "empresaByEmpresa")
+    private Collection<UsuarioEntity> usuariosByCif;
 
     public int getCif() {
         return cif;
@@ -32,14 +36,6 @@ public class EmpresaEntity {
         this.nombre = nombre;
     }
 
-    public Integer getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(Integer direccion) {
-        this.direccion = direccion;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,7 +45,6 @@ public class EmpresaEntity {
 
         if (cif != that.cif) return false;
         if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
-        if (direccion != null ? !direccion.equals(that.direccion) : that.direccion != null) return false;
 
         return true;
     }
@@ -58,7 +53,22 @@ public class EmpresaEntity {
     public int hashCode() {
         int result = cif;
         result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
-        result = 31 * result + (direccion != null ? direccion.hashCode() : 0);
         return result;
+    }
+
+    public DireccionEntity getDireccionByDireccion() {
+        return direccionByDireccion;
+    }
+
+    public void setDireccionByDireccion(DireccionEntity direccionByDireccion) {
+        this.direccionByDireccion = direccionByDireccion;
+    }
+
+    public Collection<UsuarioEntity> getUsuariosByCif() {
+        return usuariosByCif;
+    }
+
+    public void setUsuariosByCif(Collection<UsuarioEntity> usuariosByCif) {
+        this.usuariosByCif = usuariosByCif;
     }
 }

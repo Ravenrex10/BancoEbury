@@ -2,6 +2,8 @@ package com.ebury.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+
 @Entity
 @Table(name = "EstadoCuenta", schema = "BancoEbury", catalog = "")
 public class EstadoCuentaEntity {
@@ -12,6 +14,8 @@ public class EstadoCuentaEntity {
     @Basic
     @Column(name = "nombre")
     private String nombre;
+    @OneToMany(mappedBy = "estadoCuentaByEstado")
+    private Collection<CuentaEntity> cuentasById;
 
     public int getId() {
         return id;
@@ -47,5 +51,13 @@ public class EstadoCuentaEntity {
         int result = id;
         result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
         return result;
+    }
+
+    public Collection<CuentaEntity> getCuentasById() {
+        return cuentasById;
+    }
+
+    public void setCuentasById(Collection<CuentaEntity> cuentasById) {
+        this.cuentasById = cuentasById;
     }
 }

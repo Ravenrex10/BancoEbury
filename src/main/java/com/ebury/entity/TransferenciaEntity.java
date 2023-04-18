@@ -12,23 +12,23 @@ public class TransferenciaEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "cuentaOrigen")
-    private Integer cuentaOrigen;
-    @Basic
-    @Column(name = "cuentaDestino")
-    private Integer cuentaDestino;
-    @Basic
-    @Column(name = "divisaOrigen")
-    private Integer divisaOrigen;
-    @Basic
     @Column(name = "cantidad")
     private Double cantidad;
     @Basic
-    @Column(name = "divisaDestino")
-    private Integer divisaDestino;
-    @Basic
     @Column(name = "fecha")
     private Date fecha;
+    @ManyToOne
+    @JoinColumn(name = "cuentaOrigen", referencedColumnName = "id")
+    private CuentaEntity cuentaByCuentaOrigen;
+    @ManyToOne
+    @JoinColumn(name = "cuentaDestino", referencedColumnName = "id")
+    private CuentaEntity cuentaByCuentaDestino;
+    @ManyToOne
+    @JoinColumn(name = "divisaOrigen", referencedColumnName = "id")
+    private DivisaEntity divisaByDivisaOrigen;
+    @ManyToOne
+    @JoinColumn(name = "divisaDestino", referencedColumnName = "id")
+    private DivisaEntity divisaByDivisaDestino;
 
     public int getId() {
         return id;
@@ -36,30 +36,6 @@ public class TransferenciaEntity {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Integer getCuentaOrigen() {
-        return cuentaOrigen;
-    }
-
-    public void setCuentaOrigen(Integer cuentaOrigen) {
-        this.cuentaOrigen = cuentaOrigen;
-    }
-
-    public Integer getCuentaDestino() {
-        return cuentaDestino;
-    }
-
-    public void setCuentaDestino(Integer cuentaDestino) {
-        this.cuentaDestino = cuentaDestino;
-    }
-
-    public Integer getDivisaOrigen() {
-        return divisaOrigen;
-    }
-
-    public void setDivisaOrigen(Integer divisaOrigen) {
-        this.divisaOrigen = divisaOrigen;
     }
 
     public Double getCantidad() {
@@ -70,13 +46,6 @@ public class TransferenciaEntity {
         this.cantidad = cantidad;
     }
 
-    public Integer getDivisaDestino() {
-        return divisaDestino;
-    }
-
-    public void setDivisaDestino(Integer divisaDestino) {
-        this.divisaDestino = divisaDestino;
-    }
 
     public Date getFecha() {
         return fecha;
@@ -94,13 +63,7 @@ public class TransferenciaEntity {
         TransferenciaEntity that = (TransferenciaEntity) o;
 
         if (id != that.id) return false;
-        if (cuentaOrigen != null ? !cuentaOrigen.equals(that.cuentaOrigen) : that.cuentaOrigen != null) return false;
-        if (cuentaDestino != null ? !cuentaDestino.equals(that.cuentaDestino) : that.cuentaDestino != null)
-            return false;
-        if (divisaOrigen != null ? !divisaOrigen.equals(that.divisaOrigen) : that.divisaOrigen != null) return false;
         if (cantidad != null ? !cantidad.equals(that.cantidad) : that.cantidad != null) return false;
-        if (divisaDestino != null ? !divisaDestino.equals(that.divisaDestino) : that.divisaDestino != null)
-            return false;
         if (fecha != null ? !fecha.equals(that.fecha) : that.fecha != null) return false;
 
         return true;
@@ -109,12 +72,40 @@ public class TransferenciaEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (cuentaOrigen != null ? cuentaOrigen.hashCode() : 0);
-        result = 31 * result + (cuentaDestino != null ? cuentaDestino.hashCode() : 0);
-        result = 31 * result + (divisaOrigen != null ? divisaOrigen.hashCode() : 0);
         result = 31 * result + (cantidad != null ? cantidad.hashCode() : 0);
-        result = 31 * result + (divisaDestino != null ? divisaDestino.hashCode() : 0);
         result = 31 * result + (fecha != null ? fecha.hashCode() : 0);
         return result;
+    }
+
+    public CuentaEntity getCuentaByCuentaOrigen() {
+        return cuentaByCuentaOrigen;
+    }
+
+    public void setCuentaByCuentaOrigen(CuentaEntity cuentaByCuentaOrigen) {
+        this.cuentaByCuentaOrigen = cuentaByCuentaOrigen;
+    }
+
+    public CuentaEntity getCuentaByCuentaDestino() {
+        return cuentaByCuentaDestino;
+    }
+
+    public void setCuentaByCuentaDestino(CuentaEntity cuentaByCuentaDestino) {
+        this.cuentaByCuentaDestino = cuentaByCuentaDestino;
+    }
+
+    public DivisaEntity getDivisaByDivisaOrigen() {
+        return divisaByDivisaOrigen;
+    }
+
+    public void setDivisaByDivisaOrigen(DivisaEntity divisaByDivisaOrigen) {
+        this.divisaByDivisaOrigen = divisaByDivisaOrigen;
+    }
+
+    public DivisaEntity getDivisaByDivisaDestino() {
+        return divisaByDivisaDestino;
+    }
+
+    public void setDivisaByDivisaDestino(DivisaEntity divisaByDivisaDestino) {
+        this.divisaByDivisaDestino = divisaByDivisaDestino;
     }
 }

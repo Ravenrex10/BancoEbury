@@ -35,21 +35,29 @@
 <br>
 <div class="container card">
     <h2>Usuarios</h2>
-    <%
-        for(UsuarioEntity usuario: usuarios){
+    <div class="d-flex align-items-center justify-content-between">
+        <div class="col">
+            <%
+                for(UsuarioEntity usuario: usuarios){
 
-    %>
-    <%=usuario.getPrimerNombre()%>
-    <%
-        if(usuario.getSegundoNombre()!=null){
-    %>
-    <%=usuario.getSegundoNombre()%>
-    <%
-        }
-    %>
-    <%=usuario.getPrimerApellido()%>
-    <%=usuario.getSegundoApellido()%>
-    <%=usuario.getFechaNacimiento()%>
+            %>
+            <%=usuario.getPrimerNombre()%>
+            <%
+                if(usuario.getSegundoNombre()!=null){
+            %>
+            <%=usuario.getSegundoNombre()%>
+            <%
+                }
+            %>
+            <%=usuario.getPrimerApellido()%>
+            <%=usuario.getSegundoApellido()%>
+            <%=usuario.getFechaNacimiento()%>
+        </div>
+        <div class="col-auto">
+            <button action = "/darDeAlta" class="btn btn-primary">Validar</button>
+            <button action = "/noDarDeAlta" class="btn btn-danger">No validar</button>
+        </div>
+    </div>
     <br>
     <%
         }

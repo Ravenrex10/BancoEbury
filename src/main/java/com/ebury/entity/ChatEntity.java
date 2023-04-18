@@ -2,6 +2,8 @@ package com.ebury.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+
 @Entity
 @Table(name = "Chat", schema = "BancoEbury", catalog = "")
 public class ChatEntity {
@@ -9,36 +11,19 @@ public class ChatEntity {
     @Id
     @Column(name = "id")
     private int id;
-    @Basic
-    @Column(name = "clienteA")
-    private Integer clienteA;
-    @Basic
-    @Column(name = "clienteB")
-    private Integer clienteB;
+    @ManyToOne
+    @JoinColumn(name = "clienteA", referencedColumnName = "id")
+    private UsuarioEntity usuarioByClienteA;
+    @ManyToOne
+    @JoinColumn(name = "clienteB", referencedColumnName = "id")
+    private UsuarioEntity usuarioByClienteB;
+    @OneToMany(mappedBy = "chatByChat")
+    private Collection<MensajeEntity> mensajesById;
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Integer getClienteA() {
-        return clienteA;
-    }
-
-    public void setClienteA(Integer clienteA) {
-        this.clienteA = clienteA;
-    }
-
-    public Integer getClienteB() {
-        return clienteB;
-    }
-
-    public void setClienteB(Integer clienteB) {
-        this.clienteB = clienteB;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -48,8 +33,6 @@ public class ChatEntity {
         ChatEntity that = (ChatEntity) o;
 
         if (id != that.id) return false;
-        if (clienteA != null ? !clienteA.equals(that.clienteA) : that.clienteA != null) return false;
-        if (clienteB != null ? !clienteB.equals(that.clienteB) : that.clienteB != null) return false;
 
         return true;
     }
@@ -57,8 +40,30 @@ public class ChatEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (clienteA != null ? clienteA.hashCode() : 0);
-        result = 31 * result + (clienteB != null ? clienteB.hashCode() : 0);
         return result;
+    }
+
+    public UsuarioEntity getUsuarioByClienteA() {
+        return usuarioByClienteA;
+    }
+
+    public void setUsuarioByClienteA(UsuarioEntity usuarioByClienteA) {
+        this.usuarioByClienteA = usuarioByClienteA;
+    }
+
+    public UsuarioEntity getUsuarioByClienteB() {
+        return usuarioByClienteB;
+    }
+
+    public void setUsuarioByClienteB(UsuarioEntity usuarioByClienteB) {
+        this.usuarioByClienteB = usuarioByClienteB;
+    }
+
+    public Collection<MensajeEntity> getMensajesById() {
+        return mensajesById;
+    }
+
+    public void setMensajesById(Collection<MensajeEntity> mensajesById) {
+        this.mensajesById = mensajesById;
     }
 }

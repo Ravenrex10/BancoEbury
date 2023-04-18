@@ -2,6 +2,8 @@ package com.ebury.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+
 @Entity
 @Table(name = "Direccion", schema = "BancoEbury", catalog = "")
 public class DireccionEntity {
@@ -30,6 +32,8 @@ public class DireccionEntity {
     @Basic
     @Column(name = "cp")
     private String cp;
+    @OneToMany(mappedBy = "direccionByDireccion")
+    private Collection<EmpresaEntity> empresasById;
 
     public int getId() {
         return id;
@@ -125,5 +129,13 @@ public class DireccionEntity {
         result = 31 * result + (region != null ? region.hashCode() : 0);
         result = 31 * result + (cp != null ? cp.hashCode() : 0);
         return result;
+    }
+
+    public Collection<EmpresaEntity> getEmpresasById() {
+        return empresasById;
+    }
+
+    public void setEmpresasById(Collection<EmpresaEntity> empresasById) {
+        this.empresasById = empresasById;
     }
 }

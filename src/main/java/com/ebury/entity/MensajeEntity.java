@@ -18,11 +18,11 @@ public class MensajeEntity {
     @Column(name = "enviadoPorA")
     private Byte enviadoPorA;
     @Basic
-    @Column(name = "chat")
-    private Integer chat;
-    @Basic
     @Column(name = "fecha")
     private Date fecha;
+    @ManyToOne
+    @JoinColumn(name = "chat", referencedColumnName = "id")
+    private ChatEntity chatByChat;
 
     public int getId() {
         return id;
@@ -48,14 +48,6 @@ public class MensajeEntity {
         this.enviadoPorA = enviadoPorA;
     }
 
-    public Integer getChat() {
-        return chat;
-    }
-
-    public void setChat(Integer chat) {
-        this.chat = chat;
-    }
-
     public Date getFecha() {
         return fecha;
     }
@@ -74,8 +66,6 @@ public class MensajeEntity {
         if (id != that.id) return false;
         if (contenido != null ? !contenido.equals(that.contenido) : that.contenido != null) return false;
         if (enviadoPorA != null ? !enviadoPorA.equals(that.enviadoPorA) : that.enviadoPorA != null) return false;
-        if (chat != null ? !chat.equals(that.chat) : that.chat != null) return false;
-        if (fecha != null ? !fecha.equals(that.fecha) : that.fecha != null) return false;
 
         return true;
     }
@@ -85,8 +75,15 @@ public class MensajeEntity {
         int result = id;
         result = 31 * result + (contenido != null ? contenido.hashCode() : 0);
         result = 31 * result + (enviadoPorA != null ? enviadoPorA.hashCode() : 0);
-        result = 31 * result + (chat != null ? chat.hashCode() : 0);
         result = 31 * result + (fecha != null ? fecha.hashCode() : 0);
         return result;
+    }
+
+    public ChatEntity getChatByChat() {
+        return chatByChat;
+    }
+
+    public void setChatByChat(ChatEntity chatByChat) {
+        this.chatByChat = chatByChat;
     }
 }

@@ -1,6 +1,7 @@
 package com.ebury.controller;
 
 import com.ebury.dao.UsuarioRepository;
+import com.ebury.entity.RolEntity;
 import com.ebury.entity.UsuarioEntity;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Controller
 public class loginController {
@@ -27,23 +26,24 @@ public class loginController {
         String urlTo = "redirect:/";
         UsuarioEntity usuario = this.userRepo.autenticar(user, clave);
         if(usuario!=null){
-            int rol = usuario.getRol();
+            RolEntity rol = usuario.getRolByRol();
+            String rolname = rol.getNombre();
             session.setAttribute("usuario", usuario);
-            switch (rol){
-                case 1: //Usuario es cliente
+            switch (rolname){
+                case "Cliente": //Usuario es cliente
                     urlTo+="cliente/";
                     break;
-                case 2: //Usuario es empresa
+                case "AsociadoEmpresa": //Usuario es empresa
                     urlTo+="empresaHome";
                     break;
-                case 3: //Usuario es gestor
+                case "Gestor": //Usuario es gestor
                     urlTo+="gestorHome";
                     break;
-                case 4: //Usuario es asistente
+                case "Asistente": //Usuario es asistente
                     urlTo+="asistente/";
                     break;
-                case 5: //Usuario es socio
-                    urlTo="socio/";
+                case "SocioEmpresa": //Usuario es socio
+                    urlTo="empresaHome";
                     break;
             }
         }else{

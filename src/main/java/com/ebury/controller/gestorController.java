@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +31,13 @@ public class gestorController {
 
     @GetMapping("/gestorAlta")
     public String doGestorAlta(Model model){
-        List<CuentaEntity> cuentas = cuentaRepo.findAll();
-        List<UsuarioEntity> usuariosSinAlta = new ArrayList<UsuarioEntity>();
-        for(CuentaEntity cuenta: cuentas){
-            if(cuenta.getEstado()==0){
-                UsuarioEntity usuario = userRepo.getReferenceById(cuenta.getDuenyo());
-                usuariosSinAlta.add(usuario);
-            }
-        }
+        List<UsuarioEntity> usuariosSinAlta = userRepo.findAllByAlta(false);
         model.addAttribute("usuariosSinAlta", usuariosSinAlta);
+        return "gestorAlta";
+    }
+
+    @PostMapping("/darDeAlta")
+    public String darDeAlta(Model model, @RequestParam("usuario") String usuario){
         return "gestorAlta";
     }
 }
