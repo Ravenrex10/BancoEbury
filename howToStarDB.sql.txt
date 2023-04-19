@@ -6,7 +6,7 @@ sudo mariadb -u root -p
 CREATE DATABASE BancoEbury;
 
 -- Importar base de datos
-sudo mariadb -u root -p BancoEbury < script.sql
+sudo mariadb -u root -p BancoEbury < bancoEbury.sql
 
 -- Crear usuario
 sudo mariadb -u root
