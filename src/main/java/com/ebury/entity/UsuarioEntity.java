@@ -1,5 +1,6 @@
 package com.ebury.entity;
 
+import com.ebury.dto.UsuarioDTO;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -208,5 +209,16 @@ public class UsuarioEntity {
 
     public void setFechaUltimaOperacion(Date fechaUltimaOperacion) {
         this.fechaUltimaOperacion = fechaUltimaOperacion;
+    }
+
+    public UsuarioDTO toDTO() {
+        UsuarioDTO dto = new UsuarioDTO();
+        dto.setId(id);
+        dto.setEmail(email);
+        dto.setPrimerApellido(primerApellido);
+        dto.setSegundoApellido(segundoApellido);
+        dto.setPrimerNombre(primerNombre);
+        dto.setSegundoNombre(segundoNombre);
+        return dto;
     }
 }
