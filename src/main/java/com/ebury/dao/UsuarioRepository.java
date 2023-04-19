@@ -12,7 +12,8 @@ import java.util.List;
 public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Integer> {
     @Query("select a from UsuarioEntity a where a.email = :usuario and a.contrasenya = :clave")
     public UsuarioEntity autenticar (@Param("usuario") String usuario, @Param("clave")String clave);
-
+    @Query("select u from UsuarioEntity u where u.rolByRol.nombre='Cliente' OR u.rolByRol.nombre='SocioEmpresa' OR u.rolByRol.nombre='AutorizadoEmpresa'")
+    public List<UsuarioEntity> findAllClientes();
 
     public List<UsuarioEntity> findAllByAlta(Boolean alta);
 }

@@ -1,8 +1,10 @@
 package com.ebury.controller;
 
 import com.ebury.dao.CuentaRepository;
+import com.ebury.dao.EstadoRepository;
 import com.ebury.dao.UsuarioRepository;
 import com.ebury.entity.CuentaEntity;
+import com.ebury.entity.SaldoEntity;
 import com.ebury.entity.UsuarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,9 +27,12 @@ public class gestorController {
     @Autowired
     protected CuentaRepository cuentaRepo;
 
+    @Autowired
+    protected EstadoRepository estadoRepository;
+
     @GetMapping("/")
     public String doGestor(Model model){
-        model.addAttribute("usuarios", userRepo.findAll());
+        model.addAttribute("usuarios", userRepo.findAllClientes());
         return "gestorHome";
     }
 
@@ -43,6 +48,10 @@ public class gestorController {
         UsuarioEntity usuarioEntity = userRepo.getById(Integer.parseInt(usuario));
 
         usuarioEntity.setAlta(true);
+
+        CuentaEntity cuenta = new CuentaEntity();
+        cuenta.setEstadoCuentaByEstado(estadoRepository.getReferenceById(1));
+        cuenta.setUsuarioByDuenyo(usuarioEntity);
 
         userRepo.save(usuarioEntity);
 
