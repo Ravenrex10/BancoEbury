@@ -1,7 +1,11 @@
 package com.ebury.controller;
 
+import com.ebury.dto.ChatDTO;
 import com.ebury.dto.UsuarioDTO;
+import com.ebury.entity.UsuarioEntity;
+import com.ebury.service.ChatService;
 import com.ebury.service.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,22 +22,37 @@ public class ChatController {
     @Autowired
     UsuarioService usuarioService;
 
+    @Autowired
+    ChatService chatService;
+
     @GetMapping("/asistente")
     String doRedirigirAChats() {
         return "redirect:/chats";
     }
 
     @GetMapping("/chats")
-    String doListarChats(Model model) {
+    String doListarChats(HttpSession session, Model model) {
+        // TODO: hacer esto sin UsuarioEntity
+        UsuarioEntity miUsuario = (UsuarioEntity) session.getAttribute("usuario");
         List<UsuarioDTO> usuarios = usuarioService.findUsuarios();
+        List<ChatDTO> chats = chatService.findChatsByUserId(miUsuario.getId());
         model.addAttribute("usuarios", usuarios);
+        model.addAttribute("chats", chats);
         return "chats";
     }
 
-    @GetMapping("/chats/nuevoChat")
-    String doNuevoChat(@RequestParam("chatUserId") int userID, Model model) {
-        UsuarioDTO usuario = usuarioService.findUsuarioById(userID);
-        model.addAttribute("usuario", usuario);
+    @GetMapping("/nuevoChat")
+    String doNuevoChat(@RequestParam("chatUserId") int userBId, HttpSession session) {
+        // TODO: hacer esto sin UsuarioEntity
+        UsuarioEntity usuarioA = (UsuarioEntity) session.getAttribute("usuario");
+        ChatDTO nuevoChat = chatService.crearChatEntre(usuarioA.getId(), userBId);
+        return "redirect:/chat?chatId=" + nuevoChat.getId();
+    }
+
+    @GetMapping("/chat")
+    String doMostrarChat(@RequestParam("chatId") int chatId, Model model) {
+        ChatDTO chat = chatService.findChatByChatId(chatId);
+        model.addAttribute("chat", chat);
         return "chat";
     }
 

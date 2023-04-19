@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ChatRepository extends JpaRepository<ChatEntity, Integer> {
 
-    //@Query("SELECT c FROM Chat c WHERE clienteA.id = :id OR clienteB.id = :id")
-    //public List<ChatEntity> findChatEntitiesByUserId(@Param("id") Integer id);
+    @Query("SELECT c FROM ChatEntity c WHERE c.usuarioByClienteA.id = :id OR c.usuarioByClienteB.id = :id")
+    public List<ChatEntity> findChatEntitiesByUserId(@Param("id") Integer id);
 
 }

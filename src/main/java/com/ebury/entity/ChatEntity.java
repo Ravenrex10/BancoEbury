@@ -1,8 +1,10 @@
 package com.ebury.entity;
 
+import com.ebury.dto.ChatDTO;
 import jakarta.persistence.*;
 
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @Table(name = "Chat", schema = "BancoEbury", catalog = "")
@@ -24,6 +26,10 @@ public class ChatEntity {
         return id;
     }
 
+    //TODO: borrar este metodo (es solo para testing)
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -65,5 +71,16 @@ public class ChatEntity {
 
     public void setMensajesById(Collection<MensajeEntity> mensajesById) {
         this.mensajesById = mensajesById;
+    }
+
+    public ChatDTO toDTO() {
+        ChatDTO dto = new ChatDTO();
+        dto.setId(id);
+        dto.setNombreUsuarioA(usuarioByClienteA.getEmail());
+        dto.setNombreUsuarioB(usuarioByClienteB.getEmail());
+        // TODO: hay que inicializar correctamente estos atributos
+        dto.setFechaUltimoMensaje(new Date());
+        dto.setUltimoMensaje("");
+        return dto;
     }
 }
