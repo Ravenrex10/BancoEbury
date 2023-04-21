@@ -28,6 +28,11 @@ public class ChatService {
         return chats.stream().map(ChatEntity::toDTO).collect(Collectors.toList());
     }
 
+    public List<ChatDTO> findAllChats() {
+        List<ChatEntity> chats = chatRepository.findAll();
+        return chats.stream().map(ChatEntity::toDTO).collect(Collectors.toList());
+    }
+
     public ChatDTO findChatByChatId(int chatId) {
         ChatEntity chat = chatRepository.findById(chatId).orElse(null);
         if (chat == null) {

@@ -11,6 +11,11 @@ public class CuentaEntity {
     @Id
     @Column(name = "id")
     private int id;
+
+    @Basic
+    @Column(name = "iban")
+    private String iban;
+
     @ManyToOne
     @JoinColumn(name = "duenyo", referencedColumnName = "id")
     private UsuarioEntity usuarioByDuenyo;
@@ -30,6 +35,14 @@ public class CuentaEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getIban() {
+        return iban;
+    }
+
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
     @Override

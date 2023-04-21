@@ -35,7 +35,8 @@ public class ChatController {
         // TODO: hacer esto sin UsuarioEntity
         UsuarioEntity miUsuario = (UsuarioEntity) session.getAttribute("usuario");
         List<UsuarioDTO> usuarios = usuarioService.findUsuarios();
-        List<ChatDTO> chats = chatService.findChatsByUserId(miUsuario.getId());
+        //List<ChatDTO> chats = chatService.findChatsByUserId(miUsuario.getId());
+        List<ChatDTO> chats = chatService.findAllChats();
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("chats", chats);
         return "chats";

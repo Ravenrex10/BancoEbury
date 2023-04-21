@@ -16,6 +16,11 @@ public class UsuarioEntity {
     @Basic
     @Column(name = "email")
     private String email;
+
+    @Basic
+    @Column(name = "nif")
+    private int nif;
+
     @Basic
     @Column(name = "primerNombre")
     private String primerNombre;
@@ -67,6 +72,14 @@ public class UsuarioEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getNif() {
+        return this.nif;
+    }
+
+    public void setNif(int nif) {
+        this.nif = nif;
     }
 
     public String getPrimerNombre() {
