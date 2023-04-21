@@ -4,6 +4,8 @@
 -- ------------------------------------------------------
 -- Server version	10.11.2-MariaDB
 
+USE BancoEbury;
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -23,7 +25,7 @@ DROP TABLE IF EXISTS `Chat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Chat` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `clienteA` int(11) DEFAULT NULL,
   `clienteB` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -51,7 +53,8 @@ DROP TABLE IF EXISTS `Cuenta`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Cuenta` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
+  `iban` varchar(24) DEFAULT NULL,
   `duenyo` int(11) DEFAULT NULL,
   `estado` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -68,8 +71,6 @@ CREATE TABLE `Cuenta` (
 
 LOCK TABLES `Cuenta` WRITE;
 /*!40000 ALTER TABLE `Cuenta` DISABLE KEYS */;
-INSERT INTO `Cuenta` VALUES
-(1,22222222,0);
 /*!40000 ALTER TABLE `Cuenta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,7 +82,7 @@ DROP TABLE IF EXISTS `Direccion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Direccion` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `calle` varchar(20) DEFAULT NULL,
   `numero` varchar(10) DEFAULT NULL,
   `planta` varchar(20) DEFAULT NULL,
@@ -110,7 +111,7 @@ DROP TABLE IF EXISTS `Divisa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Divisa` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `nombre` varchar(20) DEFAULT NULL,
   `valor` double DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -186,7 +187,7 @@ DROP TABLE IF EXISTS `Mensaje`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Mensaje` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `contenido` varchar(50) DEFAULT NULL,
   `enviadoPorA` tinyint(1) DEFAULT NULL,
   `chat` int(11) DEFAULT NULL,
@@ -243,7 +244,7 @@ DROP TABLE IF EXISTS `Saldo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Saldo` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `cuenta` int(11) DEFAULT NULL,
   `cantidad` double DEFAULT NULL,
   `divisa` int(11) DEFAULT NULL,
@@ -272,7 +273,7 @@ DROP TABLE IF EXISTS `Transferencia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Transferencia` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `cuentaOrigen` int(11) DEFAULT NULL,
   `cuentaDestino` int(11) DEFAULT NULL,
   `divisaOrigen` int(11) DEFAULT NULL,
@@ -308,7 +309,8 @@ DROP TABLE IF EXISTS `Usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Usuario` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
+  `nif` int(11) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `primerNombre` varchar(20) DEFAULT NULL,
   `segundoNombre` varchar(20) DEFAULT NULL,
@@ -334,12 +336,6 @@ CREATE TABLE `Usuario` (
 
 LOCK TABLES `Usuario` WRITE;
 /*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
-INSERT INTO `Usuario` VALUES
-(1,'lucas@email.com','Lucas',NULL,'Colbert','Eastgate',NULL,'1234',NULL,NULL,1,NULL),
-(1010101,'autorizado@email.com','autorizado',NULL,NULL,NULL,NULL,NULL,NULL,6,1,NULL),
-(11111112,'socio@email.com','socio',NULL,NULL,NULL,NULL,'1234',NULL,2,1,NULL),
-(12341234,'gestor@email.com','gestor',NULL,NULL,NULL,NULL,'1234',NULL,3,1,NULL),
-(22222222,'usuario@email.com','Usuario','Sin','Alta','lol',NULL,'1234',NULL,1,1,NULL);
 /*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
