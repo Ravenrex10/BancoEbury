@@ -14,6 +14,10 @@
 <body>
 
     <h3>Mostrando chat entre <%=chat.getNombreUsuarioA()%> y <%=chat.getNombreUsuarioB()%>, con ID <%=chat.getId()%></h3>
-
+    <form action="/enviarMensaje" method="get">
+        <input type="text" name="mensaje" maxlength="50"/>
+        <input type="hidden" name="chatId" value="<%=chat.getId()%>"/>
+        <button>Enviar</button>
+    </form>
 </body>
 </html>

@@ -34,6 +34,7 @@ public class ChatController {
     String doListarChats(HttpSession session, Model model) {
         // TODO: hacer esto sin UsuarioEntity
         UsuarioEntity miUsuario = (UsuarioEntity) session.getAttribute("usuario");
+        if (miUsuario == null) return "redirect:/";
         List<UsuarioDTO> usuarios = usuarioService.findUsuarios();
         //List<ChatDTO> chats = chatService.findChatsByUserId(miUsuario.getId());
         List<ChatDTO> chats = chatService.findAllChats();
@@ -46,6 +47,7 @@ public class ChatController {
     String doNuevoChat(@RequestParam("chatUserId") int userBId, HttpSession session) {
         // TODO: hacer esto sin UsuarioEntity
         UsuarioEntity usuarioA = (UsuarioEntity) session.getAttribute("usuario");
+        if (usuarioA == null) return "redirect:/";
         ChatDTO nuevoChat = chatService.crearChatEntre(usuarioA.getId(), userBId);
         return "redirect:/chat?chatId=" + nuevoChat.getId();
     }
@@ -55,6 +57,13 @@ public class ChatController {
         ChatDTO chat = chatService.findChatByChatId(chatId);
         model.addAttribute("chat", chat);
         return "chat";
+    }
+
+    @GetMapping("/enviarMensaje")
+    String doEnviarMensaje(@RequestParam("mensaje") String mensaje, @RequestParam("chatId") int chatId, HttpSession session) {
+        UsuarioEntity miUsuario = (UsuarioEntity) session.getAttribute("usuario");
+        chatService.enviarMensaje(chatId, miUsuario.getId(), mensaje);
+        return "redirect:/chat?chatId=" + chatId;
     }
 
 }
