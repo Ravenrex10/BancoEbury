@@ -4,12 +4,15 @@ import com.ebury.dao.ChatRepository;
 import com.ebury.dao.MensajeRepository;
 import com.ebury.dao.UsuarioRepository;
 import com.ebury.dto.ChatDTO;
+import com.ebury.dto.MensajeDTO;
 import com.ebury.entity.ChatEntity;
 import com.ebury.entity.MensajeEntity;
 import com.ebury.entity.UsuarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,4 +71,26 @@ public class ChatService {
         chatRepository.save(chat);
         mensajeRepository.save(nuevoMensaje);
     }
+
+    /**
+     *
+     * @param chatId el id del chat al que se desea acceder
+     * @param usuarioActualId el usuario que está accediendo al chat
+     * @return lista de los mensajes de ese chat (se mostrarán de forma diferente según si el punto de vista es desde A o desde B)
+     */
+    public List<MensajeDTO> findMensajesByChatId(int chatId, int usuarioActualId) {
+        ChatEntity chat = chatRepository.findById(chatId).orElse(null);
+        Collection<MensajeEntity> mensajes = chat.getMensajesById();
+        List<MensajeDTO> mensajeDTOs = new ArrayList<>();
+        for (MensajeEntity mensaje : mensajes) {
+            boolean soyA = chat.getUsuarioByClienteA().getId() == usuarioActualId;
+            boolean enviadoPorUsuarioActual = (soyA && mensaje.getEnviadoPorA() == 1 || !soyA && mensaje.getEnviadoPorA() == 0);
+            MensajeDTO mensajeDTO = mensaje.toDto();
+            mensajeDTO.setEnviadoPorUsuarioActual(enviadoPorUsuarioActual);
+            mensajeDTOs.add(mensajeDTO);
+        }
+        return mensajeDTOs;
+    }
+
+
 }

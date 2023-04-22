@@ -1,5 +1,6 @@
 package com.ebury.entity;
 
+import com.ebury.dto.MensajeDTO;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -81,5 +82,15 @@ public class MensajeEntity {
 
     public void setChatByChat(ChatEntity chatByChat) {
         this.chatByChat = chatByChat;
+    }
+
+    public MensajeDTO toDto() {
+        MensajeDTO dto = new MensajeDTO();
+        dto.setId(this.getId());
+        dto.setChatId(this.getChatByChat().getId());
+        dto.setFecha(this.fecha);
+        dto.setContenido(this.getContenido());
+        // dto.enviadoPorUsuarioActual se calcula en chatService
+        return dto;
     }
 }

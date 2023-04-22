@@ -1,6 +1,7 @@
 package com.ebury.controller;
 
 import com.ebury.dto.ChatDTO;
+import com.ebury.dto.MensajeDTO;
 import com.ebury.dto.UsuarioDTO;
 import com.ebury.entity.UsuarioEntity;
 import com.ebury.service.ChatService;
@@ -9,10 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -53,13 +51,16 @@ public class ChatController {
     }
 
     @GetMapping("/chat")
-    String doMostrarChat(@RequestParam("chatId") int chatId, Model model) {
+    String doMostrarChat(@RequestParam("chatId") int chatId, Model model, HttpSession session) {
+        UsuarioEntity miUsuario = (UsuarioEntity) session.getAttribute("usuario");
         ChatDTO chat = chatService.findChatByChatId(chatId);
+        List<MensajeDTO> mensajes = chatService.findMensajesByChatId(chatId, miUsuario.getId());
         model.addAttribute("chat", chat);
+        model.addAttribute("mensajes", mensajes);
         return "chat";
     }
 
-    @GetMapping("/enviarMensaje")
+    @PostMapping("/enviarMensaje")
     String doEnviarMensaje(@RequestParam("mensaje") String mensaje, @RequestParam("chatId") int chatId, HttpSession session) {
         UsuarioEntity miUsuario = (UsuarioEntity) session.getAttribute("usuario");
         chatService.enviarMensaje(chatId, miUsuario.getId(), mensaje);
