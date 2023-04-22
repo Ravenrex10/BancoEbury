@@ -74,17 +74,16 @@ public class ChatService {
 
     /**
      *
-     * @param chatId el id del chat al que se desea acceder
-     * @param usuarioActualId el usuario que está accediendo al chat
-     * @return lista de los mensajes de ese chat (se mostrarán de forma diferente según si el punto de vista es desde A o desde B)
+     * @param chatId El id del chat al que se desea acceder
+     * @param usuarioActualId El usuario que está accediendo al chat
+     * @return Lista de los mensajes de ese chat (se mostrarán de forma diferente según si el punto de vista es desde A o desde B)
      */
     public List<MensajeDTO> findMensajesByChatId(int chatId, int usuarioActualId) {
         ChatEntity chat = chatRepository.findById(chatId).orElse(null);
         Collection<MensajeEntity> mensajes = chat.getMensajesById();
         List<MensajeDTO> mensajeDTOs = new ArrayList<>();
         for (MensajeEntity mensaje : mensajes) {
-            boolean soyA = chat.getUsuarioByClienteA().getId() == usuarioActualId;
-            boolean enviadoPorUsuarioActual = (soyA && mensaje.getEnviadoPorA() == 1 || !soyA && mensaje.getEnviadoPorA() == 0);
+            boolean enviadoPorUsuarioActual = mensajeEnviadoPor(chat, mensaje, usuarioActualId);
             MensajeDTO mensajeDTO = mensaje.toDto();
             mensajeDTO.setEnviadoPorUsuarioActual(enviadoPorUsuarioActual);
             mensajeDTOs.add(mensajeDTO);
@@ -92,5 +91,22 @@ public class ChatService {
         return mensajeDTOs;
     }
 
+    /**
+     * Un usuario solo tendrá acceso a un chat si participa en él, a no se que sea asistente, entonces tendrá acceso
+     * a todos los chats.
+     */
+    public boolean usuarioTieneAccesoAChat(int usuarioId, int chatId) {
+        UsuarioEntity usuario = usuarioRepository.findById(usuarioId).orElse(null);
+        if (usuario == null) return false;
+        ChatEntity chat = chatRepository.findById(chatId).orElse(null);
+        if (chat == null) return false;
+        return usuario.getRolByRol().getNombre().equals("Asistente") || chat.getUsuarioByClienteA().getId() == usuarioId
+                || chat.getUsuarioByClienteB().getId() == usuarioId;
+    }
 
+    private boolean mensajeEnviadoPor(ChatEntity chat, MensajeEntity mensaje, int usuarioId) {
+        boolean usuarioEsA = chat.getUsuarioByClienteA().getId() == usuarioId;
+        boolean usuarioEsB = chat.getUsuarioByClienteB().getId() == usuarioId;
+        return usuarioEsA && mensaje.getEnviadoPorA() == 1 || usuarioEsB && mensaje.getEnviadoPorA() == 0;
+    }
 }
