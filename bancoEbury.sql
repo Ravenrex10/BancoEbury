@@ -136,6 +136,7 @@ DROP TABLE IF EXISTS `Empresa`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Empresa` (
   `cif` int(11) NOT NULL,
+  `contrasenya` varchar(100) DEFAULT NULL,
   `nombre` varchar(20) DEFAULT NULL,
   `direccion` int(11) DEFAULT NULL,
   PRIMARY KEY (`cif`),

@@ -14,6 +14,9 @@ public class EmpresaEntity {
     @Basic
     @Column(name = "nombre")
     private String nombre;
+    @Basic
+    @Column(name = "contrasenya")
+    private String contrasenya;
     @ManyToOne
     @JoinColumn(name = "direccion", referencedColumnName = "id")
     private DireccionEntity direccionByDireccion;
@@ -34,6 +37,14 @@ public class EmpresaEntity {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getContrasenya() {
+        return contrasenya;
+    }
+
+    public void setContrasenya(String contrasenya) {
+        this.contrasenya = contrasenya;
     }
 
     @Override
