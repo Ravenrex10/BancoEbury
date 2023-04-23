@@ -28,6 +28,14 @@ public class EmpresaEntity {
     @OneToMany(mappedBy = "empresaByEmpresa")
     private Collection<UsuarioEntity> usuariosByCif;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getCif() {
         return cif;
     }
