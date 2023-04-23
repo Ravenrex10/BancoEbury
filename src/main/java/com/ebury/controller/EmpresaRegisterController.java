@@ -39,7 +39,8 @@ public class EmpresaRegisterController {
         //TODO: Arreglar save
         //TODO: Control de valores nulos
         //TODO: Control de errores
-        //TODO:
+        //TODO: Usuario asociado
+
         EmpresaEntity e = empresaWrapper.getNewEmpresa();
         DireccionEntity d = empresaWrapper.getNewDireccion();
 

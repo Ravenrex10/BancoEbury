@@ -135,11 +135,12 @@ DROP TABLE IF EXISTS `Empresa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Empresa` (
-  `cif` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cif` int(11) NOT NULL DEFAULT '0',
   `contrasenya` varchar(100) DEFAULT NULL,
   `nombre` varchar(20) DEFAULT NULL,
   `direccion` int(11) DEFAULT NULL,
-  PRIMARY KEY (`cif`),
+  PRIMARY KEY (`id`),
   KEY `direccion` (`direccion`),
   CONSTRAINT `Empresa_ibfk_1` FOREIGN KEY (`direccion`) REFERENCES `Direccion` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -326,7 +327,7 @@ CREATE TABLE `Usuario` (
   PRIMARY KEY (`id`),
   KEY `empresa` (`empresa`),
   KEY `rol` (`rol`),
-  CONSTRAINT `Usuario_ibfk_1` FOREIGN KEY (`empresa`) REFERENCES `Empresa` (`cif`),
+  CONSTRAINT `Usuario_ibfk_1` FOREIGN KEY (`empresa`) REFERENCES `Empresa` (`id`),
   CONSTRAINT `Usuario_ibfk_2` FOREIGN KEY (`rol`) REFERENCES `Rol` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

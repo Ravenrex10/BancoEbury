@@ -9,8 +9,13 @@ import java.util.Collection;
 public class EmpresaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @Column(name = "id")
+    private int id;
+
+    @Basic
     @Column(name = "cif")
     private int cif;
+
     @Basic
     @Column(name = "nombre")
     private String nombre;

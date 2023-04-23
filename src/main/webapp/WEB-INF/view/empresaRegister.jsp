@@ -1,14 +1,16 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Gestor</title>
+    <title>Registro de empresa</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 <body>
 <div class="container">
-    <form:form modelAttribute="newEmpresaWrapper" method="post" action="/registerEmpresa/register">
+    <form:form method="post" action="/registerEmpresa/register" modelAttribute="newEmpresaWrapper">
+">
         <h1>Datos de la empresa: </h1>
+        <form:hidden path="id"></form:hidden>
         Cif (*): <form:input path="newEmpresa.cif"></form:input><br>
         Nombre de la empresa (*): <form:input path="newEmpresa.nombre"></form:input><br>
         Contraseña (*): <form:input path="newEmpresa.contrasenya"></form:input>
