@@ -33,7 +33,7 @@ public class loginController {
                 case "Cliente": //Usuario es cliente
                     urlTo+="cliente/";
                     break;
-                case "AsociadoEmpresa": //Usuario es empresa
+                case "AutorizadoEmpresa": //Usuario es empresa
                     urlTo+="empresaHome";
                     break;
                 case "Gestor": //Usuario es gestor
