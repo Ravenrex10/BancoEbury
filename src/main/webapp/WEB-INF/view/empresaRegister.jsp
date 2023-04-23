@@ -10,7 +10,7 @@
     <form:form method="post" action="/registerEmpresa/register" modelAttribute="newEmpresaWrapper">
 ">
         <h1>Datos de la empresa: </h1>
-        <form:hidden path="id"></form:hidden>
+        <form:hidden path="newEmpresa.id"></form:hidden>
         Cif (*): <form:input path="newEmpresa.cif"></form:input><br>
         Nombre de la empresa (*): <form:input path="newEmpresa.nombre"></form:input><br>
         Contraseña (*): <form:input path="newEmpresa.contrasenya"></form:input>
