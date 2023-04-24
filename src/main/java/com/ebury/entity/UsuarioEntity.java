@@ -245,6 +245,12 @@ public class UsuarioEntity {
         dto.setSegundoApellido(segundoApellido);
         dto.setPrimerNombre(primerNombre);
         dto.setSegundoNombre(segundoNombre);
+        dto.setNif(nif);
+        if(empresaByEmpresa!=null){
+            dto.setEmpresa(empresaByEmpresa.getId());
+        }else{
+            dto.setEmpresa(null);
+        }
         return dto;
     }
 }

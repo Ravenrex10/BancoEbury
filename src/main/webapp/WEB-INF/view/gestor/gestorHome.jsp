@@ -45,24 +45,45 @@
                     </form:select>
                     <form:button>Filtrar</form:button>
                 </form:form>
-                <%
-                    for(UsuarioDTO usuario: usuarios){
 
-                %>
-                <%=usuario.getPrimerNombre()%>
-                <%
-                    if(usuario.getSegundoNombre()!=null){
-                %>
-                <%=usuario.getSegundoNombre()%>
-                <%
-                    }
-                %>
-                <%=usuario.getPrimerApellido()%>
-                <%=usuario.getSegundoApellido()%>
+                <table>
+                    <tr>
+                        <th>NIF</th>
+                        <th>Nombre</th>
+                        <th>Segundo Nombre</th>
+                        <th>Apellidos</th>
+                    </tr>
+                    <%
+                        for(UsuarioDTO usuario: usuarios){
+
+                    %>
+                    <tr>
+                        <td>
+                            <%=usuario.getNif()%>
+                        </td>
+                        <td>
+                            <%=usuario.getPrimerNombre()%>
+                        </td>
+                        <td>
+                            <%
+                                if(usuario.getSegundoNombre()!=null){
+                            %>
+                            <%=usuario.getSegundoNombre()%>
+                            <%
+                                }
+                            %>
+                        </td>
+                        <td>
+                            <%=usuario.getPrimerApellido() + " "+usuario.getSegundoApellido()%>
+                        </td>
+                        <td><a href="informacionUsuario?usuario=<%=usuario.getId()%>" class="button">Ver Información</a></td>
+                        <%
+                            }
+                        %>
+                    </tr>
+                </table>
                 <br>
-                <%
-                    }
-                %>
+
             </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>

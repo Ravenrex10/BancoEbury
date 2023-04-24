@@ -3,10 +3,29 @@ package com.ebury.dto;
 public class UsuarioDTO {
 
     private int id;
+    private int nif;
     private String email;
     private String primerNombre;
     private String segundoNombre;
     private String primerApellido;
+    private Integer empresa;
+
+    public Integer getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Integer empresa) {
+        this.empresa = empresa;
+    }
+
+    public int getNif() {
+        return nif;
+    }
+
+    public void setNif(int nif) {
+        this.nif = nif;
+    }
+
     private String segundoApellido;
 
     public int getId() {

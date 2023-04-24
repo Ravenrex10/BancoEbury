@@ -1,5 +1,6 @@
 package com.ebury.controller;
 
+import com.ebury.dto.EmpresaDTO;
 import com.ebury.dto.UsuarioDTO;
 import com.ebury.service.EmpresaService;
 import com.ebury.service.GestorService;
@@ -15,8 +16,7 @@ import java.util.List;
 
 @RequestMapping("/gestorHome")
 @Controller
-public class gestorController {
-
+public class GestorController {
     @Autowired
     UsuarioService usuarioService;
     @Autowired
@@ -32,7 +32,7 @@ public class gestorController {
     @GetMapping("/gestorAlta")
     public String getGestorAlta(Model model){
         model.addAttribute("usuariosSinAlta", usuarioService.findAllByAltaSolicitada());
-        return "gestorAlta";
+        return "gestor/gestorAlta";
     }
 
     @GetMapping("/darDeAlta")
@@ -58,6 +58,13 @@ public class gestorController {
         return listarUsuarios(usuarios, model);
     }
 
+    @GetMapping("/informacionUsuario")
+    public String getInformacion(@RequestParam("usuario") Integer id, Model model){
+        UsuarioDTO usuario = usuarioService.findUsuarioById(id);
+        model.addAttribute("usuario", usuario);
+        return ("gestor/informacionUsuario");
+    }
+
     private String listarUsuarios(List<UsuarioDTO> usuarios, Model model){
         model.addAttribute("usuarios", usuarios);
         FiltroUsuarios filtro = new FiltroUsuarios();
@@ -65,6 +72,6 @@ public class gestorController {
         model.addAttribute("filtroUsuarios", filtro);
         List<String> filtroItems = gestorService.getRoles();
         model.addAttribute("roles", filtroItems);
-        return("gestorHome");
+        return("gestor/gestorHome");
     }
 }

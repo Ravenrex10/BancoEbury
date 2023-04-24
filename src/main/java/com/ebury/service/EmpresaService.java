@@ -28,4 +28,13 @@ public class EmpresaService {
         return empresas.stream().map(EmpresaEntity::toDTO).collect(Collectors.toList());
     }
 
+    public EmpresaDTO findById(Integer id){
+        EmpresaEntity empresa = empresaRepository.findById(id).orElse(null);
+        if(empresa==null){
+            return null;
+        }else{
+            return empresa.toDTO();
+        }
+    }
+
 }
