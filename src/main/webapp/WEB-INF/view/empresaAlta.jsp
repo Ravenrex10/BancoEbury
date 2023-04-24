@@ -7,7 +7,6 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 <body>
-<% List<UsuarioEntity> usuarios = (List<UsuarioEntity>) request.getAttribute("sociosYAutorizados"); %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,13 +34,6 @@
     </div>
 </nav>
 <h1>Solicitud de alta</h1>
-<ul>
-    <%for (UsuarioEntity u : usuarios)
-{
-    %>
-        <li><%=u.getPrimerApellido()%> <%=u.getSegundoApellido()%>, <%=u.getPrimerNombre()%> </li>
-    <%}%>
-</ul>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

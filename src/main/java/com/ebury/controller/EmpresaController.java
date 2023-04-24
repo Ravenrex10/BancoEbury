@@ -30,9 +30,6 @@ public class EmpresaController {
     @GetMapping("/empresaAlta")
     public String doEmpresaAlta(Model model, HttpSession session)
     {
-        EmpresaEntity empresa = (EmpresaEntity) session.getAttribute("empresa");
-        List<UsuarioEntity> sociosYAutorizados = this.userRepo.findAllSociosAndAutorizadosNotInMyCompany();
-        model.addAttribute("sociosYAutorizados",sociosYAutorizados);
         return "empresaAlta";
     }
 
