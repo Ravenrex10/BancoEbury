@@ -12,7 +12,6 @@
         <form:hidden path="newEmpresa.id"></form:hidden>
         Cif (*): <form:input path="newEmpresa.cif"></form:input><br>
         Nombre de la empresa (*): <form:input path="newEmpresa.nombre"></form:input><br>
-        Contraseña (*): <form:input path="newEmpresa.contrasenya"></form:input>
 
         <h1>Dirección: </h1>
 
@@ -23,6 +22,17 @@
         Ciudad (*): <form:input path="newDireccion.ciudad"></form:input><br>
         País (*): <form:input path="newDireccion.pais"></form:input><br>
         Código Postal (*): <form:input path="newDireccion.cp"></form:input><br>
+
+        <h1>Socio fundador: </h1>
+        <form:hidden path="newUsuario.id"></form:hidden>
+        NIF: <form:input path="newUsuario.nif"></form:input><br>
+        Primer nombre: <form:input path="newUsuario.primerNombre"></form:input><br>
+        Segundo nombre: <form:input path="newUsuario.segundoNombre"></form:input><br>
+        Primer apellido: <form:input path="newUsuario.primerApellido"></form:input><br>
+        Segundo apellido: <form:input path="newUsuario.segundoApellido"></form:input><br>
+        Fecha de nacimiento: <form:input type="date" path="newUsuario.fechaNacimiento"></form:input><br>
+        Email: <form:input path="newUsuario.email"></form:input><br>
+        Contraseña: <form:input path="newUsuario.contrasenya"></form:input>
 
         <input type="submit" value="Submit">
     </form:form>

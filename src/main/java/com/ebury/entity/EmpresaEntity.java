@@ -25,7 +25,7 @@ public class EmpresaEntity {
     @JoinColumn(name = "direccion", referencedColumnName = "id")
     private DireccionEntity direccionByDireccion;
     @OneToMany(mappedBy = "empresaByEmpresa")
-    private Collection<UsuarioEntity> usuariosByCif;
+    private Collection<UsuarioEntity> usuariosById;
 
     public int getId() {
         return id;
@@ -85,15 +85,15 @@ public class EmpresaEntity {
         res.setCif(this.getCif());
         res.setId(this.getId());
         res.setNombre(this.getNombre());
-        res.setUsuariosByCif(this.getUsuariosByCif().stream().map(UsuarioEntity::toDTO).collect(Collectors.toList()));
+        res.setUsuariosByCif(this.getUsuariosById().stream().map(UsuarioEntity::toDTO).collect(Collectors.toList()));
         return res;
     }
 
-    public Collection<UsuarioEntity> getUsuariosByCif() {
-        return usuariosByCif;
+    public Collection<UsuarioEntity> getUsuariosById() {
+        return usuariosById;
     }
 
-    public void setUsuariosByCif(Collection<UsuarioEntity> usuariosByCif) {
-        this.usuariosByCif = usuariosByCif;
+    public void setUsuariosById(Collection<UsuarioEntity> usuariosById) {
+        this.usuariosById = usuariosById;
     }
 }

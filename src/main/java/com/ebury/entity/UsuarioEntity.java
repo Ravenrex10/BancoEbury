@@ -52,7 +52,7 @@ public class UsuarioEntity {
     @OneToMany(mappedBy = "usuarioByDuenyo")
     private Collection<CuentaEntity> cuentasById;
     @ManyToOne
-    @JoinColumn(name = "empresa", referencedColumnName = "cif")
+    @JoinColumn(name = "empresa", referencedColumnName = "id")
     private EmpresaEntity empresaByEmpresa;
     @ManyToOne
     @JoinColumn(name = "rol", referencedColumnName = "id")

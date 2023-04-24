@@ -12,9 +12,7 @@ import com.ebury.ui.EmpresaWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,22 +34,7 @@ public class EmpresaRegisterController {
     @PostMapping("/registerEmpresa/register")
     public String makeRegister(Model model, @ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper)
     {
-        model.addAttribute("newEmpresaWrapper",empresaWrapper);
         return (this.empresaRegisterService.makeRegister(empresaWrapper));
-    }
-
-    @GetMapping("/registerSocio")
-    public String doRegisterSocio(Model model)
-    {
-        UsuarioDTO user = new UsuarioDTO();
-        model.addAttribute("newUser",user);
-
-        EmpresaWrapper empresaWrapper = (EmpresaWrapper) model.getAttribute("newEmpresaWrapper");
-        EmpresaDTO empresa = empresaWrapper.getNewEmpresa();
-        model.addAttribute("empresaRegistered",empresa);
-
-        return "empresaSocioRegister";
-
     }
 
 

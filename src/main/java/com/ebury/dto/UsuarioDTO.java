@@ -1,5 +1,7 @@
 package com.ebury.dto;
 
+import java.sql.Date;
+
 public class UsuarioDTO {
 
     private int id;
@@ -8,6 +10,34 @@ public class UsuarioDTO {
     private String segundoNombre;
     private String primerApellido;
     private String segundoApellido;
+    private Date fechaNacimiento;
+    private int nif;
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    private String contrasenya;
+
+    public int getNif() {
+        return nif;
+    }
+
+    public void setNif(int nif) {
+        this.nif = nif;
+    }
+
+    public String getContrasenya() {
+        return contrasenya;
+    }
+
+    public void setContrasenya(String contrasenya) {
+        this.contrasenya = contrasenya;
+    }
 
     public int getId() {
         return id;
