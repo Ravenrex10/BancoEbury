@@ -39,7 +39,10 @@ public class LoginController {
                     urlTo+="cliente/";
                     break;
                 case "AutorizadoEmpresa": //Usuario es empresa
-                    urlTo+="autorizadoHome";
+                    urlTo+="autorizadoHome/";
+                    break;
+                case "FundadorEmpresa": // Usuario es fundador
+                    urlTo+="fundadorHome/";
                     break;
                 case "Gestor": //Usuario es gestor
                     urlTo+="gestorHome/";
@@ -48,24 +51,13 @@ public class LoginController {
                     urlTo+="asistente";
                     break;
                 case "SocioEmpresa": //Usuario es socio
-                    urlTo="socioHome";
+                    urlTo="socioHome/";
                     break;
             }
         }else{
             System.out.println("Error");
         }
         return urlTo;
-    }
-
-    @PostMapping("/empresa")
-    public String getEmpresa(@RequestParam("cif") Integer cif, @RequestParam("clave") String clave, HttpSession session){
-        EmpresaDTO empresa = this.empresaService.findByCifAndContrasenya(cif,clave);
-        if(empresa != null)
-        {
-            session.setAttribute("empresa",empresa);
-            return ("redirect:/empresaHome/");
-        }
-        return "/";
     }
 
 }

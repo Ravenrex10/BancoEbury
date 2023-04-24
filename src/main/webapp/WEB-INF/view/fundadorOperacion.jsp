@@ -14,13 +14,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/empresaHome/">Inicio</a>
+                        <a class="nav-link" href="/fundadorHome/">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class ="nav-link active" aria-current="page" href="#">Operaciones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="empresaAlta">Solicitud de alta</a>
+                        <a class="nav-link" href="fundadorAlta">Solicitud de alta</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
