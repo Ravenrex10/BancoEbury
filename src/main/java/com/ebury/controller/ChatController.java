@@ -39,10 +39,10 @@ public class ChatController {
         List<ChatDTO> chats = chatService.findAllChats();
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("chats", chats);
-        return "chats";
+        return "asistente/chats";
     }
 
-    @GetMapping("/nuevoChat")
+    @PostMapping("/nuevoChat")
     String doNuevoChat(@RequestParam("chatUserId") int userBId, HttpSession session) {
         // TODO: hacer esto sin UsuarioEntity
         UsuarioEntity usuarioA = (UsuarioEntity) session.getAttribute("usuario");
@@ -54,11 +54,14 @@ public class ChatController {
     @GetMapping("/chat")
     String doMostrarChat(@RequestParam("chatId") int chatId, Model model, HttpSession session) {
         UsuarioEntity miUsuario = (UsuarioEntity) session.getAttribute("usuario");
+        if (!chatService.usuarioTieneAccesoAChat(miUsuario.getId(), chatId)) {
+            return "asistente/accesoDenegado";
+        }
         ChatDTO chat = chatService.findChatByChatId(chatId);
         List<MensajeDTO> mensajes = chatService.findMensajesByChatId(chatId, miUsuario.getId());
         model.addAttribute("chat", chat);
         model.addAttribute("mensajes", mensajes);
-        return "chat";
+        return "asistente/chat";
     }
 
     @PostMapping("/enviarMensaje")
@@ -77,7 +80,7 @@ public class ChatController {
         List<UsuarioDTO> asistentes = usuarioService.findUsuariosByRolNombre("Asistente");
         model.addAttribute("chats", misChats);
         model.addAttribute("usuarios", asistentes);
-        return "asistencia";
+        return "asistente/asistencia";
     }
 
 

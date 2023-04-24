@@ -33,7 +33,7 @@
         </tr>
     <% } %>
     <h3>Nuevo chat</h3>
-    <form action="/nuevoChat" method="get">
+    <form action="/nuevoChat" method="post">
         <select name="chatUserId">
             <% for (UsuarioDTO usuario: usuarios) { %>
                 <option value="<%=usuario.getId()%>"><%=usuario.getEmail()%></option>
