@@ -1,6 +1,8 @@
 package com.ebury.controller;
 
+import com.ebury.dao.EmpresaRepository;
 import com.ebury.dao.UsuarioRepository;
+import com.ebury.entity.EmpresaEntity;
 import com.ebury.entity.RolEntity;
 import com.ebury.entity.UsuarioEntity;
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +18,9 @@ public class loginController {
 
     @Autowired
     protected UsuarioRepository userRepo;
+
+    @Autowired
+    protected EmpresaRepository empRepo;
 
     @GetMapping("/")
     public String doLogin(){
@@ -50,6 +55,17 @@ public class loginController {
             System.out.println("Error");
         }
         return urlTo;
+    }
+
+    @PostMapping("/empresa")
+    public String getEmpresa(Model model, @RequestParam("cif") Integer cif, @RequestParam("clave") String clave, HttpSession session){
+        EmpresaEntity empresa = this.empRepo.findByCifAndContrasenya(cif,clave);
+        if(empresa != null)
+        {
+            session.setAttribute("empresa",empresa);
+            return ("redirect:/empresaHome/");
+        }
+        return "/";
     }
 
 }
