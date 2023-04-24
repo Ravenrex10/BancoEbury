@@ -32,6 +32,11 @@
                             <a class="nav-link" href="#">Usuarios inactivos</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item ms-auto me-auto">
+                            <a class="nav-link" href="logout">Cerrar sesión</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>

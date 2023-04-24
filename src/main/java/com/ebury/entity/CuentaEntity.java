@@ -1,8 +1,10 @@
 package com.ebury.entity;
 
+import com.ebury.dto.CuentaDTO;
 import jakarta.persistence.*;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "Cuenta", schema = "BancoEbury", catalog = "")
@@ -101,5 +103,15 @@ public class CuentaEntity {
 
     public void setTransferenciasById_0(Collection<TransferenciaEntity> transferenciasById_0) {
         this.transferenciasById_0 = transferenciasById_0;
+    }
+
+    public CuentaDTO toDTO(){
+        CuentaDTO dto = new CuentaDTO();
+        dto.setEstado(estadoCuentaByEstado.getNombre());
+        dto.setIban(iban);
+        //dto.setTransferenciasEnviadas(this.getTransferenciasById().stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList()));
+        //dto.setTransferenciasRecibidas(this.getTransferenciasById_0().stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList()));
+        dto.setUsuario(usuarioByDuenyo.toDTO());
+        return dto;
     }
 }

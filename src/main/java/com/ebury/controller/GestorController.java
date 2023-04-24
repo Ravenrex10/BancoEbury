@@ -2,6 +2,7 @@ package com.ebury.controller;
 
 import com.ebury.dto.EmpresaDTO;
 import com.ebury.dto.UsuarioDTO;
+import com.ebury.service.CuentaService;
 import com.ebury.service.EmpresaService;
 import com.ebury.service.GestorService;
 import com.ebury.service.UsuarioService;
@@ -23,6 +24,8 @@ public class GestorController {
     EmpresaService empresaService;
     @Autowired
     GestorService gestorService;
+    @Autowired
+    CuentaService cuentaService;
 
     @GetMapping("/")
     public String getGestor(Model model){
@@ -33,6 +36,12 @@ public class GestorController {
     public String getGestorAlta(Model model){
         model.addAttribute("usuariosSinAlta", usuarioService.findAllByAltaSolicitada());
         return "gestor/gestorAlta";
+    }
+
+    @GetMapping("/logout")
+    public String doLogOut()
+    {
+        return "redirect:/";
     }
 
     @GetMapping("/darDeAlta")
@@ -62,6 +71,8 @@ public class GestorController {
     public String getInformacion(@RequestParam("usuario") Integer id, Model model){
         UsuarioDTO usuario = usuarioService.findUsuarioById(id);
         model.addAttribute("usuario", usuario);
+        model.addAttribute("transferencias", usuarioService.findAllTransferencias(id));
+        model.addAttribute("cuentas", cuentaService.findAllCuentasByUsuario(id));
         return ("gestor/informacionUsuario");
     }
 
