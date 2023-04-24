@@ -8,7 +8,6 @@
 <body>
 <div class="container">
     <form:form method="post" action="/registerEmpresa/register" modelAttribute="newEmpresaWrapper">
-">
         <h1>Datos de la empresa: </h1>
         <form:hidden path="newEmpresa.id"></form:hidden>
         Cif (*): <form:input path="newEmpresa.cif"></form:input><br>
