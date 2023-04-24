@@ -10,6 +10,8 @@
 <html>
 <head>
     <title>Log in</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+
 </head>
 <body>
 <h1>Iniciar sesión:</h1>
@@ -43,5 +45,6 @@
     <li> Como usuario</li>
     <li><a href="/registerEmpresa">Como empresa</a></li>
 </ul>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
