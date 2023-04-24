@@ -15,16 +15,12 @@ public class UsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
-
     @Autowired
     EstadoRepository estadoRepository;
-
     @Autowired
     CuentaRepository cuentaRepository;
-
     @Autowired
     DivisaRepository divisaRepository;
-
     @Autowired
     SaldoRepository saldoRepository;
 
@@ -44,6 +40,11 @@ public class UsuarioService {
 
     public List<UsuarioDTO> findAllClientes(){
         List<UsuarioEntity> usuariosEntity = usuarioRepository.findAllClientes();
+        return usuariosEntity.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
+    }
+
+    public List<UsuarioDTO> findClientesFiltrados(String filtroUsuario){
+        List<UsuarioEntity> usuariosEntity = usuarioRepository.findAllByRolByRolNombre(filtroUsuario);
         return usuariosEntity.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
     }
 

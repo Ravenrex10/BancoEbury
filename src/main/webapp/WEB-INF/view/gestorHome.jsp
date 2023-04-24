@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.ebury.dto.UsuarioDTO" %>
 <%@ page import="com.ebury.dto.EmpresaDTO" %>
@@ -35,47 +36,34 @@
             </div>
         </nav>
         <br>
-        <table style="width: 100%">
-            <tr>
-                <td style="width: 50%;">
-                    <div class="container card">
-                        <h2>Clientes</h2>
-                        <%
-                            for(UsuarioDTO usuario: usuarios){
+            <div class="container card">
+                <h2>Usuarios</h2>
+                <form:form method="post" action="filtrarUsuarios" modelAttribute="filtroUsuarios">
+                    <form:select path="filtro">
+                        <form:option value="0" label=" "/>
+                        <form:options items="${roles}" />
+                    </form:select>
+                    <form:button>Filtrar</form:button>
+                </form:form>
+                <%
+                    for(UsuarioDTO usuario: usuarios){
 
-                        %>
-                        <%=usuario.getPrimerNombre()%>
-                        <%
-                            if(usuario.getSegundoNombre()!=null){
-                        %>
-                        <%=usuario.getSegundoNombre()%>
-                        <%
-                            }
-                        %>
-                        <%=usuario.getPrimerApellido()%>
-                        <%=usuario.getSegundoApellido()%>
-                        <br>
-                        <%
-                            }
-                        %>
-                    </div>
-                </td>
-                <td style="width: 50%;">
-                    <div class="container card">
-                        <h2>Empresas</h2>
-                        <%
-                            for(EmpresaDTO empresa: empresas){
-                        %>
-                        <%=empresa.getNombre()%>
-                        <%
-                            }
-                        %>
-                    </div>
-                </td>
-            </tr>
-        </table>
-
-
+                %>
+                <%=usuario.getPrimerNombre()%>
+                <%
+                    if(usuario.getSegundoNombre()!=null){
+                %>
+                <%=usuario.getSegundoNombre()%>
+                <%
+                    }
+                %>
+                <%=usuario.getPrimerApellido()%>
+                <%=usuario.getSegundoApellido()%>
+                <br>
+                <%
+                    }
+                %>
+            </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
