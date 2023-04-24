@@ -74,8 +74,7 @@ public class ChatController {
     String doMostrarAsistencia(HttpSession session, Model model) {
         UsuarioEntity miUsuario = (UsuarioEntity) session.getAttribute("usuario");
         List<ChatDTO> misChats = chatService.findChatsByUserId(miUsuario.getId());
-        //TODO: Crear en usuarioService un método findAsistentes()
-        List<UsuarioDTO> asistentes = usuarioService.findUsuarios();
+        List<UsuarioDTO> asistentes = usuarioService.findUsuariosByRolNombre("Asistente");
         model.addAttribute("chats", misChats);
         model.addAttribute("usuarios", asistentes);
         return "asistencia";

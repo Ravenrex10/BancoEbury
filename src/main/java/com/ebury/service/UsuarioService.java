@@ -92,4 +92,8 @@ public class UsuarioService {
         return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
     }
 
+    public List<UsuarioDTO> findUsuariosByRolNombre(String rolName) {
+        return usuarioRepository.findAllByRolByRolNombre(rolName).stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
+    }
+
 }
