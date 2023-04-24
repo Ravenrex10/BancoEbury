@@ -59,8 +59,10 @@ public class ChatController {
         }
         ChatDTO chat = chatService.findChatByChatId(chatId);
         List<MensajeDTO> mensajes = chatService.findMensajesByChatId(chatId, miUsuario.getId());
+        boolean usuarioPuedeEscribir = chatService.usuarioPuedeEnviarMensajeAChat(miUsuario.getId(), chatId);
         model.addAttribute("chat", chat);
         model.addAttribute("mensajes", mensajes);
+        model.addAttribute("usuarioPuedeEscribir", usuarioPuedeEscribir);
         return "asistente/chat";
     }
 

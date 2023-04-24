@@ -104,6 +104,15 @@ public class ChatService {
                 || chat.getUsuarioByClienteB().getId() == usuarioId;
     }
 
+    public boolean usuarioPuedeEnviarMensajeAChat(int usuarioId, int chatId) {
+        UsuarioEntity usuario = usuarioRepository.findById(usuarioId).orElse(null);
+        if (usuario == null) return false;
+        ChatEntity chat = chatRepository.findById(chatId).orElse(null);
+        if (chat == null) return false;
+        return chat.getUsuarioByClienteA().getId() == usuarioId
+                || chat.getUsuarioByClienteB().getId() == usuarioId;
+    }
+
     private boolean mensajeEnviadoPor(ChatEntity chat, MensajeEntity mensaje, int usuarioId) {
         boolean usuarioEsA = chat.getUsuarioByClienteA().getId() == usuarioId;
         boolean usuarioEsB = chat.getUsuarioByClienteB().getId() == usuarioId;

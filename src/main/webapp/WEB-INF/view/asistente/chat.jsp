@@ -13,6 +13,7 @@
 <%
     ChatDTO chat = (ChatDTO) request.getAttribute("chat");
     List<MensajeDTO> mensajes = (List<MensajeDTO>) request.getAttribute("mensajes");
+    boolean usuarioPuedeEscribir = (boolean) request.getAttribute("usuarioPuedeEscribir");
 %>
 <body>
 
@@ -35,10 +36,14 @@
             </tr>
         <% } %>
     </table>
+    <% if (usuarioPuedeEscribir) { %>
     <form action="/enviarMensaje" method="post">
         <input type="text" name="mensaje" maxlength="50"/>
         <input type="hidden" name="chatId" value="<%=chat.getId()%>"/>
         <button>Enviar</button>
     </form>
+    <% } else { %>
+        <h5>No puedes enviar mensajes a este chat. <h5>
+    <% } %>
 </body>
 </html>
