@@ -91,9 +91,14 @@ public class UsuarioService {
         List<TransferenciaEntity> transferenciaEntities = transferenciasRepository.findAllByUsuario(usuario);
         return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
     }
-
     public List<UsuarioDTO> findUsuariosByRolNombre(String rolName) {
         return usuarioRepository.findAllByRolByRolNombre(rolName).stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
+    }
+
+    public UsuarioDTO autenticar(String nombreUsuario, String clave) {
+        UsuarioEntity usuario = usuarioRepository.autenticar(nombreUsuario, clave);
+        if (usuario == null) return null;
+        return usuario.toDTO();
     }
 
 }

@@ -19,10 +19,10 @@ import java.util.List;
 public class ChatController {
 
     @Autowired
-    UsuarioService usuarioService;
+    protected UsuarioService usuarioService;
 
     @Autowired
-    ChatService chatService;
+    protected ChatService chatService;
 
     @GetMapping("/asistente")
     String doRedirigirAChats() {
@@ -31,8 +31,7 @@ public class ChatController {
 
     @GetMapping("/chats")
     String doListarChats(HttpSession session, Model model) {
-        // TODO: hacer esto sin UsuarioEntity
-        UsuarioEntity miUsuario = (UsuarioEntity) session.getAttribute("usuario");
+        UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
         if (miUsuario == null) return "redirect:/";
         List<UsuarioDTO> usuarios = usuarioService.findUsuarios();
         //List<ChatDTO> chats = chatService.findChatsByUserId(miUsuario.getId());
@@ -44,8 +43,7 @@ public class ChatController {
 
     @PostMapping("/nuevoChat")
     String doNuevoChat(@RequestParam("chatUserId") int userBId, HttpSession session) {
-        // TODO: hacer esto sin UsuarioEntity
-        UsuarioEntity usuarioA = (UsuarioEntity) session.getAttribute("usuario");
+        UsuarioDTO usuarioA = (UsuarioDTO) session.getAttribute("usuario");
         if (usuarioA == null) return "redirect:/";
         ChatDTO nuevoChat = chatService.crearChatEntre(usuarioA.getId(), userBId);
         return "redirect:/chat?chatId=" + nuevoChat.getId();
@@ -53,7 +51,7 @@ public class ChatController {
 
     @GetMapping("/chat")
     String doMostrarChat(@RequestParam("chatId") int chatId, Model model, HttpSession session) {
-        UsuarioEntity miUsuario = (UsuarioEntity) session.getAttribute("usuario");
+        UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
         if (!chatService.usuarioTieneAccesoAChat(miUsuario.getId(), chatId)) {
             return "asistente/accesoDenegado";
         }
@@ -68,7 +66,7 @@ public class ChatController {
 
     @PostMapping("/enviarMensaje")
     String doEnviarMensaje(@RequestParam("mensaje") String mensaje, @RequestParam("chatId") int chatId, HttpSession session) {
-        UsuarioEntity miUsuario = (UsuarioEntity) session.getAttribute("usuario");
+        UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
         chatService.enviarMensaje(chatId, miUsuario.getId(), mensaje);
         return "redirect:/chat?chatId=" + chatId;
     }
@@ -77,13 +75,11 @@ public class ChatController {
 
     @GetMapping("/asistencia")
     String doMostrarAsistencia(HttpSession session, Model model) {
-        UsuarioEntity miUsuario = (UsuarioEntity) session.getAttribute("usuario");
+        UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
         List<ChatDTO> misChats = chatService.findChatsByUserId(miUsuario.getId());
         List<UsuarioDTO> asistentes = usuarioService.findUsuariosByRolNombre("Asistente");
         model.addAttribute("chats", misChats);
         model.addAttribute("usuarios", asistentes);
         return "asistente/asistencia";
     }
-
-
 }

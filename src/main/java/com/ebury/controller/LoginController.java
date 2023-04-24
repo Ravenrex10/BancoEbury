@@ -2,9 +2,11 @@ package com.ebury.controller;
 
 import com.ebury.dao.UsuarioRepository;
 import com.ebury.dto.EmpresaDTO;
+import com.ebury.dto.UsuarioDTO;
 import com.ebury.entity.RolEntity;
 import com.ebury.entity.UsuarioEntity;
 import com.ebury.service.EmpresaService;
+import com.ebury.service.UsuarioService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
 
     @Autowired
-    protected UsuarioRepository userRepo;
+    protected UsuarioService usuarioService;
 
     @Autowired
     protected EmpresaService empresaService;
@@ -29,10 +31,9 @@ public class LoginController {
     @PostMapping("/")
     public String getHome(Model model, @RequestParam("usuario") String user, @RequestParam("clave") String clave, HttpSession session){
         String urlTo = "redirect:/";
-        UsuarioEntity usuario = this.userRepo.autenticar(user, clave);
+        UsuarioDTO usuario = this.usuarioService.autenticar(user, clave);
         if(usuario!=null){
-            RolEntity rol = usuario.getRolByRol();
-            String rolname = rol.getNombre();
+            String rolname = usuario.getRolName();
             session.setAttribute("usuario", usuario);
             switch (rolname){
                 case "Cliente": //Usuario es cliente
