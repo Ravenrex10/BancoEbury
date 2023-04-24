@@ -1,8 +1,10 @@
 package com.ebury.entity;
 
+import com.ebury.dto.EmpresaDTO;
 import jakarta.persistence.*;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "Empresa", schema = "BancoEbury", catalog = "")
@@ -86,6 +88,17 @@ public class EmpresaEntity {
 
     public void setDireccionByDireccion(DireccionEntity direccionByDireccion) {
         this.direccionByDireccion = direccionByDireccion;
+    }
+
+    public EmpresaDTO toDTO()
+    {
+        EmpresaDTO res = new EmpresaDTO();
+        res.setCif(this.getCif());
+        res.setContrasenya(this.getContrasenya());
+        res.setId(this.getId());
+        res.setNombre(this.getNombre());
+        res.setUsuariosByCif(this.getUsuariosByCif().stream().map(UsuarioEntity::toDTO).collect(Collectors.toList()));
+        return res;
     }
 
     public Collection<UsuarioEntity> getUsuariosByCif() {

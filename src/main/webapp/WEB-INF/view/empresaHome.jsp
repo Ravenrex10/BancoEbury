@@ -1,4 +1,5 @@
 <%@ page import="com.ebury.entity.EmpresaEntity" %>
+<%@ page import="com.ebury.dto.EmpresaDTO" %>
 <html>
 <head>
     <title>Empresa Home</title>
@@ -6,7 +7,7 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 <body>
-<%EmpresaEntity e = (EmpresaEntity) request.getAttribute("empresa");%>
+<%EmpresaDTO e = (EmpresaDTO) request.getAttribute("empresa");%>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

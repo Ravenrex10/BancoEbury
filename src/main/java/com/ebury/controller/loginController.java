@@ -2,9 +2,11 @@ package com.ebury.controller;
 
 import com.ebury.dao.EmpresaRepository;
 import com.ebury.dao.UsuarioRepository;
+import com.ebury.dto.EmpresaDTO;
 import com.ebury.entity.EmpresaEntity;
 import com.ebury.entity.RolEntity;
 import com.ebury.entity.UsuarioEntity;
+import com.ebury.service.EmpresaService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +22,7 @@ public class loginController {
     protected UsuarioRepository userRepo;
 
     @Autowired
-    protected EmpresaRepository empRepo;
+    protected EmpresaService empresaService;
 
     @GetMapping("/")
     public String doLogin(){
@@ -39,7 +41,7 @@ public class loginController {
                     urlTo+="cliente/";
                     break;
                 case "AutorizadoEmpresa": //Usuario es empresa
-                    urlTo+="empresaHome";
+                    urlTo+="autorizadoHome";
                     break;
                 case "Gestor": //Usuario es gestor
                     urlTo+="gestorHome/";
@@ -48,7 +50,7 @@ public class loginController {
                     urlTo+="asistente";
                     break;
                 case "SocioEmpresa": //Usuario es socio
-                    urlTo="empresaHome";
+                    urlTo="socioHome";
                     break;
             }
         }else{
@@ -58,8 +60,8 @@ public class loginController {
     }
 
     @PostMapping("/empresa")
-    public String getEmpresa(Model model, @RequestParam("cif") Integer cif, @RequestParam("clave") String clave, HttpSession session){
-        EmpresaEntity empresa = this.empRepo.findByCifAndContrasenya(cif,clave);
+    public String getEmpresa(@RequestParam("cif") Integer cif, @RequestParam("clave") String clave, HttpSession session){
+        EmpresaDTO empresa = this.empresaService.findByCifAndContrasenya(cif,clave);
         if(empresa != null)
         {
             session.setAttribute("empresa",empresa);

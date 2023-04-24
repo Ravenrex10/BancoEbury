@@ -1,8 +1,10 @@
 package com.ebury.controller;
 
 import com.ebury.dao.UsuarioRepository;
+import com.ebury.dto.EmpresaDTO;
 import com.ebury.entity.EmpresaEntity;
 import com.ebury.entity.UsuarioEntity;
+import com.ebury.service.UsuarioService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,17 +20,17 @@ import java.util.List;
 public class EmpresaController {
 
     @Autowired
-    public UsuarioRepository userRepo;
+    protected UsuarioService usuarioService;
     @GetMapping("/")
     public String doHome(Model model, HttpSession session)
     {
-        EmpresaEntity empresa = (EmpresaEntity) session.getAttribute("empresa");
+        EmpresaDTO empresa = (EmpresaDTO) session.getAttribute("empresa");
         model.addAttribute("empresa",empresa);
         return "empresaHome";
     }
 
     @GetMapping("/empresaAlta")
-    public String doEmpresaAlta(Model model, HttpSession session)
+    public String doEmpresaAlta()
     {
         return "empresaAlta";
     }

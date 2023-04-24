@@ -1,8 +1,10 @@
 package com.ebury.entity;
 
+import com.ebury.dto.DireccionDTO;
 import jakarta.persistence.*;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "Direccion", schema = "BancoEbury", catalog = "")
@@ -129,6 +131,22 @@ public class DireccionEntity {
         result = 31 * result + (region != null ? region.hashCode() : 0);
         result = 31 * result + (cp != null ? cp.hashCode() : 0);
         return result;
+    }
+
+    public DireccionDTO toDO()
+    {
+        DireccionDTO direccionDTO = new DireccionDTO();
+        direccionDTO.setCalle(this.getCalle());
+        direccionDTO.setCiudad(this.getCiudad());
+        direccionDTO.setCp(this.getCp());
+        direccionDTO.setId(this.getId());
+        direccionDTO.setNumero(this.getNumero());
+        direccionDTO.setPais(this.getPais());
+        direccionDTO.setPlanta(this.getPlanta());
+        direccionDTO.setEmpresasById(this.getEmpresasById().stream().map(EmpresaEntity::toDTO).collect(Collectors.toList()));
+        direccionDTO.setRegion(this.getRegion());
+
+        return direccionDTO;
     }
 
     public Collection<EmpresaEntity> getEmpresasById() {

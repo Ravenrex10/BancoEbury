@@ -1,26 +1,28 @@
 package com.ebury.ui;
 
+import com.ebury.dto.DireccionDTO;
+import com.ebury.dto.EmpresaDTO;
 import com.ebury.entity.DireccionEntity;
 import com.ebury.entity.EmpresaEntity;
 import com.ebury.entity.UsuarioEntity;
 
 public class EmpresaWrapper {
-    private EmpresaEntity newEmpresa;
-    private DireccionEntity newDireccion;
+    private EmpresaDTO newEmpresa;
+    private DireccionDTO newDireccion;
 
-    public EmpresaEntity getNewEmpresa() {
+    public EmpresaDTO getNewEmpresa() {
         return newEmpresa;
     }
 
-    public void setNewEmpresa(EmpresaEntity newEmpresa) {
+    public void setNewEmpresa(EmpresaDTO newEmpresa) {
         this.newEmpresa = newEmpresa;
     }
 
-    public DireccionEntity getNewDireccion() {
+    public DireccionDTO getNewDireccion() {
         return newDireccion;
     }
 
-    public void setNewDireccion(DireccionEntity newDireccion) {
+    public void setNewDireccion(DireccionDTO newDireccion) {
         this.newDireccion = newDireccion;
     }
 }
