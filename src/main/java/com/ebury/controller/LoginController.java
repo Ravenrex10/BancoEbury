@@ -1,9 +1,7 @@
 package com.ebury.controller;
 
-import com.ebury.dao.EmpresaRepository;
 import com.ebury.dao.UsuarioRepository;
 import com.ebury.dto.EmpresaDTO;
-import com.ebury.entity.EmpresaEntity;
 import com.ebury.entity.RolEntity;
 import com.ebury.entity.UsuarioEntity;
 import com.ebury.service.EmpresaService;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class loginController {
+public class LoginController {
 
     @Autowired
     protected UsuarioRepository userRepo;

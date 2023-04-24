@@ -1,5 +1,6 @@
 package com.ebury.entity;
 
+import com.ebury.dto.TransferenciaDTO;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -107,5 +108,16 @@ public class TransferenciaEntity {
 
     public void setDivisaByDivisaDestino(DivisaEntity divisaByDivisaDestino) {
         this.divisaByDivisaDestino = divisaByDivisaDestino;
+    }
+
+    public TransferenciaDTO toDTO(){
+        TransferenciaDTO dto = new TransferenciaDTO();
+        dto.setCantidad(cantidad);
+        dto.setCuentaDestino(cuentaByCuentaDestino.toDTO());
+        dto.setCuentaOrigen(cuentaByCuentaOrigen.toDTO());
+        dto.setDivisaDestino(divisaByDivisaDestino.getNombre());
+        dto.setDivisaOrigen(divisaByDivisaOrigen.getNombre());
+        dto.setFecha(fecha);
+        return dto;
     }
 }

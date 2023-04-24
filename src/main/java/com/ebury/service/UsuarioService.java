@@ -1,6 +1,7 @@
 package com.ebury.service;
 
 import com.ebury.dao.*;
+import com.ebury.dto.TransferenciaDTO;
 import com.ebury.dto.UsuarioDTO;
 import com.ebury.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +16,16 @@ public class UsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
-
     @Autowired
     EstadoRepository estadoRepository;
-
     @Autowired
     CuentaRepository cuentaRepository;
-
     @Autowired
     DivisaRepository divisaRepository;
-
     @Autowired
     SaldoRepository saldoRepository;
+    @Autowired
+    TransferenciasRepository transferenciasRepository;
 
     public List<UsuarioDTO> findUsuarios() {
         List<UsuarioEntity> usuarios = usuarioRepository.findAll();
@@ -44,6 +43,11 @@ public class UsuarioService {
 
     public List<UsuarioDTO> findAllClientes(){
         List<UsuarioEntity> usuariosEntity = usuarioRepository.findAllClientes();
+        return usuariosEntity.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
+    }
+
+    public List<UsuarioDTO> findClientesFiltrados(String filtroUsuario){
+        List<UsuarioEntity> usuariosEntity = usuarioRepository.findAllByRolByRolNombre(filtroUsuario);
         return usuariosEntity.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
     }
 
@@ -81,6 +85,11 @@ public class UsuarioService {
         usuarioEntity.setAltaSolicitada(false);
 
         usuarioRepository.save(usuarioEntity);
+    }
+
+    public List<TransferenciaDTO> findAllTransferencias(Integer usuario){
+        List<TransferenciaEntity> transferenciaEntities = transferenciasRepository.findAllByUsuario(usuario);
+        return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
     }
 
 }
