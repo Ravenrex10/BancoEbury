@@ -1,5 +1,5 @@
-<%@ page import="com.ebury.entity.UsuarioEntity" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.ebury.dto.UsuarioDTO" %>
 <html>
     <head>
         <title>Gestor</title>
@@ -7,7 +7,7 @@
     </head>
     <body>
     <%
-        List<UsuarioEntity> usuarios = (List<UsuarioEntity>) request.getAttribute("usuarios");
+        List<UsuarioDTO> usuarios = (List<UsuarioDTO>) request.getAttribute("usuarios");
     %>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
@@ -36,7 +36,7 @@
         <div class="container card">
             <h2>Usuarios</h2>
             <%
-                for(UsuarioEntity usuario: usuarios){
+                for(UsuarioDTO usuario: usuarios){
 
             %>
             <%=usuario.getPrimerNombre()%>
@@ -49,7 +49,6 @@
             %>
             <%=usuario.getPrimerApellido()%>
             <%=usuario.getSegundoApellido()%>
-            <%=usuario.getFechaNacimiento()%>
             <br>
             <%
                 }

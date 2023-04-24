@@ -1,5 +1,6 @@
 <%@ page import="com.ebury.entity.UsuarioEntity" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.ebury.dto.UsuarioDTO" %>
 <html>
 <head>
     <title>Gestor</title>
@@ -7,7 +8,7 @@
 </head>
 <body>
 <%
-    List<UsuarioEntity> usuarios = (List<UsuarioEntity>) request.getAttribute("usuariosSinAlta");
+    List<UsuarioDTO> usuarios = (List<UsuarioDTO>) request.getAttribute("usuariosSinAlta");
 %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -38,7 +39,7 @@
     <div class="d-flex align-items-center justify-content-between">
         <div class="col">
             <%
-                for(UsuarioEntity usuario: usuarios){
+                for(UsuarioDTO usuario: usuarios){
 
             %>
             <%=usuario.getPrimerNombre()%>
@@ -51,7 +52,6 @@
             %>
             <%=usuario.getPrimerApellido()%>
             <%=usuario.getSegundoApellido()%>
-            <%=usuario.getFechaNacimiento()%>
         </div>
         <div class="col-auto">
             <a href="darDeAlta?usuario=<%=usuario.getId()%>" class="btn btn-primary">Validar</a>
