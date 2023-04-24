@@ -20,18 +20,8 @@ public class UsuarioDTO {
         this.empresa = empresa;
     }
 
-    public int getNif() {
-        return nif;
-    }
-
-    public void setNif(int nif) {
-        this.nif = nif;
-    }
-
     private String segundoApellido;
     private Date fechaNacimiento;
-    private int nif;
-
     public Date getFechaNacimiento() {
         return fechaNacimiento;
     }

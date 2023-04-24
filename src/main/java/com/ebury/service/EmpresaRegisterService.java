@@ -9,12 +9,10 @@ import com.ebury.dto.EmpresaDTO;
 import com.ebury.dto.UsuarioDTO;
 import com.ebury.entity.DireccionEntity;
 import com.ebury.entity.EmpresaEntity;
-import com.ebury.entity.RolEntity;
 import com.ebury.entity.UsuarioEntity;
 import com.ebury.ui.EmpresaWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.Collection;
