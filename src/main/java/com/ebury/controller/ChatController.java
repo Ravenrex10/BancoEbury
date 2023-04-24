@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -66,5 +67,19 @@ public class ChatController {
         chatService.enviarMensaje(chatId, miUsuario.getId(), mensaje);
         return "redirect:/chat?chatId=" + chatId;
     }
+
+    // si soy cliente, quiero ver un listado de todos mis chats con asistentes
+
+    @GetMapping("/asistencia")
+    String doMostrarAsistencia(HttpSession session, Model model) {
+        UsuarioEntity miUsuario = (UsuarioEntity) session.getAttribute("usuario");
+        List<ChatDTO> misChats = chatService.findChatsByUserId(miUsuario.getId());
+        //TODO: Crear en usuarioService un método findAsistentes()
+        List<UsuarioDTO> asistentes = usuarioService.findUsuarios();
+        model.addAttribute("chats", misChats);
+        model.addAttribute("usuarios", asistentes);
+        return "asistencia";
+    }
+
 
 }
