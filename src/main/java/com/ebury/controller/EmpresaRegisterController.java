@@ -2,6 +2,8 @@ package com.ebury.controller;
 
 import com.ebury.dao.DireccionRepository;
 import com.ebury.dao.EmpresaRepository;
+import com.ebury.dto.EmpresaDTO;
+import com.ebury.dto.UsuarioDTO;
 import com.ebury.entity.DireccionEntity;
 import com.ebury.entity.EmpresaEntity;
 import com.ebury.entity.UsuarioEntity;
@@ -32,10 +34,24 @@ public class EmpresaRegisterController {
     }
 
     @PostMapping("/registerEmpresa/register")
-    public String makeRegister(@ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper)
+    public String makeRegister(Model model, @ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper)
     {
-
+        model.addAttribute("newEmpresaWrapper",empresaWrapper);
         return (this.empresaRegisterService.makeRegister(empresaWrapper));
+    }
+
+    @GetMapping("/registerSocio")
+    public String doRegisterSocio(Model model)
+    {
+        UsuarioDTO user = new UsuarioDTO();
+        model.addAttribute("newUser",user);
+
+        EmpresaWrapper empresaWrapper = (EmpresaWrapper) model.getAttribute("newEmpresaWrapper");
+        EmpresaDTO empresa = empresaWrapper.getNewEmpresa();
+        model.addAttribute("empresaRegistered",empresa);
+
+        return "empresaSocioRegister";
+
     }
 
 

@@ -23,7 +23,7 @@ public class EmpresaRegisterService {
     protected DireccionRepository direccionRepository;
     public String makeRegister(EmpresaWrapper empresaWrapper)
     {
-        //TODO: Arreglar save
+        //TODO: Control de usuario no repetido
         //TODO: Control de valores nulos
         //TODO: Control de errores
         //TODO: Usuario asociado
@@ -62,6 +62,6 @@ public class EmpresaRegisterService {
         this.direccionRepository.save(direccion);
         this.empresaRepository.save(empresa);
 
-        return("redirect:/");
+        return("redirect:/registerSocio");
     }
 }
