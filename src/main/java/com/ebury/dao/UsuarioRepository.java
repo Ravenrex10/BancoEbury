@@ -15,5 +15,8 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Integer>
     @Query("select u from UsuarioEntity u where u.rolByRol.nombre='Cliente' OR u.rolByRol.nombre='SocioEmpresa' OR u.rolByRol.nombre='AutorizadoEmpresa'")
     public List<UsuarioEntity> findAllClientes();
 
+    @Query("select u from UsuarioEntity u where (u.rolByRol.nombre='SocioEmpresa' OR u.rolByRol.nombre='AutorizadoEmpresa') AND u.empresaByEmpresa = null AND u.alta = false ")
+    public List<UsuarioEntity> findAllSociosAndAutorizadosNotInMyCompany();
+
     public List<UsuarioEntity> findAllByAlta(Boolean alta);
 }
