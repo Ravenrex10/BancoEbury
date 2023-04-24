@@ -7,7 +7,7 @@ public class ChatDTO {
     private int id;
     private String nombreUsuarioA;
     private String nombreUsuarioB;
-    private Date fechaUltimoMensaje;
+    private String fechaUltimoMensaje;
     private String ultimoMensaje;
 
     public int getId() {
@@ -34,11 +34,11 @@ public class ChatDTO {
         this.nombreUsuarioB = nombreUsuarioB;
     }
 
-    public Date getFechaUltimoMensaje() {
+    public String getFechaUltimoMensaje() {
         return fechaUltimoMensaje;
     }
 
-    public void setFechaUltimoMensaje(Date fechaUltimoMensaje) {
+    public void setFechaUltimoMensaje(String fechaUltimoMensaje) {
         this.fechaUltimoMensaje = fechaUltimoMensaje;
     }
 

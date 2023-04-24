@@ -6,7 +6,7 @@ public class MensajeDTO {
     private int id;
     private int chatId;
     private String contenido;
-    private Date fecha;
+    private String fecha;
 
     /**
      * True si el mensaje lo envió el usuario que está usando el chat (entonces se mostrará a la derecha)
@@ -37,11 +37,11 @@ public class MensajeDTO {
         this.contenido = contenido;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

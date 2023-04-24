@@ -4,6 +4,8 @@ import com.ebury.dto.MensajeDTO;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "Mensaje", schema = "BancoEbury", catalog = "")
@@ -88,7 +90,8 @@ public class MensajeEntity {
         MensajeDTO dto = new MensajeDTO();
         dto.setId(this.getId());
         dto.setChatId(this.getChatByChat().getId());
-        dto.setFecha(this.fecha);
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy HH:mm:ss");
+        dto.setFecha(dateFormat.format(getFecha()));
         dto.setContenido(this.getContenido());
         // dto.enviadoPorUsuarioActual se calcula en chatService
         return dto;

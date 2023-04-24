@@ -3,6 +3,8 @@ package com.ebury.entity;
 import com.ebury.dto.ChatDTO;
 import jakarta.persistence.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 
@@ -79,7 +81,8 @@ public class ChatEntity {
         dto.setNombreUsuarioA(usuarioByClienteA.getEmail());
         dto.setNombreUsuarioB(usuarioByClienteB.getEmail());
         // TODO: hay que inicializar correctamente estos atributos
-        dto.setFechaUltimoMensaje(new Date());
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy HH:mm:ss");
+        dto.setFechaUltimoMensaje(dateFormat.format(new Date()));
         dto.setUltimoMensaje("");
         return dto;
     }
