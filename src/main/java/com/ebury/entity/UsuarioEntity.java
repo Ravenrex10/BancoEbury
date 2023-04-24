@@ -42,6 +42,9 @@ public class UsuarioEntity {
     @Basic
     @Column(name = "alta")
     private Boolean alta;
+    @Basic
+    @Column(name = "altaSolicitada")
+    private Boolean altaSolicitada;
     @OneToMany(mappedBy = "usuarioByClienteA")
     private Collection<ChatEntity> chatsById;
     @OneToMany(mappedBy = "usuarioByClienteB")
@@ -96,6 +99,14 @@ public class UsuarioEntity {
 
     public void setSegundoNombre(String segundoNombre) {
         this.segundoNombre = segundoNombre;
+    }
+
+    public Boolean getAltaSolicitada() {
+        return altaSolicitada;
+    }
+
+    public void setAltaSolicitada(Boolean altaSolicitada) {
+        this.altaSolicitada = altaSolicitada;
     }
 
     public String getPrimerApellido() {
@@ -158,6 +169,7 @@ public class UsuarioEntity {
             return false;
         if (contrasenya != null ? !contrasenya.equals(that.contrasenya) : that.contrasenya != null) return false;
         if (alta != null ? !alta.equals(that.alta) : that.alta != null) return false;
+        if (altaSolicitada != null ? !altaSolicitada.equals(that.altaSolicitada) : that.altaSolicitada != null) return false;
 
         return true;
     }
@@ -173,6 +185,7 @@ public class UsuarioEntity {
         result = 31 * result + (fechaNacimiento != null ? fechaNacimiento.hashCode() : 0);
         result = 31 * result + (contrasenya != null ? contrasenya.hashCode() : 0);
         result = 31 * result + (alta != null ? alta.hashCode() : 0);
+        result = 31 * result + (altaSolicitada !=null ? altaSolicitada.hashCode() : 0);
         return result;
     }
 

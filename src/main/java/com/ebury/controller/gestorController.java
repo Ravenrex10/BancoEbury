@@ -1,5 +1,6 @@
 package com.ebury.controller;
 
+import com.ebury.service.EmpresaService;
 import com.ebury.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,22 +18,31 @@ public class gestorController {
 
     @Autowired
     UsuarioService usuarioService;
+    @Autowired
+    EmpresaService empresaService;
 
     @GetMapping("/")
-    public String doGestor(Model model){
+    public String getGestor(Model model){
         model.addAttribute("usuarios", usuarioService.findAllClientes());
+        model.addAttribute("empresas", empresaService.findAll());
         return "gestorHome";
     }
 
     @GetMapping("/gestorAlta")
-    public String doGestorAlta(Model model){
-        model.addAttribute("usuariosSinAlta", usuarioService.findAllByAltaFalse());
+    public String getGestorAlta(Model model){
+        model.addAttribute("usuariosSinAlta", usuarioService.findAllByAltaSolicitada());
         return "gestorAlta";
     }
 
     @GetMapping("/darDeAlta")
-    public String darDeAlta(Model model, @RequestParam("usuario") Integer usuario){
+    public String darDeAlta(@RequestParam("usuario") Integer usuario){
         usuarioService.darDeAltaUsuario(usuario);
+        return "redirect:/gestorHome/gestorAlta";
+    }
+
+    @GetMapping("/denegarAlta")
+    public String denegarAlta(@RequestParam("usuario") Integer usuario){
+        usuarioService.denegarAltaUsuario(usuario);
         return "redirect:/gestorHome/gestorAlta";
     }
 }

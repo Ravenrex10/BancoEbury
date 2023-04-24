@@ -4,5 +4,5 @@ import com.ebury.entity.EmpresaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EmpresaRepository extends JpaRepository<EmpresaEntity,Integer> {
-    public EmpresaEntity findByCifAndContrasenya(Integer cif, String contrasenya);
+    //public EmpresaEntity findByCifAndContrasenya(Integer cif, String contrasenya);
 }

@@ -1,4 +1,3 @@
-<%@ page import="com.ebury.entity.UsuarioEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.ebury.dto.UsuarioDTO" %>
 <html>
@@ -55,7 +54,7 @@
         </div>
         <div class="col-auto">
             <a href="darDeAlta?usuario=<%=usuario.getId()%>" class="btn btn-primary">Validar</a>
-            <button action = "/noDarDeAlta" class="btn btn-danger">No validar</button>
+            <a href="denegarAlta?usuario=<%=usuario.getId()%>" class="btn btn-danger">No validar</a>
         </div>
     </div>
     <br>

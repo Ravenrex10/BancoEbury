@@ -6,7 +6,6 @@ public class EmpresaDTO {
     private int id;
     private int cif;
     private String nombre;
-    private String contrasenya;
     private DireccionDTO direccionByDireccion;
     private Collection<UsuarioDTO> usuariosByCif;
 
@@ -32,14 +31,6 @@ public class EmpresaDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getContrasenya() {
-        return contrasenya;
-    }
-
-    public void setContrasenya(String contrasenya) {
-        this.contrasenya = contrasenya;
     }
 
     public DireccionDTO getDireccionByDireccion() {

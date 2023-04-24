@@ -37,7 +37,7 @@ public class EmpresaRegisterService {
         empresa.setCif(e.getCif());
         empresa.setId(e.getId());
         empresa.setNombre(e.getNombre());
-        empresa.setContrasenya(e.getContrasenya());
+        //empresa.setContrasenya(e.getContrasenya());
         empresa.setId(e.getId());
 
         direccion.setId(d.getId());

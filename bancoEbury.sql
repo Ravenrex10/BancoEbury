@@ -137,7 +137,6 @@ DROP TABLE IF EXISTS `Empresa`;
 CREATE TABLE `Empresa` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cif` int(11) NOT NULL DEFAULT '0',
-  `contrasenya` varchar(100) DEFAULT NULL,
   `nombre` varchar(20) DEFAULT NULL,
   `direccion` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -233,6 +232,7 @@ INSERT INTO `Rol` VALUES
 (1,'Cliente'),
 (2,'SocioEmpresa'),
 (3,'Gestor'),
+(4,'FundadorEmpresa'),
 (5,'Asistente'),
 (6,'AutorizadoEmpresa');
 /*!40000 ALTER TABLE `Rol` ENABLE KEYS */;
@@ -323,6 +323,7 @@ CREATE TABLE `Usuario` (
   `empresa` int(11) DEFAULT NULL,
   `rol` int(11) DEFAULT NULL,
   `alta` tinyint(1) DEFAULT NULL,
+  `altaSolicitada` tinyint(1) DEFAULT NULL,
   `fechaUltimaOperacion` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `empresa` (`empresa`),

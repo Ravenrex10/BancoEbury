@@ -21,9 +21,6 @@ public class EmpresaEntity {
     @Basic
     @Column(name = "nombre")
     private String nombre;
-    @Basic
-    @Column(name = "contrasenya")
-    private String contrasenya;
     @ManyToOne
     @JoinColumn(name = "direccion", referencedColumnName = "id")
     private DireccionEntity direccionByDireccion;
@@ -52,14 +49,6 @@ public class EmpresaEntity {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getContrasenya() {
-        return contrasenya;
-    }
-
-    public void setContrasenya(String contrasenya) {
-        this.contrasenya = contrasenya;
     }
 
     @Override
@@ -94,7 +83,6 @@ public class EmpresaEntity {
     {
         EmpresaDTO res = new EmpresaDTO();
         res.setCif(this.getCif());
-        res.setContrasenya(this.getContrasenya());
         res.setId(this.getId());
         res.setNombre(this.getNombre());
         res.setUsuariosByCif(this.getUsuariosByCif().stream().map(UsuarioEntity::toDTO).collect(Collectors.toList()));
