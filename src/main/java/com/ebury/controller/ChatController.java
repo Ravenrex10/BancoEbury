@@ -72,7 +72,6 @@ public class ChatController {
     }
 
     // si soy cliente, quiero ver un listado de todos mis chats con asistentes
-
     @GetMapping("/asistencia")
     String doMostrarAsistencia(HttpSession session, Model model) {
         UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
@@ -81,5 +80,14 @@ public class ChatController {
         model.addAttribute("chats", misChats);
         model.addAttribute("usuarios", asistentes);
         return "asistente/asistencia";
+    }
+
+    @GetMapping("/volverAChats")
+    String doVolverAChats(@SessionAttribute("usuario") UsuarioDTO miUsuario) {
+        if (miUsuario.getRolName().equals("Asistente")) {
+            return "redirect:/chats";
+        } else {
+            return "redirect:/asistencia";
+        }
     }
 }
