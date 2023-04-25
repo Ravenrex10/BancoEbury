@@ -32,7 +32,7 @@
         Segundo apellido: <form:input path="newUsuario.segundoApellido"></form:input><br>
         Fecha de nacimiento: <form:input type="date" path="newUsuario.fechaNacimiento"></form:input><br>
         Email: <form:input path="newUsuario.email"></form:input><br>
-        Contraseña: <form:input path="newUsuario.contrasenya"></form:input>
+        Contraseña: <form:input path="newUsuario.contrasenya" type="password"></form:input>
 
         <input type="submit" value="Submit">
     </form:form>

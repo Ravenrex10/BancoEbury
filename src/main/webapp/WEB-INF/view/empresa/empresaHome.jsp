@@ -1,5 +1,6 @@
 <%@ page import="com.ebury.entity.EmpresaEntity" %>
 <%@ page import="com.ebury.dto.EmpresaDTO" %>
+<%@ page import="com.ebury.dto.UsuarioDTO" %>
 <html>
 <head>
     <title>Empresa Home</title>
@@ -7,6 +8,7 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 <body>
+<% UsuarioDTO usuarioDTO = (UsuarioDTO) request.getAttribute("usuario"); %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -34,7 +36,10 @@
         </div>
     </div>
 </nav>
-<h1>Home
+<h1>
+    <div class="container">
+        Bienvenido, <%=usuarioDTO.getPrimerNombre()%>
+    </div>
 </h1>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

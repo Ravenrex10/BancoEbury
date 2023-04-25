@@ -4,6 +4,7 @@ import com.ebury.dao.*;
 import com.ebury.dto.TransferenciaDTO;
 import com.ebury.dto.UsuarioDTO;
 import com.ebury.entity.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,12 @@ public class UsuarioService {
     SaldoRepository saldoRepository;
     @Autowired
     TransferenciasRepository transferenciasRepository;
+
+    @Autowired
+    RolRepository rolRepository;
+
+    @Autowired
+    EmpresaRepository empresaRepository;
 
     public List<UsuarioDTO> findUsuarios() {
         List<UsuarioEntity> usuarios = usuarioRepository.findAll();
@@ -101,4 +108,34 @@ public class UsuarioService {
         return usuario.toDTO();
     }
 
+
+    public String makeRegister(UsuarioDTO u, int empresaId) {
+        UsuarioEntity usuario = new UsuarioEntity();
+
+        usuario.setPrimerNombre(u.getPrimerNombre());
+        usuario.setSegundoNombre(u.getSegundoNombre());
+        usuario.setPrimerApellido(u.getPrimerApellido());
+        usuario.setSegundoApellido(u.getSegundoApellido());
+        usuario.setContrasenya(u.getContrasenya());
+        usuario.setEmail(u.getEmail());
+        usuario.setNif(u.getNif());
+        usuario.setFechaNacimiento(u.getFechaNacimiento());
+
+        EmpresaEntity empresa = this.empresaRepository.findById(empresaId).orElse(null);
+
+        usuario.setRolByRol(this.rolRepository.findByNombre(u.getRolName()));
+        usuario.setEmpresaByEmpresa(empresa);
+        usuario.setAlta(false);
+        usuario.setAltaSolicitada(true);
+
+        List<UsuarioEntity> usuarioEntityList = (List<UsuarioEntity>) empresa.getUsuariosById();
+        usuarioEntityList.add(usuario);
+        empresa.setUsuariosById(usuarioEntityList);
+
+        this.empresaRepository.save(empresa);
+        this.usuarioRepository.save(usuario);
+
+        return("redirect:/fundadorHome/");
+
+    }
 }
