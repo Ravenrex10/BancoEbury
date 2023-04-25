@@ -7,5 +7,6 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 public class EmpresaCommonController {
+    //TODO: Cambiar mapeado de Fundador, Socio y Autorizado aquí para no repetir código innecesario
 
 }
