@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -110,6 +111,7 @@ public class UsuarioService {
 
 
     public String makeRegister(UsuarioDTO u, int empresaId) {
+        // TODO: Control de errores
         UsuarioEntity usuario = new UsuarioEntity();
 
         usuario.setPrimerNombre(u.getPrimerNombre());
@@ -136,6 +138,16 @@ public class UsuarioService {
         this.usuarioRepository.save(usuario);
 
         return("redirect:/fundadorHome/");
+    }
 
+    public List<UsuarioDTO> findUsuariosDTOByEmpresaId(int id)
+    {
+        List<UsuarioEntity> usuarios = (this.usuarioRepository.findAllByEmpresaByEmpresaId(id));
+        List<UsuarioDTO> usuarioDTOS = new ArrayList<>();
+        for(UsuarioEntity u : usuarios)
+        {
+            usuarioDTOS.add(u.toDTO());
+        }
+        return usuarioDTOS;
     }
 }

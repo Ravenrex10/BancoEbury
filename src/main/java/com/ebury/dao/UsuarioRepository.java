@@ -20,4 +20,5 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Integer>
 
     public List<UsuarioEntity> findAllByAltaSolicitada(Boolean altaSolicitada);
     public List<UsuarioEntity> findAllByRolByRolNombre(String rol);
+    List<UsuarioEntity> findAllByEmpresaByEmpresaId(Integer id);
 }

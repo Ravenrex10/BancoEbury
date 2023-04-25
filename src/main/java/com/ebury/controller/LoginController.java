@@ -52,13 +52,19 @@ public class LoginController {
                     urlTo+="asistente";
                     break;
                 case "SocioEmpresa": //Usuario es socio
-                    urlTo="socioHome/";
+                    urlTo+="socioHome/";
                     break;
             }
         }else{
             System.out.println("Error");
         }
         return urlTo;
+    }
+
+    @GetMapping("/logout")
+    public String doLogout (HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 
 }

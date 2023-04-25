@@ -20,16 +20,20 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">Inicio</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="fundadorOperacion">Operaciones</a>
-                </li>
+                <% if(usuarioDTO.getRolName().equals("FundadorEmpresa")) { %>
                 <li class="nav-item">
                     <a class="nav-link" href="fundadorAlta">Solicitud de alta</a>
                 </li>
+                <% }; %>
+                <% if(usuarioDTO.getRolName().equals("FundadorEmpresa") ||usuarioDTO.getRolName().equals("SocioEmpresa")) { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="listaUsuarios">Socios/Autorizados</a>
+                </li>
+                <% }; %>
             </ul>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item ms-auto me-auto">
-                    <a class="nav-link" href="logout">Cerrar sesión</a>
+                    <a class="nav-link" href="/logout">Cerrar sesión</a>
                 </li>
             </ul>
 
@@ -38,7 +42,7 @@
 </nav>
 <h1>
     <div class="container">
-        Bienvenido, <%=usuarioDTO.getPrimerNombre()%>
+        Bienvenid@, <%=usuarioDTO.getPrimerNombre()%>
     </div>
 </h1>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

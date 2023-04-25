@@ -1,15 +1,16 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.ebury.entity.UsuarioEntity" %>
-<%@ page import="java.util.List" %>
+<%@ page import="com.ebury.entity.EmpresaEntity" %>
 <%@ page import="com.ebury.dto.UsuarioDTO" %>
+<%@ page import="java.util.List" %>
 <html>
 <head>
-    <title>Empresa Solicitud de Alta</title>
+    <title>Empresa Operaciones</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 <body>
-<% UsuarioDTO usuarioDTO = (UsuarioDTO) request.getAttribute("usuario"); %>
+<% UsuarioDTO usuarioDTO = (UsuarioDTO) request.getAttribute("usuario");
+    List<UsuarioDTO> listUsuarios = (List<UsuarioDTO>) request.getAttribute("listaUsuarios");
+ %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -21,17 +22,17 @@
                 <li class="nav-item">
                     <% if(usuarioDTO.getRolName().equals("FundadorEmpresa")) { %>
                     <a class="nav-link" href="/fundadorHome/">Inicio</a>
-                    <% } %>
+                    <% }; %>
                     <% if(usuarioDTO.getRolName().equals("SocioEmpresa")) { %>
                     <a class="nav-link" href="/socioHome/">Inicio</a>
-                    <% } %>
+                    <% }; %>
                     <% if(usuarioDTO.getRolName().equals("AutorizadoEmpresa")) { %>
                     <a class="nav-link" href="/autorizadoHome/">Inicio</a>
-                    <% } %>
+                    <% }; %>
                 </li>
-                <% if(usuarioDTO.getRolName().equals("FundadorEmpresa")) { %>
+                <% if (usuarioDTO.getRolName().equals("FundadorEmpresa")) { %>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Solicitud de alta</a>
+                    <a class="nav-link" href="fundadorAlta">Solicitud de alta</a>
                 </li>
                 <% }; %>
                 <% if(usuarioDTO.getRolName().equals("FundadorEmpresa") ||usuarioDTO.getRolName().equals("SocioEmpresa")) { %>
@@ -50,29 +51,35 @@
     </div>
 </nav>
 <div class="container">
-    <h1>Solicitud de alta</h1>
-    <form:form method="post" action="/fundadorHome/solicitarAlta" modelAttribute="newUsuarioDTO">
-        <form:hidden path="id"></form:hidden>
-        NIF: <form:input path="nif"></form:input><br>
-        Primer nombre: <form:input path="primerNombre"></form:input><br>
-        Segundo nombre: <form:input path="segundoNombre"></form:input><br>
-        Primer apellido: <form:input path="primerApellido"></form:input><br>
-        Segundo apellido: <form:input path="segundoApellido"></form:input><br>
-        Rol <form:select path="rolName">
-        <form:option value="SocioEmpresa" label="Socio">
-        </form:option>
-        <form:option value="AutorizadoEmpresa" label="Autorizado"></form:option>
-    </form:select><br>
-        Fecha de nacimiento: <form:input type="date" path="fechaNacimiento"></form:input><br>
-        Email: <form:input path="email"></form:input><br>
-        Contraseña: <form:input path="contrasenya" type="password"></form:input>
-        <input type="submit" value="Submit">
-
-    </form:form>
-
+    <h1>Lista de socios/autorizados</h1>
+    <div class = "container">
+        <table border="1px solid black" class="table">
+            <tr>
+                <th>NIF</th>
+                <th>Primer nombre</th>
+                <th>Segundo nombre</th>
+                <th>Primer Apellido</th>
+                <th>Segundo Apellido</th>
+                <th>Email</th>
+                <th>Rol</th>
+            </tr>
+            <%
+                for(UsuarioDTO u : listUsuarios)
+                { %>
+            <tr>
+                <td><%=u.getNif()%></td>
+                <td><%=u.getPrimerNombre()%></td>
+                <td><%=u.getSegundoNombre()%></td>
+                <td><%=u.getPrimerApellido()%></td>
+                <td><%=u.getSegundoApellido()%></td>
+                <td><%=u.getEmail()%></td>
+                <td><%=u.getRolName()%></td>
+            </tr>
+            <%};%>
+        </table>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 
 </html>

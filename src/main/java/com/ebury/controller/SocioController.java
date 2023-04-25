@@ -9,15 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+
 @Controller
-@RequestMapping("/fundadorHome")
-public class FundadorController {
+@RequestMapping("/socioHome")
+public class SocioController {
+
     @Autowired
     protected UsuarioService usuarioService;
 
@@ -29,25 +29,6 @@ public class FundadorController {
     {
         model.addAttribute("usuario",session.getAttribute("usuario"));
         return "empresa/empresaHome";
-    }
-
-    @GetMapping("/fundadorAlta")
-    public String doAlta(Model model, HttpSession session)
-    {
-        model.addAttribute("usuario",session.getAttribute("usuario"));
-
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        model.addAttribute("newUsuarioDTO",usuarioDTO);
-
-        return "empresa/empresaAlta";
-    }
-
-    @PostMapping("/solicitarAlta")
-    public String solicitarAlta(@ModelAttribute("newUsuarioDTO") UsuarioDTO usuarioDTO, HttpSession session)
-    {
-        UsuarioDTO fundador = (UsuarioDTO) session.getAttribute("usuario");
-        int empresaId = fundador.getEmpresa();
-        return this.usuarioService.makeRegister(usuarioDTO,empresaId);
     }
 
     @GetMapping("/listaUsuarios")
