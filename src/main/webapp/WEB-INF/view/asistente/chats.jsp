@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <%@ page import="java.util.List" %>
 <%@ page import="com.ebury.dto.UsuarioDTO" %>
@@ -13,8 +14,17 @@
     List<ChatDTO> chats = (List<ChatDTO>) request.getAttribute("chats");
 %>
 <body>
+<h1>Chats</h1>
+<form:form action="/filtrarChats" modelAttribute="filtro" method="post">
+    Ordenar por: <form:select path="criterioOrdenacion">
+        <form:option value="fechaCreacion">Fecha de creación</form:option>
+        <form:option value="fechaUltimoMensaje">Fecha del último mensaje</form:option>
+    </form:select>
+    Mostrar chats cerrados<form:checkbox path="mostrarCerrados" value="true"/>
+    Mostrar solo mis chats<form:checkbox path="mostrarSoloPropios" value="true"/>
+    <br/><form:button>Actualizar</form:button>
+</form:form>
 <table>
-    <h1>CHATS</h1>
     <tr>
         <th>Usuario solicitante</th>
         <th>Asistente asignado</th>

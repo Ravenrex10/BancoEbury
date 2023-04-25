@@ -6,6 +6,7 @@ import com.ebury.dto.UsuarioDTO;
 import com.ebury.entity.UsuarioEntity;
 import com.ebury.service.ChatService;
 import com.ebury.service.UsuarioService;
+import com.ebury.ui.FiltroChats;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,10 +35,16 @@ public class ChatController {
         UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
         if (miUsuario == null) return "redirect:/";
         List<UsuarioDTO> usuarios = usuarioService.findUsuarios();
-        //List<ChatDTO> chats = chatService.findChatsByUserId(miUsuario.getId());
         List<ChatDTO> chats = chatService.findAllChats();
+
+        FiltroChats filtro = new FiltroChats();
+        filtro.setCriterioOrdenacion("fechaCreacion");
+        filtro.setMostrarCerrados(true);
+        filtro.setMostrarSoloPropios(false);
+
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("chats", chats);
+        model.addAttribute("filtro", filtro);
         return "asistente/chats";
     }
 
@@ -89,5 +96,10 @@ public class ChatController {
         } else {
             return "redirect:/asistencia";
         }
+    }
+
+    @PostMapping("/filtrarChats")
+    String doFiltrarChats(@ModelAttribute("filtro") FiltroChats filtro) {
+        return "redirect:/chats";
     }
 }
