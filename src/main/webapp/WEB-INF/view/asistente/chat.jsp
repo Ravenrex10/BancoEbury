@@ -45,5 +45,6 @@
     <% } else { %>
         <h5>No puedes enviar mensajes a este chat. <h5>
     <% } %>
+            <a href="/volverAChats">Volver a chats</a>
 </body>
 </html>
