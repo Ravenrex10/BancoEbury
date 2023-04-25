@@ -40,10 +40,10 @@ public class LoginController {
                     urlTo+="cliente/";
                     break;
                 case "AutorizadoEmpresa": //Usuario es autorizado
-                    urlTo+="autorizadoHome/";
+                    urlTo+="empresa/";
                     break;
                 case "FundadorEmpresa": // Usuario es fundador
-                    urlTo+="fundadorHome/";
+                    urlTo+="empresa/";
                     break;
                 case "Gestor": //Usuario es gestor
                     urlTo+="gestorHome/";
@@ -52,7 +52,7 @@ public class LoginController {
                     urlTo+="asistente";
                     break;
                 case "SocioEmpresa": //Usuario es socio
-                    urlTo+="socioHome/";
+                    urlTo+="empresa/";
                     break;
             }
         }else{
