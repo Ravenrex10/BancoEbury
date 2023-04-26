@@ -1,8 +1,11 @@
 package com.ebury.controller;
 
+import com.ebury.dto.EmpresaDTO;
 import com.ebury.dto.UsuarioDTO;
+import com.ebury.service.DireccionService;
 import com.ebury.service.EmpresaService;
 import com.ebury.service.UsuarioService;
+import com.ebury.ui.EmpresaWrapper;
 import com.ebury.ui.FiltroUsuarios;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +35,38 @@ public class EmpresaCommonController {
     @Autowired
     protected EmpresaService empresaService;
 
+    @Autowired
+    protected DireccionService direccionService;
     @GetMapping("/")
     public String getHome(HttpSession session, Model model) {
         model.addAttribute("usuario", session.getAttribute("usuario"));
         return "empresa/empresaHome";
     }
 
+    @GetMapping("/datos")
+    public String getDatos(HttpSession session, Model model) {
+        model.addAttribute("usuario", session.getAttribute("usuario"));
+
+        EmpresaWrapper empresaWrapper = new EmpresaWrapper();
+        UsuarioDTO user = (UsuarioDTO) session.getAttribute("usuario");
+        empresaWrapper.setNewUsuario(user);
+
+        int empresaId = user.getEmpresa();
+        EmpresaDTO empresaDTO = this.empresaService.findById(empresaId);
+        empresaWrapper.setNewEmpresa(empresaDTO);
+
+        empresaWrapper.setNewDireccion(this.direccionService.findDireccionByEmpresaId(empresaId));
+
+        model.addAttribute("newEmpresaWrapper",empresaWrapper);
+
+        return("empresa/empresaDatos");
+    }
+
+    @PostMapping("/register")
+    public String makeRegister(Model model, @ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper)
+    {
+        return (this.empresaService.makeRegister(empresaWrapper));
+    }
     @GetMapping("/fundadorAlta")
     public String getAlta(Model model, HttpSession session) {
         model.addAttribute("usuario", session.getAttribute("usuario"));

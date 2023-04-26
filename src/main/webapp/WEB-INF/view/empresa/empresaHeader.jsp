@@ -14,6 +14,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/empresa/">Inicio</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/empresa/datos">Datos</a>
+                </li>
                 <% if (usuarioDTO.getRolName().equals("FundadorEmpresa")) { %>
                 <li class="nav-item">
                     <a class="nav-link" href="fundadorAlta">Solicitud de alta</a>
