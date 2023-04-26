@@ -63,9 +63,9 @@ public class EmpresaCommonController {
     }
 
     @PostMapping("/register")
-    public String makeRegister(Model model, @ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper)
+    public String makeRegister(HttpSession session, @ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper)
     {
-        return (this.empresaService.makeRegister(empresaWrapper));
+        return (this.empresaService.makeRegister(empresaWrapper,session));
     }
     @GetMapping("/fundadorAlta")
     public String getAlta(Model model, HttpSession session) {

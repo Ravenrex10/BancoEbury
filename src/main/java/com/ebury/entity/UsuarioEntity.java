@@ -248,6 +248,7 @@ public class UsuarioEntity {
         dto.setNif(nif);
         dto.setRolName(this.getRolByRol().getNombre());
         dto.setFechaNacimiento(this.getFechaNacimiento());
+        dto.setContrasenya(this.getContrasenya());
         if(empresaByEmpresa!=null){
             dto.setEmpresa(empresaByEmpresa.getId());
         }else{

@@ -24,7 +24,7 @@
         País (*): <form:input path="newDireccion.pais"></form:input><br>
         Código Postal (*): <form:input path="newDireccion.cp"></form:input><br>
 
-        <h1>Socio fundador: </h1>
+        <h1>Tu usuario:</h1>
         <form:hidden path="newUsuario.id"></form:hidden>
         NIF: <form:input path="newUsuario.nif"></form:input><br>
         Primer nombre: <form:input path="newUsuario.primerNombre"></form:input><br>

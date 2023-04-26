@@ -11,6 +11,7 @@ import com.ebury.entity.DireccionEntity;
 import com.ebury.entity.EmpresaEntity;
 import com.ebury.entity.UsuarioEntity;
 import com.ebury.ui.EmpresaWrapper;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,8 +56,9 @@ public class EmpresaService {
         }
     }
 
-    public String makeRegister(EmpresaWrapper empresaWrapper) {
+    public String makeRegister(EmpresaWrapper empresaWrapper, HttpSession session) {
         //TODO: Control de usuario no repetido
+        //TODO: Mensaje de volver a entrar por haber modificado la cuenta
         //TODO: Control de valores nulos
         //TODO: Control de errores
         //TODO: Usuario asociado
@@ -64,6 +66,8 @@ public class EmpresaService {
         EmpresaDTO e = empresaWrapper.getNewEmpresa();
         DireccionDTO d = empresaWrapper.getNewDireccion();
         UsuarioDTO u = empresaWrapper.getNewUsuario();
+
+        UsuarioDTO userActual = (UsuarioDTO) session.getAttribute("usuario");
 
         EmpresaEntity empresa = new EmpresaEntity();
         DireccionEntity direccion = new DireccionEntity();
@@ -92,9 +96,11 @@ public class EmpresaService {
         usuario.setNif(u.getNif());
         usuario.setFechaNacimiento(u.getFechaNacimiento());
 
-        usuario.setRolByRol(this.rolRepository.findById(4).orElse(null));
-        usuario.setAlta(false);
-        usuario.setAltaSolicitada(true);
+        UsuarioEntity userActualEntity = this.usuarioRepository.findById(userActual.getId()).orElse(null);
+
+        usuario.setRolByRol(this.rolRepository.findByNombre(userActual.getRolName()));
+        usuario.setAlta(userActualEntity.getAlta());
+        usuario.setAltaSolicitada(userActualEntity.getAltaSolicitada());
 
         // Añadir direccion en empresa
         empresa.setDireccionByDireccion(direccion);
@@ -117,7 +123,7 @@ public class EmpresaService {
         this.empresaRepository.save(empresa);
         this.usuarioRepository.save(usuario);
 
-        return ("redirect:/empresa/");
+        return ("redirect:/logout");
     }
 
 }
