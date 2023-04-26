@@ -137,7 +137,7 @@ public class UsuarioService {
         this.empresaRepository.save(empresa);
         this.usuarioRepository.save(usuario);
 
-        return("redirect:/fundadorHome/");
+        return("redirect:/empresa/");
     }
 
     public List<UsuarioDTO> findUsuariosDTOByEmpresaId(int id)
