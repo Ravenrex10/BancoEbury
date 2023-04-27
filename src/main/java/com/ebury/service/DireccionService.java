@@ -17,6 +17,9 @@ public class DireccionService {
     @Autowired
     protected EmpresaRepository empresaRepository;
 
+    /*  Devuelve la dirección de una empresa en concreto
+        @author Diego
+    */
     public DireccionDTO findDireccionByEmpresaId(Integer id)
     {
         EmpresaEntity empresaEntity = this.empresaRepository.findById(id).orElse(null);

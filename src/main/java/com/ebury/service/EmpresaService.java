@@ -35,13 +35,6 @@ public class EmpresaService {
     @Autowired
     protected RolRepository rolRepository;
 
-    public EmpresaDTO findByCifAndContrasenya(Integer cif, String clave) {
-        //EmpresaEntity empresa = this.empresaRepository.findByCifAndContrasenya(cif, clave);
-        EmpresaEntity empresa = new EmpresaEntity(); //TEMPORAL!!!
-        EmpresaDTO empresaDTO = empresa.toDTO();
-        return empresaDTO;
-    }
-
     public List<EmpresaDTO> findAll(){
         List<EmpresaEntity> empresas = empresaRepository.findAll();
         return empresas.stream().map(EmpresaEntity::toDTO).collect(Collectors.toList());
@@ -56,6 +49,8 @@ public class EmpresaService {
         }
     }
 
+    /* Modifica el usuario, la dirección y la empresa
+    / @author Diego*/
     public String makeRegister(EmpresaWrapper empresaWrapper, HttpSession session) {
         //TODO: Control de usuario no repetido
         //TODO: Mensaje de volver a entrar por haber modificado la cuenta

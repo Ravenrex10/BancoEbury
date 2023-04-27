@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * @author Diego
+ */
 @Controller
 public class EmpresaRegisterController {
 
