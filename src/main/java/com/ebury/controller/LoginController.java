@@ -61,6 +61,7 @@ public class LoginController {
         return urlTo;
     }
 
+    // @author Diego
     @GetMapping("/logout")
     public String doLogout (HttpSession session) {
         session.invalidate();
