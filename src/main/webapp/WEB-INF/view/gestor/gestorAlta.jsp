@@ -4,6 +4,7 @@
 <head>
     <title>Gestor</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 <body>
 <%
@@ -37,30 +38,35 @@
     <h2>Usuarios</h2>
     <div class="d-flex align-items-center justify-content-between">
         <div class="col">
-            <%
-                for(UsuarioDTO usuario: usuarios){
-
-            %>
-            <%=usuario.getPrimerNombre()%>
-            <%
-                if(usuario.getSegundoNombre()!=null){
-            %>
-            <%=usuario.getSegundoNombre()%>
-            <%
-                }
-            %>
-            <%=usuario.getPrimerApellido()%>
-            <%=usuario.getSegundoApellido()%>
-        </div>
-        <div class="col-auto">
-            <a href="darDeAlta?usuario=<%=usuario.getId()%>" class="btn btn-primary">Validar</a>
-            <a href="denegarAlta?usuario=<%=usuario.getId()%>" class="btn btn-danger">No validar</a>
+            <table>
+                <%
+                    for(UsuarioDTO usuario: usuarios){
+                %>
+                <tr>
+                    <td>
+                        <%=usuario.getPrimerNombre()%>
+                        <%
+                            if(usuario.getSegundoNombre()!=null){
+                        %>
+                        <%=usuario.getSegundoNombre()%>
+                        <%
+                            }
+                        %>
+                        <%=usuario.getPrimerApellido()%>
+                        <%=usuario.getSegundoApellido()%>
+                    </td>
+                    <td>
+                        <a href="informacionUsuario?usuario=<%=usuario.getId()%>" class="btn btn-primary">Ver información</a>
+                        <a href="darDeAlta?usuario=<%=usuario.getId()%>" class="btn btn-primary">Validar</a>
+                        <a href="denegarAlta?usuario=<%=usuario.getId()%>" class="btn btn-danger">No validar</a>
+                    </td>
+                </tr>
+                <%
+                    }
+                %>
+            </table>
         </div>
     </div>
-    <br>
-    <%
-        }
-    %>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

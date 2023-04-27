@@ -1,5 +1,7 @@
 package com.ebury.entity;
 
+import com.ebury.dto.SaldoDTO;
+import com.ebury.dto.UsuarioDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -69,5 +71,12 @@ public class SaldoEntity {
 
     public void setDivisaByDivisa(DivisaEntity divisaByDivisa) {
         this.divisaByDivisa = divisaByDivisa;
+    }
+
+    public SaldoDTO toDTO() {
+        SaldoDTO dto = new SaldoDTO();
+        dto.setDivisa(divisaByDivisa.getNombre());
+        dto.setCantidad(cantidad);
+        return dto;
     }
 }

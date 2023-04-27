@@ -2,10 +2,11 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.ebury.dto.UsuarioDTO" %>
 <%@ page import="com.ebury.dto.EmpresaDTO" %>
-<html>
+<html lang="es">
     <head>
         <title>Gestor</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+        <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     </head>
     <body>
     <%
@@ -51,7 +52,7 @@
                     <form:button>Filtrar</form:button>
                 </form:form>
 
-                <table>
+                <table class="table">
                     <tr>
                         <th>NIF</th>
                         <th>Nombre</th>

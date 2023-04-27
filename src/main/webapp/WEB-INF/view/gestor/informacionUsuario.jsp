@@ -1,12 +1,11 @@
-<%@ page import="com.ebury.dto.UsuarioDTO" %>
-<%@ page import="com.ebury.dto.EmpresaDTO" %>
-<%@ page import="com.ebury.dto.TransferenciaDTO" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.ebury.dto.CuentaDTO" %>
+<%@ page import="com.ebury.dto.*" %>
 <html>
     <head>
         <title>Informacion</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+        <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     </head>
     <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -17,7 +16,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/gestorHome/">Usuarios</a>
+                        <a class="nav-link active" aria-current="page" href="/gestorHome/">Usuarios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="gestorAlta">Solicitud de alta</a>
@@ -36,36 +35,89 @@
             UsuarioDTO usuario = (UsuarioDTO) request.getAttribute("usuario");
             List<TransferenciaDTO> transferencias = (List<TransferenciaDTO>) request.getAttribute("transferencias");
             List<CuentaDTO> cuentas = (List<CuentaDTO>) request.getAttribute("cuentas");
+            List<SaldoDTO> saldos = (List<SaldoDTO>) request.getAttribute("saldos");
+            EmpresaDTO empresa = (EmpresaDTO) request.getAttribute("empresa");
         %>
         <div class="card container">
             <table>
                 <tr>
                     <td style="width: 33%">
                         <h3>Datos:</h3>
-                        NIF: <%=usuario.getNif()%><br>
-                        Nombre: <%=usuario.getPrimerNombre() + " " + usuario.getSegundoNombre()%><br>
-                        Apellidos: <%=usuario.getPrimerApellido() + " " + usuario.getSegundoApellido()%><br>
+                        <b>NIF: </b><%=usuario.getNif()%>
+                        <b>Nombre: </b><%=usuario.getPrimerNombre() + " " + usuario.getSegundoNombre()%>
+                        <b>Apellidos: </b><%=usuario.getPrimerApellido() + " " + usuario.getSegundoApellido()%>
                     </td>
+                </tr>
+                <tr>
                     <td style="width: 50%">
-                        <h3>Cuentas</h3>
-                        <%
-                            for(CuentaDTO cuenta : cuentas){
-                        %>
-                        IBAN: <%=cuenta.getIban()%>
-                        <%
-                            }
-                        %>
+                        <table class="table">
+                            <tr>
+                                <th><h3>Cuentas</h3></th>
+                            </tr>
+                            <%
+                                for(CuentaDTO cuenta : cuentas){
+                            %>
+                            <tr>
+                                <td>
+                                    IBAN: <%=cuenta.getIban()%> <br>
+                                    <table>
+                                        <%
+                                        for(SaldoDTO saldo : saldos){
+                                        %>
+                                        <tr>
+                                            <td>
+                                                <div class="card container">
+                                                    Divisa: <%=saldo.getDivisa()%> <br>
+                                                    Saldo: <%=saldo.getCantidad()%>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
+                                    </table>
+                                </td>
+                            </tr>
+                            <%
+                                }
+                            %>
+                        </table>
                     </td>
                     <td>
-                        <h3>Transferencias:</h3>
-                        <%
-                            for(TransferenciaDTO transferencia : transferencias){
-                        %>
-                        Cantidad: <%=transferencia.getCantidad()%>
-                        <%
-                            }
-                        %>
-
+                        <table class="table">
+                            <tr>
+                                <th><h3>Transferencias</h3></th>
+                                <form:form method="post" action="filtrarTransferencias" modelAttribute="filtroTransferencias">
+                                    <form:select path="filtro">
+                                        <form:option value="0" label=" " />
+                                        <form:options items="${filtroItems}" />
+                                    </form:select>
+                                    <form:button>Filtrar</form:button>
+                                </form:form>
+                            </tr>
+                            <%
+                                for(TransferenciaDTO transferencia : transferencias){
+                            %>
+                            <tr>
+                                <td>
+                                    <%
+                                        if(transferencia.getCuentaOrigen().getUsuario().getId() == usuario.getId()){
+                                    %>
+                                    Enviado: <%=transferencia.getCantidad()+" "+transferencia.getDivisaOrigen()%> <br>
+                                    <%
+                                        }else{
+                                    %>
+                                    Recibido: <%=transferencia.getCantidad()+" "+transferencia.getDivisaDestino()%> <br>
+                                    <%
+                                        }
+                                    %>
+                                    Origen: <%=transferencia.getCuentaOrigen().getUsuario().getPrimerNombre()%> <br>
+                                </td>
+                            </tr>
+                            <%
+                                }
+                            %>
+                        </table>
                     </td>
                 </tr>
                 <tr>
@@ -73,7 +125,7 @@
                         if(usuario.getEmpresa()!=null){
                     %>
                     <h3>Empresa</h3>
-                    Nombre:
+                    <b>Nombre: </b><%=empresa.getNombre()%>
                     <%
                         }
                     %>
