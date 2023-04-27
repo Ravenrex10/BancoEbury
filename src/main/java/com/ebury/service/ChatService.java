@@ -65,7 +65,7 @@ public class ChatService {
         MensajeEntity nuevoMensaje = new MensajeEntity();
         nuevoMensaje.setChatByChat(chat);
         nuevoMensaje.setContenido(contenido);
-        nuevoMensaje.setFecha(new java.sql.Date(System.currentTimeMillis()));
+        nuevoMensaje.setFecha(new java.sql.Timestamp(System.currentTimeMillis()));
         nuevoMensaje.setEnviadoPorA((byte)(chat.getUsuarioByClienteA().getId() == emisorId? 1 : 0));
         chat.getMensajesById().add(nuevoMensaje);
         chatRepository.save(chat);

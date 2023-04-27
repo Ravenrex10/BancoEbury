@@ -24,6 +24,10 @@ public class ChatEntity {
     @OneToMany(mappedBy = "chatByChat")
     private Collection<MensajeEntity> mensajesById;
 
+    @Basic
+    @Column(name = "cerrado")
+    private Boolean cerrado;
+
     public int getId() {
         return id;
     }
@@ -73,6 +77,14 @@ public class ChatEntity {
 
     public void setMensajesById(Collection<MensajeEntity> mensajesById) {
         this.mensajesById = mensajesById;
+    }
+
+    public Boolean getCerrado() {
+        return cerrado;
+    }
+
+    public void setCerrado(Boolean cerrado) {
+        this.cerrado = cerrado;
     }
 
     public ChatDTO toDTO() {

@@ -3,7 +3,7 @@ package com.ebury.entity;
 import com.ebury.dto.MensajeDTO;
 import jakarta.persistence.*;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -22,7 +22,7 @@ public class MensajeEntity {
     private Byte enviadoPorA;
     @Basic
     @Column(name = "fecha")
-    private Date fecha;
+    private Timestamp fecha;
     @ManyToOne
     @JoinColumn(name = "chat", referencedColumnName = "id")
     private ChatEntity chatByChat;
@@ -47,11 +47,11 @@ public class MensajeEntity {
         this.enviadoPorA = enviadoPorA;
     }
 
-    public Date getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 

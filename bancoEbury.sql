@@ -28,6 +28,7 @@ CREATE TABLE `Chat` (
   `id` int(11) NOT NULL auto_increment,
   `clienteA` int(11) DEFAULT NULL,
   `clienteB` int(11) DEFAULT NULL,
+  `cerrado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `clienteA` (`clienteA`),
   KEY `clienteB` (`clienteB`),
@@ -192,7 +193,7 @@ CREATE TABLE `Mensaje` (
   `contenido` varchar(50) DEFAULT NULL,
   `enviadoPorA` tinyint(1) DEFAULT NULL,
   `chat` int(11) DEFAULT NULL,
-  `fecha` date DEFAULT NULL,
+  `fecha` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `chat` (`chat`),
   CONSTRAINT `Mensaje_ibfk_1` FOREIGN KEY (`chat`) REFERENCES `Chat` (`id`)
