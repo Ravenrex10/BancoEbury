@@ -23,6 +23,8 @@ import java.util.List;
  * Este controller es para tres roles en común: Fundador, Socio y Autorizado
  * Se ha decidio unir en el mismo controller a estos tres roles por tema de refactorización: repiten demasiado código y
  * solo se diferencian en el número de funciones que pueden realizar.
+ *
+ * @author Diego
  */
 
 

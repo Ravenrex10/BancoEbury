@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * Esta controller se encarga del registro de una empresa y un fundador
  * @author Diego
  */
 @Controller
