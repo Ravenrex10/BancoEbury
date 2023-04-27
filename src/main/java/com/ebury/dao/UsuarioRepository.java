@@ -20,5 +20,9 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Integer>
 
     public List<UsuarioEntity> findAllByAltaSolicitada(Boolean altaSolicitada);
     public List<UsuarioEntity> findAllByRolByRolNombre(String rol);
-    List<UsuarioEntity> findAllByEmpresaByEmpresaId(Integer id);
+    @Query("select u from UsuarioEntity u where u.empresaByEmpresa.id = :empresaId and (u.rolByRol.nombre = 'AutorizadoEmpresa' OR u.rolByRol.nombre='SocioEmpresa' OR u.rolByRol.nombre='FundadorEmpresa')")
+    List<UsuarioEntity> findAllFundadoresAndSociosAndAutorizadosByEmpresaByEmpresaId(@Param("empresaId") Integer empresaId);
+
+    @Query("select u from UsuarioEntity u where u.empresaByEmpresa.id = :empresaId and (u.rolByRol.nombre = 'AutorizadoEmpresa' OR u.rolByRol.nombre='SocioEmpresa')")
+    List<UsuarioEntity> findAllSociosAndAutorizadosByEmpresa(@Param("empresaId") Integer empresaId);
 }

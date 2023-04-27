@@ -49,22 +49,22 @@ public class UsuarioService {
         }
     }
 
-    public List<UsuarioDTO> findAllClientes(){
+    public List<UsuarioDTO> findAllClientes() {
         List<UsuarioEntity> usuariosEntity = usuarioRepository.findAllClientes();
         return usuariosEntity.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
     }
 
-    public List<UsuarioDTO> findClientesFiltrados(String filtroUsuario){
+    public List<UsuarioDTO> findClientesFiltrados(String filtroUsuario) {
         List<UsuarioEntity> usuariosEntity = usuarioRepository.findAllByRolByRolNombre(filtroUsuario);
         return usuariosEntity.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
     }
 
-    public List<UsuarioDTO> findAllByAltaSolicitada(){
+    public List<UsuarioDTO> findAllByAltaSolicitada() {
         List<UsuarioEntity> usuariosEntity = usuarioRepository.findAllByAltaSolicitada(true);
         return usuariosEntity.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
     }
 
-    public void darDeAltaUsuario(Integer usuario){
+    public void darDeAltaUsuario(Integer usuario) {
         UsuarioEntity usuarioEntity = (UsuarioEntity) usuarioRepository.findById(usuario).orElse(null);
 
         usuarioEntity.setAlta(true);
@@ -73,7 +73,7 @@ public class UsuarioService {
         CuentaEntity cuenta = new CuentaEntity();
         cuenta.setEstadoCuentaByEstado(estadoRepository.getReferenceById(1));
         cuenta.setUsuarioByDuenyo(usuarioEntity);
-        String Iban = ("ES"+ (Math.abs(new Random().nextInt())) + System.currentTimeMillis());
+        String Iban = ("ES" + (Math.abs(new Random().nextInt())) + System.currentTimeMillis());
         Iban = Iban.substring(0, Math.min(Iban.length(), 23));
         cuenta.setIban(Iban);
         SaldoEntity saldo = new SaldoEntity();
@@ -87,7 +87,7 @@ public class UsuarioService {
         saldoRepository.save(saldo);
     }
 
-    public void denegarAltaUsuario(Integer usuario){
+    public void denegarAltaUsuario(Integer usuario) {
         UsuarioEntity usuarioEntity = (UsuarioEntity) usuarioRepository.findById(usuario).orElse(null);
 
         usuarioEntity.setAltaSolicitada(false);
@@ -95,10 +95,11 @@ public class UsuarioService {
         usuarioRepository.save(usuarioEntity);
     }
 
-    public List<TransferenciaDTO> findAllTransferencias(Integer usuario){
+    public List<TransferenciaDTO> findAllTransferencias(Integer usuario) {
         List<TransferenciaEntity> transferenciaEntities = transferenciasRepository.findAllByUsuario(usuario);
         return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
     }
+
     public List<UsuarioDTO> findUsuariosByRolNombre(String rolName) {
         return usuarioRepository.findAllByRolByRolNombre(rolName).stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
     }
@@ -137,17 +138,44 @@ public class UsuarioService {
         this.empresaRepository.save(empresa);
         this.usuarioRepository.save(usuario);
 
-        return("redirect:/empresa/");
+        return ("redirect:/empresa/");
     }
 
-    public List<UsuarioDTO> findUsuariosDTOByEmpresaId(int id)
-    {
-        List<UsuarioEntity> usuarios = (this.usuarioRepository.findAllByEmpresaByEmpresaId(id));
+    public List<UsuarioDTO> findFundadorSociosAndAutorizadosByEmpresaId(int id) {
+        List<UsuarioEntity> usuarios = (this.usuarioRepository.findAllFundadoresAndSociosAndAutorizadosByEmpresaByEmpresaId(id));
         List<UsuarioDTO> usuarioDTOS = new ArrayList<>();
-        for(UsuarioEntity u : usuarios)
-        {
+        for (UsuarioEntity u : usuarios) {
             usuarioDTOS.add(u.toDTO());
         }
         return usuarioDTOS;
+    }
+
+    public List<UsuarioDTO> findSociosAndAutorizadosByEmpresaId(int id) {
+        List<UsuarioEntity> usuarios = (this.usuarioRepository.findAllSociosAndAutorizadosByEmpresa(id));
+        List<UsuarioDTO> usuarioDTOS = new ArrayList<>();
+        for (UsuarioEntity u : usuarios) {
+            usuarioDTOS.add(u.toDTO());
+        }
+        return usuarioDTOS;
+    }
+
+    public void bloquearUsuarioById(int id) {
+        UsuarioEntity usuarioBloqueado = this.usuarioRepository.findById(id).orElse(null);
+
+        List<CuentaEntity> cuentaEntities = this.cuentaRepository.findAllByUsuarioByDuenyo(usuarioBloqueado);
+
+        // Hemos considerado desactivar una cuenta como bloquearla
+        EstadoCuentaEntity estadoDesactivado = this.estadoRepository.findById(0).orElse(null);
+
+        List<CuentaEntity> cuentasBloqueadas = new ArrayList<>();
+
+        for (CuentaEntity cuenta : cuentaEntities) {
+            cuenta.setEstadoCuentaByEstado(estadoDesactivado);
+            cuentasBloqueadas.add(cuenta);
+            this.cuentaRepository.save(cuenta);
+        }
+
+        usuarioBloqueado.setCuentasById(cuentasBloqueadas);
+        this.usuarioRepository.save(usuarioBloqueado);
     }
 }

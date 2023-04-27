@@ -26,6 +26,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="listaUsuarios">Socios/Autorizados</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="bloquearUsuarios">Bloquear usuarios</a>
+                </li>
                 <% }; %>
             </ul>
             <ul class="navbar-nav ms-auto">

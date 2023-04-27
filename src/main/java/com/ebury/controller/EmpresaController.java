@@ -28,7 +28,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/empresa")
-public class EmpresaCommonController {
+public class EmpresaController {
     @Autowired
     protected UsuarioService usuarioService;
 
@@ -63,7 +63,7 @@ public class EmpresaCommonController {
     }
 
     @PostMapping("/register")
-    public String makeRegister(HttpSession session, @ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper)
+    public String doRegister(HttpSession session, @ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper)
     {
         return (this.empresaService.makeRegister(empresaWrapper,session));
     }
@@ -78,7 +78,7 @@ public class EmpresaCommonController {
     }
 
     @PostMapping("/solicitarAlta")
-    public String solicitarAlta(@ModelAttribute("newUsuarioDTO") UsuarioDTO usuarioDTO, HttpSession session) {
+    public String getSolicitarAlta(@ModelAttribute("newUsuarioDTO") UsuarioDTO usuarioDTO, HttpSession session) {
         // TODO: Controlar que el usuario sea fundador
         UsuarioDTO fundador = (UsuarioDTO) session.getAttribute("usuario");
         int empresaId = fundador.getEmpresa();
@@ -109,7 +109,7 @@ public class EmpresaCommonController {
         if (filtro == null || filtro.getFiltro().equals("0")) {
             filtro = new FiltroUsuarios();
             filtro.setFiltro("0");
-            usuarioDTOList = this.usuarioService.findUsuariosDTOByEmpresaId(empresaId);
+            usuarioDTOList = this.usuarioService.findFundadorSociosAndAutorizadosByEmpresaId(empresaId);
 
         } else {
             switch (filtro.getFiltro()) {
@@ -123,7 +123,7 @@ public class EmpresaCommonController {
                     usuarioDTOList = this.usuarioService.findUsuariosByRolNombre("AutorizadoEmpresa");
                     break;
                 default:
-                    usuarioDTOList = this.usuarioService.findUsuariosDTOByEmpresaId(empresaId);
+                    usuarioDTOList = this.usuarioService.findFundadorSociosAndAutorizadosByEmpresaId(empresaId);
             }
         }
         model.addAttribute("listaUsuarios", usuarioDTOList);
@@ -138,6 +138,28 @@ public class EmpresaCommonController {
         res.add("AutorizadoEmpresa");
 
         return res;
+    }
+
+    @GetMapping("/bloquearUsuarios")
+    public String getBloquearUsuarios(HttpSession session, Model model)
+    {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("usuario",usuarioActual);
+
+        List<UsuarioDTO> usuarioDTOList = this.usuarioService.findSociosAndAutorizadosByEmpresaId(usuarioActual.getEmpresa());
+        model.addAttribute("listaUsuarios",usuarioDTOList);
+
+        UsuarioDTO usuarioABloquear = new UsuarioDTO();
+        model.addAttribute("blockUser",usuarioABloquear);
+
+        return "empresa/empresaBloqueo";
+    }
+
+    @PostMapping("/bloquear")
+    public String doBloquear(@ModelAttribute("blockUser") UsuarioDTO usuarioDTO)
+    {
+        this.usuarioService.bloquearUsuarioById(usuarioDTO.getId());
+        return "redirect:/empresa/";
     }
 
     @GetMapping("/logout")
