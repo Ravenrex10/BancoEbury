@@ -13,7 +13,7 @@
 <div class = "container">
     <h1 class="alert">Página de error</h1>
     <div class="alert alert-danger">
-        <strong>Error</strong> ${error}
+        <strong>Error: </strong>${error}
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

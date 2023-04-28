@@ -56,7 +56,6 @@ public class EmpresaService {
         //TODO: Mensaje de volver a entrar por haber modificado la cuenta
         //TODO: Control de valores nulos
         //TODO: Control de errores
-        //TODO: Usuario asociado
 
         EmpresaDTO e = empresaWrapper.getNewEmpresa();
         DireccionDTO d = empresaWrapper.getNewDireccion();

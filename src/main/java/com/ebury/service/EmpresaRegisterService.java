@@ -31,7 +31,7 @@ public class EmpresaRegisterService {
     @Autowired
     protected UsuarioRepository usuarioRepository;
 
-    /* Registra el socio fundador (creador de la empresa, la empresa y su dirección
+    /* Registra al socio fundador (fundador de la empresa, la empresa y su dirección)
        @author Diego
      */
     public String makeRegister(EmpresaWrapper empresaWrapper) {

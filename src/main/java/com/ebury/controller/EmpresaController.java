@@ -75,9 +75,8 @@ public class EmpresaController {
     @GetMapping("/fundadorAlta")
     public String getAlta(Model model, HttpSession session) {
         UsuarioDTO fundador = (UsuarioDTO) session.getAttribute("usuario");
-        if(!fundador.getRolName().equals("Fundador"))
-        {
-            return getError(model,"Acceso denegado",session);
+        if (!fundador.getRolName().equals("FundadorEmpresa")) {
+            return getError(model, "Acceso denegado", session);
         }
         model.addAttribute("usuario", fundador);
 
@@ -88,11 +87,10 @@ public class EmpresaController {
     }
 
     @PostMapping("/solicitarAlta")
-    public String getSolicitarAlta(@ModelAttribute("newUsuarioDTO") UsuarioDTO usuarioDTO, HttpSession session,Model model) {
+    public String getSolicitarAlta(@ModelAttribute("newUsuarioDTO") UsuarioDTO usuarioDTO, HttpSession session, Model model) {
         UsuarioDTO fundador = (UsuarioDTO) session.getAttribute("usuario");
-        if(!fundador.getRolName().equals("Fundador"))
-        {
-            return getError(model,"Acceso denegado",session);
+        if (!fundador.getRolName().equals("FundadorEmpresa")) {
+            return getError(model, "Acceso denegado", session);
         }
         int empresaId = fundador.getEmpresa();
         return this.usuarioService.makeRegister(usuarioDTO, empresaId);
@@ -101,9 +99,8 @@ public class EmpresaController {
     @GetMapping("/listaUsuarios")
     public String getLista(Model model, HttpSession session) {
         UsuarioDTO fundador = (UsuarioDTO) session.getAttribute("usuario");
-        if(!fundador.getRolName().equals("Fundador") && !fundador.getRolName().equals("SocioEmpresa"))
-        {
-            return getError(model,"Acceso denegado",session);
+        if (!fundador.getRolName().equals("FundadorEmpresa") && !fundador.getRolName().equals("SocioEmpresa")) {
+            return getError(model, "Acceso denegado", session);
         }
         model.addAttribute("usuario", session.getAttribute("usuario"));
         return (listarUsuarios(model, null, session));
@@ -160,9 +157,8 @@ public class EmpresaController {
     @GetMapping("/bloquearUsuarios")
     public String getBloquearUsuarios(HttpSession session, Model model) {
         UsuarioDTO fundador = (UsuarioDTO) session.getAttribute("usuario");
-        if(!fundador.getRolName().equals("Fundador") && !fundador.getRolName().equals("SocioEmpresa"))
-        {
-            return getError(model,"Acceso denegado",session);
+        if (!fundador.getRolName().equals("FundadorEmpresa") && !fundador.getRolName().equals("SocioEmpresa")) {
+            return getError(model, "Acceso denegado", session);
         }
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
         model.addAttribute("usuario", usuarioActual);
@@ -198,10 +194,9 @@ public class EmpresaController {
         return "redirect:/empresa/cuentas";
     }
 
-    private String getError(Model model, String error, HttpSession session)
-    {
-        model.addAttribute("error",error);
-        model.addAttribute("usuario",session.getAttribute("usuario"));
+    private String getError(Model model, String error, HttpSession session) {
+        model.addAttribute("error", error);
+        model.addAttribute("usuario", session.getAttribute("usuario"));
         return "empresa/empresaError";
     }
 
