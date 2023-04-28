@@ -142,6 +142,7 @@ public class UsuarioService {
 
         return ("redirect:/empresa/");
     }
+
     /*     Devuelve al fundador y a todos los socios y autorizados de una empresa.
            @author Diego
            */
@@ -153,6 +154,7 @@ public class UsuarioService {
         }
         return usuarioDTOS;
     }
+
     /*     Devuelve todos los socios y autorizados de una empresa.
            @author Diego
            */

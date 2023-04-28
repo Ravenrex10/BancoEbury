@@ -67,9 +67,10 @@ public class EmpresaController {
         return ("empresa/empresaDatos");
     }
 
-    @PostMapping("/register")
-    public String doRegister(HttpSession session, @ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper) {
-        return (this.empresaService.makeRegister(empresaWrapper, session));
+    @PostMapping("/edit")
+    public String doEdit(HttpSession session, @ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper) {
+        //TODO: CONTROL DE ERRORES Y VALORES NULOS
+        return (this.empresaService.makeEdit(empresaWrapper, session));
     }
 
     @GetMapping("/fundadorAlta")
@@ -88,6 +89,7 @@ public class EmpresaController {
 
     @PostMapping("/solicitarAlta")
     public String getSolicitarAlta(@ModelAttribute("newUsuarioDTO") UsuarioDTO usuarioDTO, HttpSession session, Model model) {
+        //TODO: CONTROL DE ERRORES Y VALORES NULOS
         UsuarioDTO fundador = (UsuarioDTO) session.getAttribute("usuario");
         if (!fundador.getRolName().equals("FundadorEmpresa")) {
             return getError(model, "Acceso denegado", session);

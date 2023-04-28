@@ -9,7 +9,7 @@
 <body>
 <jsp:include page="empresaHeader.jsp"></jsp:include>
 <div class="container">
-    <form:form method="post" action="/empresa/register" modelAttribute="newEmpresaWrapper">
+    <form:form method="post" action="/empresa/edit" modelAttribute="newEmpresaWrapper">
         <h1>Datos de la empresa: </h1>
         <form:hidden path="newEmpresa.id"></form:hidden>
         Cif (*): <form:input path="newEmpresa.cif"></form:input><br>
