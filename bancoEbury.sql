@@ -177,7 +177,9 @@ LOCK TABLES `EstadoCuenta` WRITE;
 /*!40000 ALTER TABLE `EstadoCuenta` DISABLE KEYS */;
 INSERT INTO `EstadoCuenta` VALUES
 (0,'Desactivada'),
-(1,'Activada');
+(1,'Activada'),
+(2,'Bloqueada'),
+(3,'SolicitudBloqueada');
 /*!40000 ALTER TABLE `EstadoCuenta` ENABLE KEYS */;
 UNLOCK TABLES;
 
