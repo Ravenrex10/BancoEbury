@@ -1,7 +1,9 @@
 package com.ebury.controller;
 
+import com.ebury.dto.CuentaDTO;
 import com.ebury.dto.EmpresaDTO;
 import com.ebury.dto.UsuarioDTO;
+import com.ebury.service.CuentaService;
 import com.ebury.service.DireccionService;
 import com.ebury.service.EmpresaService;
 import com.ebury.service.UsuarioService;
@@ -11,10 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +38,10 @@ public class EmpresaController {
 
     @Autowired
     protected DireccionService direccionService;
+
+    @Autowired
+    protected CuentaService cuentaService;
+
     @GetMapping("/")
     public String getHome(HttpSession session, Model model) {
         model.addAttribute("usuario", session.getAttribute("usuario"));
@@ -59,16 +62,16 @@ public class EmpresaController {
 
         empresaWrapper.setNewDireccion(this.direccionService.findDireccionByEmpresaId(empresaId));
 
-        model.addAttribute("newEmpresaWrapper",empresaWrapper);
+        model.addAttribute("newEmpresaWrapper", empresaWrapper);
 
-        return("empresa/empresaDatos");
+        return ("empresa/empresaDatos");
     }
 
     @PostMapping("/register")
-    public String doRegister(HttpSession session, @ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper)
-    {
-        return (this.empresaService.makeRegister(empresaWrapper,session));
+    public String doRegister(HttpSession session, @ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper) {
+        return (this.empresaService.makeRegister(empresaWrapper, session));
     }
+
     @GetMapping("/fundadorAlta")
     public String getAlta(Model model, HttpSession session) {
         model.addAttribute("usuario", session.getAttribute("usuario"));
@@ -90,7 +93,7 @@ public class EmpresaController {
     @GetMapping("/listaUsuarios")
     public String getLista(Model model, HttpSession session) {
         // TODO: Controlar que el usuario no sea autorizado
-
+        model.addAttribute("usuario", session.getAttribute("usuario"));
         return (listarUsuarios(model, null, session));
     }
 
@@ -143,25 +146,39 @@ public class EmpresaController {
     }
 
     @GetMapping("/bloquearUsuarios")
-    public String getBloquearUsuarios(HttpSession session, Model model)
-    {
+    public String getBloquearUsuarios(HttpSession session, Model model) {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
-        model.addAttribute("usuario",usuarioActual);
+        model.addAttribute("usuario", usuarioActual);
 
         List<UsuarioDTO> usuarioDTOList = this.usuarioService.findSociosAndAutorizadosByEmpresaId(usuarioActual.getEmpresa());
-        model.addAttribute("listaUsuarios",usuarioDTOList);
+        model.addAttribute("listaUsuarios", usuarioDTOList);
 
         UsuarioDTO usuarioABloquear = new UsuarioDTO();
-        model.addAttribute("blockUser",usuarioABloquear);
+        model.addAttribute("blockUser", usuarioABloquear);
 
         return "empresa/empresaBloqueo";
     }
 
     @PostMapping("/bloquear")
-    public String doBloquear(@ModelAttribute("blockUser") UsuarioDTO usuarioDTO)
-    {
+    public String doBloquear(@ModelAttribute("blockUser") UsuarioDTO usuarioDTO) {
         this.usuarioService.bloquearUsuarioById(usuarioDTO.getId());
         return "redirect:/empresa/";
+    }
+
+    @GetMapping("/cuentas")
+    public String getSolicitudDesbloqueo(HttpSession session, Model model) {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuarioActual);
+
+        List<CuentaDTO> cuentasUsuario = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
+        model.addAttribute("cuentasUsuario", cuentasUsuario);
+        return "empresa/empresaDesbloqueo";
+    }
+
+    @GetMapping("/solicitarDesbloqueo")
+    public String doSolicitudDesbloqueo(@RequestParam("cuenta") Integer id) {
+        this.cuentaService.solicitarDesbloqueoCuenta(id);
+        return "redirect:/empresa/cuentas";
     }
 
     @GetMapping("/logout")

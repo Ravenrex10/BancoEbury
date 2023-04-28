@@ -166,7 +166,7 @@ public class UsuarioService {
     }
 
     /*
-          Cambia el estado de todas las cuentas del usuario a desactivadas.
+          Cambia el estado de todas las cuentas del usuario a bloqueada.
           @author Diego
      */
     public void bloquearUsuarioById(int id) {
@@ -174,13 +174,12 @@ public class UsuarioService {
 
         List<CuentaEntity> cuentaEntities = this.cuentaRepository.findAllByUsuarioByDuenyo(usuarioBloqueado);
 
-        // Hemos considerado desactivar una cuenta como bloquearla
-        EstadoCuentaEntity estadoDesactivado = this.estadoRepository.findById(0).orElse(null);
+        EstadoCuentaEntity estadoBloqueado = this.estadoRepository.findById(2).orElse(null);
 
         List<CuentaEntity> cuentasBloqueadas = new ArrayList<>();
 
         for (CuentaEntity cuenta : cuentaEntities) {
-            cuenta.setEstadoCuentaByEstado(estadoDesactivado);
+            cuenta.setEstadoCuentaByEstado(estadoBloqueado);
             cuentasBloqueadas.add(cuenta);
             this.cuentaRepository.save(cuenta);
         }

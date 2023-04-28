@@ -107,6 +107,7 @@ public class CuentaEntity {
 
     public CuentaDTO toDTO(){
         CuentaDTO dto = new CuentaDTO();
+        dto.setId(id);
         dto.setEstado(estadoCuentaByEstado.getNombre());
         dto.setIban(iban);
         //dto.setTransferenciasEnviadas(this.getTransferenciasById().stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList()));

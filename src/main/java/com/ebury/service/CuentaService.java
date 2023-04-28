@@ -1,9 +1,12 @@
 package com.ebury.service;
 
 import com.ebury.dao.CuentaRepository;
+import com.ebury.dao.EstadoRepository;
+import com.ebury.dao.RolRepository;
 import com.ebury.dao.UsuarioRepository;
 import com.ebury.dto.CuentaDTO;
 import com.ebury.entity.CuentaEntity;
+import com.ebury.entity.EstadoCuentaEntity;
 import com.ebury.entity.UsuarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +21,25 @@ public class CuentaService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
+    @Autowired
+    EstadoRepository estadoRepository;
+
     public List<CuentaDTO> findAllCuentasByUsuario(Integer usuario){
         List<CuentaEntity> cuentas = cuentaRepository.findAllByUsuarioByDuenyo(usuarioRepository.findById(usuario).orElse(null));
         return cuentas.stream().map(CuentaEntity::toDTO).collect(Collectors.toList());
+    }
+
+    /*
+        Cambia el estado de la cuenta a "SolicitudBloqueada"
+        @author Diego
+     */
+    public void solicitarDesbloqueoCuenta(Integer id)
+    {
+        CuentaEntity cuenta = this.cuentaRepository.findById(id).orElse(null);
+        EstadoCuentaEntity estadoCuenta = this.estadoRepository.findById(3).orElse(null);
+
+        cuenta.setEstadoCuentaByEstado(estadoCuenta);
+        this.cuentaRepository.save(cuenta);
+
     }
 }

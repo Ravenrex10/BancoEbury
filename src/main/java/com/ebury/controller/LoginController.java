@@ -61,6 +61,7 @@ public class LoginController {
         return urlTo;
     }
 
+    // Cierra la sesión actual
     // @author Diego
     @GetMapping("/logout")
     public String doLogout (HttpSession session) {

@@ -4,11 +4,21 @@ import java.util.Collection;
 import java.util.List;
 
 public class CuentaDTO {
+
+    private int id;
     private String iban;
     private UsuarioDTO usuario;
     private String estado;
     private List<TransferenciaDTO> transferenciasEnviadas;
     private List<TransferenciaDTO> transferenciasRecibidas;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getIban() {
         return iban;

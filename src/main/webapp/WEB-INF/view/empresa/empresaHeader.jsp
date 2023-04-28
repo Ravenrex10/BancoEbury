@@ -1,7 +1,6 @@
 <!--@author Diego-->
 <%@ page import="com.ebury.dto.UsuarioDTO" %>
 <%@ page import="java.util.List" %><% UsuarioDTO usuarioDTO = (UsuarioDTO) request.getAttribute("usuario");
-    List<UsuarioDTO> listUsuarios = (List<UsuarioDTO>) request.getAttribute("listaUsuarios");
 %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -17,6 +16,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/empresa/datos">Datos</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="cuentas">Tus cuentas</a>
                 </li>
                 <% if (usuarioDTO.getRolName().equals("FundadorEmpresa")) { %>
                 <li class="nav-item">
