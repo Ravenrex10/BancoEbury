@@ -35,11 +35,17 @@ public class UsuarioService {
     @Autowired
     EmpresaRepository empresaRepository;
 
+    /**
+     * @author Daniel
+     */
     public List<UsuarioDTO> findUsuarios() {
         List<UsuarioEntity> usuarios = usuarioRepository.findAll();
         return usuarios.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
     }
 
+    /**
+     * @author Daniel
+     */
     public UsuarioDTO findUsuarioById(int id) {
         UsuarioEntity usuario = usuarioRepository.findById(id).orElse(null);
         if (usuario == null) {
@@ -100,10 +106,16 @@ public class UsuarioService {
         return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
     }
 
+    /**
+     * @author Daniel
+     */
     public List<UsuarioDTO> findUsuariosByRolNombre(String rolName) {
         return usuarioRepository.findAllByRolByRolNombre(rolName).stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
     }
 
+    /**
+     * @author Daniel
+     */
     public UsuarioDTO autenticar(String nombreUsuario, String clave) {
         UsuarioEntity usuario = usuarioRepository.autenticar(nombreUsuario, clave);
         if (usuario == null) return null;

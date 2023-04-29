@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Daniel
+ */
 @Controller
 public class ChatController {
 
@@ -65,9 +68,11 @@ public class ChatController {
         ChatDTO chat = chatService.findChatByChatId(chatId);
         List<MensajeDTO> mensajes = chatService.findMensajesByChatId(chatId, miUsuario.getId());
         boolean usuarioPuedeEscribir = chatService.usuarioPuedeEnviarMensajeAChat(miUsuario.getId(), chatId);
+        boolean usuarioPuedeCerrar = !miUsuario.getRolName().equals("Asistente") && !chat.isCerrado();
         model.addAttribute("chat", chat);
         model.addAttribute("mensajes", mensajes);
         model.addAttribute("usuarioPuedeEscribir", usuarioPuedeEscribir);
+        model.addAttribute("usuarioPuedeCerrar", usuarioPuedeCerrar);
         return "asistente/chat";
     }
 
@@ -101,5 +106,11 @@ public class ChatController {
     @PostMapping("/filtrarChats")
     String doFiltrarChats(@ModelAttribute("filtro") FiltroChats filtro) {
         return "redirect:/chats";
+    }
+
+    @PostMapping("/chat/cerrar")
+    String doCerrarChat(@RequestParam("chatId") int chatId) {
+        chatService.cerrarChat(chatId);
+        return "redirect:/asistencia";
     }
 }

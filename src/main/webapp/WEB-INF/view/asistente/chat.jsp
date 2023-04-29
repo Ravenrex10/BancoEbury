@@ -6,6 +6,7 @@
 <%@ page import="com.ebury.dto.MensajeDTO" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%-- @author Daniel --%>
 <html>
 <head>
     <title>Chats</title>
@@ -14,6 +15,7 @@
     ChatDTO chat = (ChatDTO) request.getAttribute("chat");
     List<MensajeDTO> mensajes = (List<MensajeDTO>) request.getAttribute("mensajes");
     boolean usuarioPuedeEscribir = (boolean) request.getAttribute("usuarioPuedeEscribir");
+    boolean usuarioPuedeCerrar = (boolean) request.getAttribute("usuarioPuedeCerrar");
 %>
 <body>
 
@@ -46,5 +48,13 @@
         <h5>No puedes enviar mensajes a este chat. <h5>
     <% } %>
             <a href="/volverAChats">Volver a chats</a>
+    <br/>
+    <% if (usuarioPuedeCerrar) { %>
+    Ya hemos resuelto tu incidencia?
+    <form action="/chat/cerrar" method="post">
+        <input type="hidden" name="chatId" value="<%=chat.getId()%>"/>
+        <button>Cerrar chat</button>
+    </form>
+    <% } %>
 </body>
 </html>

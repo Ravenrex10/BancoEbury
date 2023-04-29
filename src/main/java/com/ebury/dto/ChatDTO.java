@@ -1,7 +1,9 @@
 package com.ebury.dto;
 
 import java.util.Date;
-
+/**
+ * @author Daniel
+ */
 public class ChatDTO {
 
     private int id;
@@ -9,6 +11,8 @@ public class ChatDTO {
     private String nombreUsuarioB;
     private String fechaUltimoMensaje;
     private String ultimoMensaje;
+
+    private boolean cerrado;
 
     public int getId() {
         return id;
@@ -48,5 +52,13 @@ public class ChatDTO {
 
     public void setUltimoMensaje(String ultimoMensaje) {
         this.ultimoMensaje = ultimoMensaje;
+    }
+
+    public boolean isCerrado() {
+        return cerrado;
+    }
+
+    public void setCerrado(boolean cerrado) {
+        this.cerrado = cerrado;
     }
 }

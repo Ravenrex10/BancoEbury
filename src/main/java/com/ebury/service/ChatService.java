@@ -16,6 +16,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Daniel
+ */
 @Service
 public class ChatService {
 
@@ -56,6 +59,7 @@ public class ChatService {
         ChatEntity nuevoChat = new ChatEntity();
         nuevoChat.setUsuarioByClienteA(usuarioA);
         nuevoChat.setUsuarioByClienteB(usuarioB);
+        nuevoChat.setCerrado(false);
         chatRepository.save(nuevoChat);
         return nuevoChat.toDTO();
     }
@@ -109,13 +113,19 @@ public class ChatService {
         if (usuario == null) return false;
         ChatEntity chat = chatRepository.findById(chatId).orElse(null);
         if (chat == null) return false;
-        return chat.getUsuarioByClienteA().getId() == usuarioId
-                || chat.getUsuarioByClienteB().getId() == usuarioId;
+        return !chat.getCerrado() && (chat.getUsuarioByClienteA().getId() == usuarioId
+                || chat.getUsuarioByClienteB().getId() == usuarioId);
     }
 
     private boolean mensajeEnviadoPor(ChatEntity chat, MensajeEntity mensaje, int usuarioId) {
         boolean usuarioEsA = chat.getUsuarioByClienteA().getId() == usuarioId;
         boolean usuarioEsB = chat.getUsuarioByClienteB().getId() == usuarioId;
         return usuarioEsA && mensaje.getEnviadoPorA() == 1 || usuarioEsB && mensaje.getEnviadoPorA() == 0;
+    }
+
+    public void cerrarChat(int chatId) {
+        ChatEntity chat = chatRepository.findById(chatId).orElse(null);
+        chat.setCerrado(true);
+        chatRepository.save(chat);
     }
 }

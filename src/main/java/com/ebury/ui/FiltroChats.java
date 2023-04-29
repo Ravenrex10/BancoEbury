@@ -1,5 +1,8 @@
 package com.ebury.ui;
 
+/**
+ * @author Daniel
+ */
 public class FiltroChats {
     private String criterioOrdenacion;
 

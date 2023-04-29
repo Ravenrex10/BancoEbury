@@ -5,6 +5,7 @@
 <%@ page import="com.ebury.dto.ChatDTO" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%-- @author Daniel --%>
 <html>
 <head>
     <title>Chats</title>
@@ -29,7 +30,10 @@
         <th>Usuario solicitante</th>
         <th>Asistente asignado</th>
         <th>Fecha</th>
-        <th></th>
+        <th>Último mensaje</th>
+        <th>Ir a chat</th>
+        <th>Cerrado</th>
+
     </tr>
     <% for (ChatDTO chat : chats) { %>
         <tr>
@@ -40,6 +44,7 @@
             <td>
                 <a href="/chat?chatId=<%=chat.getId()%>">Ir al chat</a>
             </td>
+            <td><strong><%=chat.isCerrado()? "Cerrado" : ""%></strong></td>
         </tr>
     <% } %>
     <h3>Nuevo chat</h3>

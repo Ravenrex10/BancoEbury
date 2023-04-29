@@ -2,6 +2,9 @@ package com.ebury.dto;
 
 import java.util.Date;
 
+/**
+ * @author Daniel
+ */
 public class MensajeDTO {
     private int id;
     private int chatId;

@@ -87,6 +87,9 @@ public class ChatEntity {
         this.cerrado = cerrado;
     }
 
+    /**
+     * @author Daniel
+     */
     public ChatDTO toDTO() {
         ChatDTO dto = new ChatDTO();
         dto.setId(id);
@@ -96,6 +99,7 @@ public class ChatEntity {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy HH:mm:ss");
         dto.setFechaUltimoMensaje(dateFormat.format(new Date()));
         dto.setUltimoMensaje("");
+        dto.setCerrado(this.getCerrado());
         return dto;
     }
 }
