@@ -16,6 +16,7 @@ public class SaldoService {
     @Autowired
     SaldoRepository saldoRepository;
 
+    //Autor Lucas Colbert Eastgate
     public List<SaldoDTO> findAllSaldosByCuenta(Integer id){
         List<SaldoEntity> saldoEntities = saldoRepository.findAllByCuentaByCuenta_Id(id);
         return saldoEntities.stream().map(SaldoEntity::toDTO).collect(Collectors.toList());

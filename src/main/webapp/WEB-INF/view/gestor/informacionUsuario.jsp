@@ -88,6 +88,7 @@
                             <tr>
                                 <th><h3>Transferencias</h3></th>
                                 <form:form method="post" action="filtrarTransferencias" modelAttribute="filtroTransferencias">
+                                    <form:hidden path="usuario"></form:hidden>
                                     <form:select path="filtro">
                                         <form:option value="0" label=" " />
                                         <form:options items="${filtroItems}" />
@@ -104,14 +105,16 @@
                                         if(transferencia.getCuentaOrigen().getUsuario().getId() == usuario.getId()){
                                     %>
                                     Enviado: <%=transferencia.getCantidad()+" "+transferencia.getDivisaOrigen()%> <br>
+                                    Destino: <%=transferencia.getCuentaDestino().getUsuario().getPrimerNombre()%> <br>
                                     <%
                                         }else{
                                     %>
                                     Recibido: <%=transferencia.getCantidad()+" "+transferencia.getDivisaDestino()%> <br>
+                                    Origen: <%=transferencia.getCuentaOrigen().getUsuario().getPrimerNombre()%> <br>
                                     <%
                                         }
                                     %>
-                                    Origen: <%=transferencia.getCuentaOrigen().getUsuario().getPrimerNombre()%> <br>
+
                                 </td>
                             </tr>
                             <%

@@ -1,8 +1,10 @@
 package com.ebury.service;
 
 import com.ebury.dao.RolRepository;
+import com.ebury.dto.TransferenciaDTO;
 import com.ebury.dto.UsuarioDTO;
 import com.ebury.entity.RolEntity;
+import com.ebury.ui.FiltroTransferencias;
 import com.ebury.ui.FiltroUsuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,10 @@ public class GestorService {
 
     @Autowired
     UsuarioService usuarioService;
+    @Autowired
+    TransferenciaService transferenciaService;
 
+    //Autor Lucas Colbert Eastgate
     public List<String> getRoles(){
         List<RolEntity> roles = rolRepository.findAll();
         List<String> rolesNombres = new ArrayList<>();
@@ -28,6 +33,7 @@ public class GestorService {
         return rolesNombres;
     }
 
+    //Lucas Colbert Eastgate
     public List<UsuarioDTO> filtrar(FiltroUsuarios filtroUsuario){
         List<UsuarioDTO> usuarios;
         if(filtroUsuario.getFiltro().equals("0")){
@@ -49,5 +55,23 @@ public class GestorService {
             usuarios = usuarioService.findClientesFiltrados(filtro);
         }
         return usuarios;
+    }
+
+    //Lucas Colbert Eastgate
+    public List<TransferenciaDTO> filtrarTransferencias(FiltroTransferencias filtroTransferencias, Integer usuario){
+        List<TransferenciaDTO> transferencias;
+        switch (filtroTransferencias.getFiltro()){
+            case "Recibidos": transferencias = transferenciaService.findAllByUsuarioDestino(usuario);
+            System.out.println(usuarioService.findUsuarioById(usuario).getPrimerNombre());
+                break;
+
+            case "Enviados": transferencias = transferenciaService.findAllByUsuarioOrigen(usuario);
+            System.out.println("enviados");
+                break;
+
+            default: transferencias = transferenciaService.findAllTransferencias(usuario);
+                break;
+        }
+        return transferencias;
     }
 }
