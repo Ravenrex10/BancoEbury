@@ -201,4 +201,24 @@ public class UsuarioService {
         usuarioBloqueado.setCuentasById(cuentasBloqueadas);
         this.usuarioRepository.save(usuarioBloqueado);
     }
+
+    public List<UsuarioDTO> getUsuariosInactivos(){
+        List<UsuarioEntity> inactivos = usuarioRepository.findAllUsuariosInactivos();
+        List<UsuarioEntity> usuariosInactivosConCuentasActivadas = inactivos;
+        boolean activo;
+
+        for(int i = 0; i<inactivos.size(); i++){
+            UsuarioEntity usuario = inactivos.get(i);
+            activo = false;
+            for(CuentaEntity cuenta : usuario.getCuentasById()){
+                if(cuenta.getEstadoCuentaByEstado().getId() == 1){
+                    activo = true;
+                }
+            }
+            if(!activo){
+                usuariosInactivosConCuentasActivadas.remove(i);
+            }
+        }
+        return usuariosInactivosConCuentasActivadas.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -25,4 +26,8 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Integer>
 
     @Query("select u from UsuarioEntity u where u.empresaByEmpresa.id = :empresaId and (u.rolByRol.nombre = 'AutorizadoEmpresa' OR u.rolByRol.nombre='SocioEmpresa')")
     List<UsuarioEntity> findAllSociosAndAutorizadosByEmpresa(@Param("empresaId") Integer empresaId);
+
+    @Query("select u from UsuarioEntity u where (DATEDIFF(curdate(), u.fechaUltimaOperacion) >= 30) " +
+            "AND (u.rolByRol.nombre='Cliente' OR u.rolByRol.nombre='SocioEmpresa' OR u.rolByRol.nombre='AutorizadoEmpresa' OR u.rolByRol.nombre='FundadorEmpresa') ")
+    List<UsuarioEntity> findAllUsuariosInactivos();
 }

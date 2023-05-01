@@ -1,9 +1,14 @@
 package com.ebury.service;
 
+import com.ebury.dao.CuentaRepository;
+import com.ebury.dao.EstadoRepository;
 import com.ebury.dao.RolRepository;
+import com.ebury.dao.UsuarioRepository;
 import com.ebury.dto.TransferenciaDTO;
 import com.ebury.dto.UsuarioDTO;
+import com.ebury.entity.CuentaEntity;
 import com.ebury.entity.RolEntity;
+import com.ebury.entity.UsuarioEntity;
 import com.ebury.ui.FiltroTransferencias;
 import com.ebury.ui.FiltroUsuarios;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,12 @@ public class GestorService {
 
     @Autowired
     RolRepository rolRepository;
+    @Autowired
+    UsuarioRepository usuarioRepository;
+    @Autowired
+    CuentaRepository cuentaRepository;
+    @Autowired
+    EstadoRepository estadoRepository;
 
     @Autowired
     UsuarioService usuarioService;
@@ -73,5 +84,13 @@ public class GestorService {
                 break;
         }
         return transferencias;
+    }
+
+    public void desactivarCuenta(Integer usuario){
+        UsuarioEntity usuarioEntity = usuarioRepository.getById(usuario);
+        for(CuentaEntity cuenta : cuentaRepository.findAllByUsuarioByDuenyo(usuarioEntity)){
+            cuenta.setEstadoCuentaByEstado(estadoRepository.getReferenceById(0));
+            cuentaRepository.save(cuenta);
+        }
     }
 }

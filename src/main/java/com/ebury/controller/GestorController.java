@@ -83,6 +83,23 @@ public class GestorController {
         return verInformacionUsuario(transferencias, model, usuario);
     }
 
+    @GetMapping("/inactivos")
+    public String getInactivos(Model model){
+        model.addAttribute("usuariosInactivos", usuarioService.getUsuariosInactivos());
+        return("gestor/gestorInactivos");
+    }
+
+    @GetMapping("/desactivarCuentas")
+    public String doDesactivarCuentas(@RequestParam("usuario") Integer id){
+        gestorService.desactivarCuenta(id);
+        return("redirect:/gestorHome/inactivos");
+    }
+
+    @GetMapping("/cuentasSospechosas")
+    public String getCuentasSospechosas(Model model){
+        return("gestor/gestorSospechosas.jsp");
+    }
+
     private String verInformacionUsuario(List<TransferenciaDTO> transferencias, Model model, Integer id){
         UsuarioDTO usuario = usuarioService.findUsuarioById(id);
         FiltroTransferencias filtro = new FiltroTransferencias();

@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.ebury.dto.UsuarioDTO" %>
-<html>
+<html lang="es">
 <head>
     <title>Gestor</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
@@ -8,7 +8,7 @@
 </head>
 <body>
 <%
-    List<UsuarioDTO> usuarios = (List<UsuarioDTO>) request.getAttribute("usuariosSinAlta");
+    List<UsuarioDTO> usuarios = (List<UsuarioDTO>) request.getAttribute("usuariosInactivos");
 %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -21,13 +21,13 @@
                     <a class="nav-link" href="/gestorHome/">Usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Solicitud de alta</a>
+                    <a class="nav-link" href="gestorAlta">Solicitud de alta</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Transferencias Sospechosas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="inactivos">Usuarios inactivos</a>
+                    <a class="nav-link active" aria-current="page" href="#">Usuarios inactivos</a>
                 </li>
             </ul>
         </div>
@@ -35,10 +35,10 @@
 </nav>
 <br>
 <div class="container card">
-    <h2>Usuarios</h2>
+    <h2>Usuarios Inactivos</h2>
     <div class="d-flex align-items-center justify-content-between">
         <div class="col">
-            <table>
+            <table class="table">
                 <%
                     for(UsuarioDTO usuario: usuarios){
                 %>
@@ -57,8 +57,7 @@
                     </td>
                     <td>
                         <a href="informacionUsuario?usuario=<%=usuario.getId()%>" class="btn btn-primary">Ver información</a>
-                        <a href="darDeAlta?usuario=<%=usuario.getId()%>" class="btn btn-primary">Validar</a>
-                        <a href="denegarAlta?usuario=<%=usuario.getId()%>" class="btn btn-danger">No validar</a>
+                        <a href="desactivarCuenta?usuario=<%=usuario.getId()%>" class="btn btn-danger">Desactivar Cuenta</a>
                     </td>
                 </tr>
                 <%

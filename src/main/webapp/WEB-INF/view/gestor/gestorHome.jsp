@@ -30,7 +30,7 @@
                             <a class="nav-link" href="#">Transferencias Sospechosas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Usuarios inactivos</a>
+                            <a class="nav-link" href="inactivos">Usuarios inactivos</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
