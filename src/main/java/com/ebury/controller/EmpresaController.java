@@ -224,9 +224,10 @@ public class EmpresaController {
     public String doTransferir(@ModelAttribute("newTransferencia") TransferenciaDTO transferenciaDTO, HttpSession session, Model model)
     {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
-        if(!usuarioActual.getAlta())
+        CuentaDTO cuentaDTO = this.cuentaService.findCuentaByIdToDto(transferenciaDTO.getCuentaOrigen().getId());
+        if(!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada"))
         {
-            return getError(model,"Tu cuenta no está activada",session);
+            return getError(model,"Tu cuenta no está activada o tu usuario no ha sido dado de alta aún. Contacta con el gestor de tu empresa.",session);
         }
         try {
             return this.transferenciaService.transferir(transferenciaDTO.getCuentaOrigen().getId(), transferenciaDTO.getCuentaDestino().getId(), transferenciaDTO.getCantidad());

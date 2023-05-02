@@ -52,4 +52,14 @@ public class CuentaService {
         this.cuentaRepository.save(cuenta);
 
     }
+
+    /*
+        Busca la cuenta por el id y devuelve su dto
+        @author Diego
+     */
+    public CuentaDTO findCuentaByIdToDto(Integer id)
+    {
+        CuentaEntity cuenta = this.cuentaRepository.findById(id).orElse(null);
+        return cuenta.toDTO();
+    }
 }
