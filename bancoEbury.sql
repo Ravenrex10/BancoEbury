@@ -137,7 +137,7 @@ DROP TABLE IF EXISTS `Empresa`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Empresa` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cif` int(11) NOT NULL DEFAULT '0',
+  `cif` int(11) NOT NULL DEFAULT '0' unique,
   `nombre` varchar(20) DEFAULT NULL,
   `direccion` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -315,8 +315,8 @@ DROP TABLE IF EXISTS `Usuario`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Usuario` (
   `id` int(11) NOT NULL auto_increment,
-  `nif` int(11) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
+  `nif` int(11) DEFAULT NULL unique,
+  `email` varchar(100) DEFAULT NULL unique,
   `primerNombre` varchar(20) DEFAULT NULL,
   `segundoNombre` varchar(20) DEFAULT NULL,
   `primerApellido` varchar(20) DEFAULT NULL,
