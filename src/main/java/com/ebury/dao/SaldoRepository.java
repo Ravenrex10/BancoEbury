@@ -9,5 +9,7 @@ import java.util.List;
 
 @Repository
 public interface SaldoRepository extends JpaRepository<SaldoEntity, Integer> {
-    public List<SaldoEntity> findAllByCuentaByCuenta_Id(Integer id);
+    List<SaldoEntity> findAllByCuentaByCuenta_Id(Integer id);
+
+    SaldoEntity findSaldoEntityByDivisaByDivisa_IdAndCuentaByCuenta_Id(String divisaId, Integer cuentaId);
 }

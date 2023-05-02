@@ -30,6 +30,16 @@ public class CuentaService {
     }
 
     /*
+        Devuelve todas las cuentas excepto las del usuario pasado por parámetro
+        @author Diego
+     */
+    public List<CuentaDTO> findAllCuentasExceptThisUser(Integer usuario)
+    {
+        List<CuentaEntity> cuentas = this.cuentaRepository.findAllCuentasExceptThisUserById(usuario);
+        return cuentas.stream().map(CuentaEntity::toDTO).collect(Collectors.toList());
+    }
+
+    /*
         Cambia el estado de la cuenta a "SolicitudBloqueada"
         @author Diego
      */

@@ -20,6 +20,9 @@
                 <li>
                     <a class="nav-link" href="cuentas">Tus cuentas</a>
                 </li>
+                <li>
+                    <a class="nav-link" href="/empresa/transferencias">Realizar transferencia</a>
+                </li>
                 <% if (usuarioDTO.getRolName().equals("FundadorEmpresa")) { %>
                 <li class="nav-item">
                     <a class="nav-link" href="fundadorAlta">Solicitud de alta</a>

@@ -2,11 +2,9 @@ package com.ebury.controller;
 
 import com.ebury.dto.CuentaDTO;
 import com.ebury.dto.EmpresaDTO;
+import com.ebury.dto.TransferenciaDTO;
 import com.ebury.dto.UsuarioDTO;
-import com.ebury.service.CuentaService;
-import com.ebury.service.DireccionService;
-import com.ebury.service.EmpresaService;
-import com.ebury.service.UsuarioService;
+import com.ebury.service.*;
 import com.ebury.ui.EmpresaWrapper;
 import com.ebury.ui.FiltroUsuarios;
 import jakarta.servlet.http.HttpSession;
@@ -41,6 +39,9 @@ public class EmpresaController {
 
     @Autowired
     protected CuentaService cuentaService;
+
+    @Autowired
+    protected TransferenciaService transferenciaService;
 
     @GetMapping("/")
     public String getHome(HttpSession session, Model model) {
@@ -194,6 +195,30 @@ public class EmpresaController {
     public String doSolicitudDesbloqueo(@RequestParam("cuenta") Integer id) {
         this.cuentaService.solicitarDesbloqueoCuenta(id);
         return "redirect:/empresa/cuentas";
+    }
+
+    @GetMapping("/transferencias")
+    public String getTransferencias(HttpSession session, Model model)
+    {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuarioActual);
+
+        TransferenciaDTO transferenciaDTO = new TransferenciaDTO();
+        model.addAttribute("newTransferencia",transferenciaDTO);
+
+        List<CuentaDTO> cuentasUsuario = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
+        model.addAttribute("cuentasUsuario",cuentasUsuario);
+
+        List<CuentaDTO> cuentasDestino = this.cuentaService.findAllCuentasExceptThisUser(usuarioActual.getId());
+        model.addAttribute("cuentasDestino",cuentasDestino);
+
+        return "empresa/empresaTransferencia";
+    }
+
+    @PostMapping("/transferir")
+    public String doTransferir(@ModelAttribute("newTransferencia") TransferenciaDTO transferenciaDTO, HttpSession session, Model model)
+    {
+        return this.transferenciaService.transferir(transferenciaDTO.getCuentaOrigen().getId(),transferenciaDTO.getCuentaDestino().getId(),transferenciaDTO.getCantidad(),transferenciaDTO.getDivisaOrigen());
     }
 
     private String getError(Model model, String error, HttpSession session) {
