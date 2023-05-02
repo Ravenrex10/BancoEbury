@@ -35,10 +35,8 @@ public class EmpresaRegisterService {
        @author Diego
      */
     public String makeRegister(EmpresaWrapper empresaWrapper) {
-        //TODO: Control de usuario no repetido
         //TODO: Control de valores nulos
         //TODO: Control de errores
-        //TODO: Usuario asociado
 
         EmpresaDTO e = empresaWrapper.getNewEmpresa();
         DireccionDTO d = empresaWrapper.getNewDireccion();

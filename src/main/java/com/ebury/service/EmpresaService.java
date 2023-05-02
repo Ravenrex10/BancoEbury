@@ -52,8 +52,6 @@ public class EmpresaService {
     /* Modifica el usuario, la dirección y la empresa
     / @author Diego*/
     public String makeEdit(EmpresaWrapper empresaWrapper, HttpSession session) {
-        //TODO: Control de usuario no repetido
-        //TODO: Mensaje de volver a entrar por haber modificado la cuenta
         //TODO: Control de valores nulos
         //TODO: Control de errores
 
