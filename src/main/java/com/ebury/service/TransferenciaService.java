@@ -1,14 +1,9 @@
 package com.ebury.service;
 
-import com.ebury.dao.CuentaRepository;
-import com.ebury.dao.SaldoRepository;
-import com.ebury.dao.TransferenciasRepository;
-import com.ebury.dao.UsuarioRepository;
+import com.ebury.dao.*;
 import com.ebury.dto.TransferenciaDTO;
-import com.ebury.entity.CuentaEntity;
-import com.ebury.entity.SaldoEntity;
-import com.ebury.entity.TransferenciaEntity;
-import com.ebury.entity.UsuarioEntity;
+import com.ebury.entity.*;
+import com.ebury.exceptions.DivisaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +13,17 @@ import java.util.stream.Collectors;
 @Service
 public class TransferenciaService {
     @Autowired
-    TransferenciasRepository transferenciasRepository;
+    protected TransferenciasRepository transferenciasRepository;
     @Autowired
-    CuentaRepository cuentaRepository;
+    protected CuentaRepository cuentaRepository;
     @Autowired
-    SaldoRepository saldoRepository;
+    protected SaldoRepository saldoRepository;
+
+    @Autowired
+    protected DivisaRepository divisaRepository;
+
+    @Autowired
+    protected UsuarioRepository usuarioRepository;
 
     public List<TransferenciaDTO> findAllByUsuarioOrigen(Integer id){
         List<TransferenciaEntity> transferenciaEntities = transferenciasRepository.findAllByUsuarioOrigen(id);
@@ -43,21 +44,42 @@ public class TransferenciaService {
         Transfiere una cantidad de dinero desde una cuenta origen a una cuenta destino
         @author Diego
      */
-    public String transferir(Integer origen, Integer destino,Double cantidad, String divisaId)
+    public String transferir(Integer origen, Integer destino,Double cantidad)
     {
         CuentaEntity cuentaOrigen = this.cuentaRepository.findById(origen).orElse(null);
         CuentaEntity cuentaDestino = this.cuentaRepository.findById(destino).orElse(null);
 
-        SaldoEntity saldoOrigen = this.saldoRepository.findSaldoEntityByDivisaByDivisa_IdAndCuentaByCuenta_Id(divisaId,cuentaOrigen.getId());
-        SaldoEntity saldoDestino = this.saldoRepository.findSaldoEntityByDivisaByDivisa_IdAndCuentaByCuenta_Id(divisaId,cuentaDestino.getId());
+        SaldoEntity saldoOrigen = this.saldoRepository.findSaldoEntityByDivisaByDivisa_IdAndCuentaByCuenta_Id(cuentaOrigen.getId());
+        SaldoEntity saldoDestino = this.saldoRepository.findSaldoEntityByDivisaByDivisa_IdAndCuentaByCuenta_Id(cuentaDestino.getId());
+
+        DivisaEntity divisaOrigen = saldoOrigen.getDivisaByDivisa();
+        DivisaEntity divisaDestino = saldoDestino.getDivisaByDivisa();
+
+        if(!divisaOrigen.getNombre().equals(divisaDestino.getNombre()))
+        {
+            throw new DivisaException();
+        }
 
         saldoOrigen.setCantidad(saldoOrigen.getCantidad() - cantidad);
         saldoDestino.setCantidad(saldoDestino.getCantidad() + cantidad);
 
+        TransferenciaEntity newTransferencia = new TransferenciaEntity();
+        newTransferencia.setCantidad(cantidad);
+        newTransferencia.setFecha(new java.sql.Date(System.currentTimeMillis()));
+        newTransferencia.setCuentaByCuentaOrigen(cuentaOrigen);
+        newTransferencia.setCuentaByCuentaDestino(cuentaDestino);
+        newTransferencia.setDivisaByDivisaOrigen(saldoOrigen.getDivisaByDivisa());
+        newTransferencia.setDivisaByDivisaDestino(saldoDestino.getDivisaByDivisa());
+
+        UsuarioEntity usuarioOrigen = this.usuarioRepository.findById(cuentaOrigen.getUsuarioByDuenyo().getId()).orElse(null);
+        usuarioOrigen.setFechaUltimaOperacion(newTransferencia.getFecha());
+
+        this.transferenciasRepository.save(newTransferencia);
         this.saldoRepository.save(saldoDestino);
         this.saldoRepository.save(saldoOrigen);
         this.cuentaRepository.save(cuentaOrigen);
         this.cuentaRepository.save(cuentaDestino);
+        this.usuarioRepository.save(usuarioOrigen);
 
         return "redirect:/empresa/";
 

@@ -1,5 +1,6 @@
 package com.ebury.dao;
 
+import com.ebury.entity.DivisaEntity;
 import com.ebury.entity.TransferenciaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

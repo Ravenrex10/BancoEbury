@@ -11,8 +11,9 @@ public class UsuarioDTO {
     private String segundoNombre;
     private String primerApellido;
     private Integer empresa;
-
     private String rolName;
+
+    private Boolean alta;
     public Integer getEmpresa() {
         return empresa;
     }
@@ -103,6 +104,14 @@ public class UsuarioDTO {
 
     public void setRolName(String rolName) {
         this.rolName = rolName;
+    }
+
+    public Boolean getAlta() {
+        return alta;
+    }
+
+    public void setAlta(Boolean alta) {
+        this.alta = alta;
     }
 
     // TODO: extender con más campos cuando sea necesario

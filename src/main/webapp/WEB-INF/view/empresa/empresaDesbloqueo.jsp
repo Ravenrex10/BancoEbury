@@ -26,9 +26,6 @@
             <%=c.getIban()%>
             </td>
             <td>
-                <%=c%>
-            </td>
-            <td>
                 <%=c.getEstado()%>
             </td>
             <td>

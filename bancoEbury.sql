@@ -118,13 +118,18 @@ CREATE TABLE `Divisa` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 --
 -- Dumping data for table `Divisa`
 --
 
 LOCK TABLES `Divisa` WRITE;
 /*!40000 ALTER TABLE `Divisa` DISABLE KEYS */;
+INSERT INTO `Divisa` VALUES
+(1,'Dolar',1),
+(2,'Euro',0.91),
+(3,'Yen',136.57),
+(4,'Libra',0.8),
+(5,'Peso mexicano',18.0);
 /*!40000 ALTER TABLE `Divisa` ENABLE KEYS */;
 UNLOCK TABLES;
 

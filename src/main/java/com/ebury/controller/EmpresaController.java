@@ -1,9 +1,11 @@
 package com.ebury.controller;
 
+import com.ebury.dao.DivisaRepository;
 import com.ebury.dto.CuentaDTO;
 import com.ebury.dto.EmpresaDTO;
 import com.ebury.dto.TransferenciaDTO;
 import com.ebury.dto.UsuarioDTO;
+import com.ebury.exceptions.DivisaException;
 import com.ebury.service.*;
 import com.ebury.ui.EmpresaWrapper;
 import com.ebury.ui.FiltroUsuarios;
@@ -42,6 +44,9 @@ public class EmpresaController {
 
     @Autowired
     protected TransferenciaService transferenciaService;
+
+    @Autowired
+    protected DivisaService divisaService;
 
     @GetMapping("/")
     public String getHome(HttpSession session, Model model) {
@@ -218,7 +223,17 @@ public class EmpresaController {
     @PostMapping("/transferir")
     public String doTransferir(@ModelAttribute("newTransferencia") TransferenciaDTO transferenciaDTO, HttpSession session, Model model)
     {
-        return this.transferenciaService.transferir(transferenciaDTO.getCuentaOrigen().getId(),transferenciaDTO.getCuentaDestino().getId(),transferenciaDTO.getCantidad(),transferenciaDTO.getDivisaOrigen());
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        if(!usuarioActual.getAlta())
+        {
+            return getError(model,"Tu cuenta no está activada",session);
+        }
+        try {
+            return this.transferenciaService.transferir(transferenciaDTO.getCuentaOrigen().getId(), transferenciaDTO.getCuentaDestino().getId(), transferenciaDTO.getCantidad());
+        } catch(DivisaException divisaException)
+        {
+            return this.getError(model,"Las divisas entre la cuenta de origen y destino son diferentes. Intenta cambiar de divisa.",session);
+        }
     }
 
     private String getError(Model model, String error, HttpSession session) {

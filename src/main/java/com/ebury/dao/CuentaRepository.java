@@ -14,6 +14,6 @@ public interface CuentaRepository extends JpaRepository<CuentaEntity, Integer> {
     public List<CuentaEntity> findAllByUsuarioByDuenyo(UsuarioEntity usuario);
 
     // Busca todas las cuentas que no sean del usuario id
-    @Query("select c from CuentaEntity c where c.id != :idCuenta")
+    @Query("select c from CuentaEntity c where c.usuarioByDuenyo.id <> :idCuenta")
     public List<CuentaEntity> findAllCuentasExceptThisUserById(@Param("idCuenta") Integer idCuenta);
 }

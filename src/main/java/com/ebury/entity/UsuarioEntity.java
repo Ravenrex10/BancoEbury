@@ -249,6 +249,7 @@ public class UsuarioEntity {
         dto.setRolName(this.getRolByRol().getNombre());
         dto.setFechaNacimiento(this.getFechaNacimiento());
         dto.setContrasenya(this.getContrasenya());
+        dto.setAlta(this.getAlta());
         if(empresaByEmpresa!=null){
             dto.setEmpresa(empresaByEmpresa.getId());
         }else{
