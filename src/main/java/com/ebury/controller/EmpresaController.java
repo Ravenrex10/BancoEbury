@@ -1,10 +1,7 @@
 package com.ebury.controller;
 
 import com.ebury.dao.DivisaRepository;
-import com.ebury.dto.CuentaDTO;
-import com.ebury.dto.EmpresaDTO;
-import com.ebury.dto.TransferenciaDTO;
-import com.ebury.dto.UsuarioDTO;
+import com.ebury.dto.*;
 import com.ebury.exceptions.DivisaException;
 import com.ebury.service.*;
 import com.ebury.ui.EmpresaWrapper;
@@ -48,6 +45,8 @@ public class EmpresaController {
     @Autowired
     protected DivisaService divisaService;
 
+    @Autowired
+    protected SaldoService saldoService;
     @GetMapping("/")
     public String getHome(HttpSession session, Model model) {
         model.addAttribute("usuario", session.getAttribute("usuario"));
@@ -193,6 +192,14 @@ public class EmpresaController {
 
         List<CuentaDTO> cuentasUsuario = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
         model.addAttribute("cuentasUsuario", cuentasUsuario);
+
+        List<SaldoDTO> saldos = new ArrayList<>();
+        for(CuentaDTO c : cuentasUsuario)
+        {
+            saldos.addAll(this.saldoService.findAllSaldosByCuenta(c.getId()));
+        }
+        model.addAttribute("saldos",saldos);
+
         return "empresa/empresaDesbloqueo";
     }
 

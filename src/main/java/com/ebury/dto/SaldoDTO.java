@@ -4,6 +4,8 @@ public class SaldoDTO {
     private double cantidad;
     private String divisa;
 
+    private CuentaDTO cuenta;
+
     public double getCantidad() {
         return cantidad;
     }
@@ -18,5 +20,13 @@ public class SaldoDTO {
 
     public void setDivisa(String divisa) {
         this.divisa = divisa;
+    }
+
+    public CuentaDTO getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(CuentaDTO cuenta) {
+        this.cuenta = cuenta;
     }
 }

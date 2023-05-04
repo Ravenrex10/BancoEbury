@@ -77,6 +77,7 @@ public class SaldoEntity {
         SaldoDTO dto = new SaldoDTO();
         dto.setDivisa(divisaByDivisa.getNombre());
         dto.setCantidad(cantidad);
+        dto.setCuenta(cuentaByCuenta.toDTO());
         return dto;
     }
 }
