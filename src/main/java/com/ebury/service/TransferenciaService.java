@@ -7,6 +7,7 @@ import com.ebury.exceptions.DivisaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,5 +85,20 @@ public class TransferenciaService {
         return "redirect:/empresa/";
 
 
+    }
+
+    /*
+        Devuelve todas las transferencias de una empresa
+        @author Diego
+     */
+    public List<TransferenciaDTO> findAllTransferenciasFromAEmpresa(Integer idEmpresa)
+    {
+        List<TransferenciaDTO> res = new ArrayList<>();
+        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllByEmpresaId(idEmpresa);
+        for(TransferenciaEntity t : transferencias)
+        {
+            res.add(t.toDTO());
+        }
+        return res;
     }
 }

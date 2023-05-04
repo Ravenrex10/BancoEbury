@@ -20,4 +20,8 @@ public interface TransferenciasRepository extends JpaRepository<TransferenciaEnt
 
     @Query("select t from TransferenciaEntity  t where t.cuentaByCuentaDestino.usuarioByDuenyo.id = :id")
     public List<TransferenciaEntity> findAllByUsuarioDestino(Integer id);
+
+    // Busca todas las transfencias de una empresa @author Diego
+    @Query("select t from TransferenciaEntity t where t.cuentaByCuentaOrigen.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa OR t.cuentaByCuentaDestino.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa")
+    List<TransferenciaEntity> findAllByEmpresaId(@Param("idEmpresa") Integer idEmpresa);
 }

@@ -5,6 +5,7 @@ import com.ebury.dto.*;
 import com.ebury.exceptions.DivisaException;
 import com.ebury.service.*;
 import com.ebury.ui.EmpresaWrapper;
+import com.ebury.ui.FiltroTransferencias;
 import com.ebury.ui.FiltroUsuarios;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,7 @@ public class EmpresaController {
 
     @Autowired
     protected SaldoService saldoService;
+
     @GetMapping("/")
     public String getHome(HttpSession session, Model model) {
         model.addAttribute("usuario", session.getAttribute("usuario"));
@@ -194,11 +196,10 @@ public class EmpresaController {
         model.addAttribute("cuentasUsuario", cuentasUsuario);
 
         List<SaldoDTO> saldos = new ArrayList<>();
-        for(CuentaDTO c : cuentasUsuario)
-        {
+        for (CuentaDTO c : cuentasUsuario) {
             saldos.addAll(this.saldoService.findAllSaldosByCuenta(c.getId()));
         }
-        model.addAttribute("saldos",saldos);
+        model.addAttribute("saldos", saldos);
 
         return "empresa/empresaDesbloqueo";
     }
@@ -210,38 +211,49 @@ public class EmpresaController {
     }
 
     @GetMapping("/transferencias")
-    public String getTransferencias(HttpSession session, Model model)
-    {
+    public String getTransferencias(HttpSession session, Model model) {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
         model.addAttribute("usuario", usuarioActual);
 
         TransferenciaDTO transferenciaDTO = new TransferenciaDTO();
-        model.addAttribute("newTransferencia",transferenciaDTO);
+        model.addAttribute("newTransferencia", transferenciaDTO);
 
         List<CuentaDTO> cuentasUsuario = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
-        model.addAttribute("cuentasUsuario",cuentasUsuario);
+        model.addAttribute("cuentasUsuario", cuentasUsuario);
 
         List<CuentaDTO> cuentasDestino = this.cuentaService.findAllCuentasExceptThisUser(usuarioActual.getId());
-        model.addAttribute("cuentasDestino",cuentasDestino);
+        model.addAttribute("cuentasDestino", cuentasDestino);
 
         return "empresa/empresaTransferencia";
     }
 
     @PostMapping("/transferir")
-    public String doTransferir(@ModelAttribute("newTransferencia") TransferenciaDTO transferenciaDTO, HttpSession session, Model model)
-    {
+    public String doTransferir(@ModelAttribute("newTransferencia") TransferenciaDTO transferenciaDTO, HttpSession session, Model model) {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
         CuentaDTO cuentaDTO = this.cuentaService.findCuentaByIdToDto(transferenciaDTO.getCuentaOrigen().getId());
-        if(!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada"))
-        {
-            return getError(model,"Tu cuenta no está activada o tu usuario no ha sido dado de alta aún. Contacta con el gestor de tu empresa.",session);
+        if (!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada")) {
+            return getError(model, "Tu cuenta no está activada o tu usuario no ha sido dado de alta aún. Contacta con el gestor de tu empresa.", session);
         }
         try {
             return this.transferenciaService.transferir(transferenciaDTO.getCuentaOrigen().getId(), transferenciaDTO.getCuentaDestino().getId(), transferenciaDTO.getCantidad());
-        } catch(DivisaException divisaException)
-        {
-            return this.getError(model,"Las divisas entre la cuenta de origen y destino son diferentes. Intenta cambiar de divisa.",session);
+        } catch (DivisaException divisaException) {
+            return this.getError(model, "Las divisas entre la cuenta de origen y destino son diferentes. Intenta cambiar de divisa.", session);
         }
+    }
+
+    @GetMapping("/listaTransferencias")
+    public String getListaTransferencias(HttpSession session, Model model) {
+        return (listarTransferencias(model, null, session));
+    }
+
+    private String listarTransferencias(Model model, FiltroTransferencias filtro, HttpSession session)
+    {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuarioActual);
+
+        List<TransferenciaDTO> transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresa(usuarioActual.getEmpresa());
+        model.addAttribute("transferencias",transferenciaDTOS);
+        return("empresa/empresaListaTransferencias");
     }
 
     private String getError(Model model, String error, HttpSession session) {

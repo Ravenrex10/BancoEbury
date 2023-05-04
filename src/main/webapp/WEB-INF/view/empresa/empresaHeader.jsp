@@ -21,16 +21,22 @@
                     <a class="nav-link" href="cuentas">Tus cuentas</a>
                 </li>
                 <li>
+                    <a class="nav-link" href="/empresa/listaTransferencias">Lista de transferencias</a>
+                </li>
+                <li>
                     <a class="nav-link" href="/empresa/transferencias">Realizar transferencia</a>
+                </li>
+                <li>
+                    <a class="nav-link">Cambio de divisas (TODO)</a>
                 </li>
                 <% if (usuarioDTO.getRolName().equals("FundadorEmpresa")) { %>
                 <li class="nav-item">
-                    <a class="nav-link" href="fundadorAlta">Solicitud de alta</a>
+                    <a class="nav-link" href="fundadorAlta">Registrar Socio/Autorizado</a>
                 </li>
                 <% }; %>
                 <% if(usuarioDTO.getRolName().equals("FundadorEmpresa") || usuarioDTO.getRolName().equals("SocioEmpresa")) { %>
                 <li class="nav-item">
-                    <a class="nav-link" href="listaUsuarios">Socios/Autorizados</a>
+                    <a class="nav-link" href="listaUsuarios">Lista de Socios/Autorizados</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="bloquearUsuarios">Bloquear usuarios</a>
