@@ -11,6 +11,7 @@ import com.ebury.entity.UsuarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,5 +62,20 @@ public class CuentaService {
     {
         CuentaEntity cuenta = this.cuentaRepository.findById(id).orElse(null);
         return cuenta.toDTO();
+    }
+
+    /*
+        Busca todas las cuentas de una empresa
+        @author Diego
+     */
+
+    public List<CuentaDTO> findAllCuentasByEmpresa(Integer idEmpresa) {
+        List<CuentaEntity> cuentaEntities = this.cuentaRepository.findAllByEmpresaId(idEmpresa);
+        List<CuentaDTO> res = new ArrayList<>();
+        for(CuentaEntity c : cuentaEntities)
+        {
+            res.add(c.toDTO());
+        }
+        return res;
     }
 }

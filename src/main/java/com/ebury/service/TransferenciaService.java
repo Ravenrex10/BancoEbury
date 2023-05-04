@@ -101,4 +101,19 @@ public class TransferenciaService {
         }
         return res;
     }
+
+     /*
+        Devuelve todas las transferencias de una empresa cuya divisa y usuario equivalen a los parámetros. Orden fecha descendente.
+        @author Diego
+     */
+
+    public List<TransferenciaDTO> findAllTransferenciasFromAEmpresaByDivisaAndUsuarioIdOrderDesc(Integer idEmpresa, String divisa, Integer cuentaId) {
+        List<TransferenciaDTO> res = new ArrayList<>();
+        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAEmpresaByDivisaAndUsuarioIdOrderDesc(idEmpresa,divisa,cuentaId);
+        for(TransferenciaEntity t : transferencias)
+        {
+            res.add(t.toDTO());
+        }
+        return res;
+    }
 }

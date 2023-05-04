@@ -251,9 +251,47 @@ public class EmpresaController {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
         model.addAttribute("usuario", usuarioActual);
 
-        List<TransferenciaDTO> transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresa(usuarioActual.getEmpresa());
-        model.addAttribute("transferencias",transferenciaDTOS);
+        if(filtro == null || filtro.getDivisa().equals("0") && filtro.getUsuario().equals(0) && filtro.getOrdenPorFecha().equals("Ascendente"))
+        {
+            FiltroTransferencias newFiltro = new FiltroTransferencias();
+            List<TransferenciaDTO> transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresa(usuarioActual.getEmpresa());
+            newFiltro.setDivisa("0");
+            newFiltro.setCuenta(0);
+            newFiltro.setOrdenPorFecha("Ascendente");
+            model.addAttribute("transferencias",transferenciaDTOS);
+            model.addAttribute("newFiltro",newFiltro);
+        }
+        else{
+            List<TransferenciaDTO> transferenciaDTOS = new ArrayList<>();
+            if(!filtro.getDivisa().equals("0"))
+            {
+                if(!filtro.getCuenta().equals(0))
+                {
+                    if(filtro.getOrdenPorFecha().equals("Descendente"))
+                    {
+                       transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaAndUsuarioIdOrderDesc(usuarioActual.getEmpresa(),filtro.getDivisa(),filtro.getCuenta());
+                    }
+                }
+            }
+            model.addAttribute("transferencias",transferenciaDTOS);
+        }
+        List<String> orden = new ArrayList<>();
+        orden.add("Ascendente");
+        orden.add("Descendente");
+        model.addAttribute("orden",orden);
+
+        List<String> divisas = this.divisaService.findAllDivisaNames();
+        model.addAttribute("divisas",divisas);
+
+        List<CuentaDTO> cuentaDTOS = this.cuentaService.findAllCuentasByEmpresa(usuarioActual.getEmpresa());
+        model.addAttribute("cuentasDTOS",cuentaDTOS);
         return("empresa/empresaListaTransferencias");
+    }
+
+    @PostMapping("/filtrarTransferencias")
+    public String doFiltrarTransferencias(@ModelAttribute("newFiltro") FiltroTransferencias filtro, Model model, HttpSession session)
+    {
+        return listarTransferencias(model,filtro,session);
     }
 
     private String getError(Model model, String error, HttpSession session) {

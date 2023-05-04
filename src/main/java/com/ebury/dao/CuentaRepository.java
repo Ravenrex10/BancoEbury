@@ -13,7 +13,11 @@ import java.util.List;
 public interface CuentaRepository extends JpaRepository<CuentaEntity, Integer> {
     public List<CuentaEntity> findAllByUsuarioByDuenyo(UsuarioEntity usuario);
 
-    // Busca todas las cuentas que no sean del usuario id
+    // Busca todas las cuentas que no sean del usuario id @author Diego
     @Query("select c from CuentaEntity c where c.usuarioByDuenyo.id <> :idCuenta")
     public List<CuentaEntity> findAllCuentasExceptThisUserById(@Param("idCuenta") Integer idCuenta);
+
+    // Devuelve todas las cuentas que sean de una empresa @author Diego
+    @Query("select c from CuentaEntity c  where c.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa")
+    List<CuentaEntity> findAllByEmpresaId(@Param("idEmpresa") Integer idEmpresa);
 }
