@@ -88,7 +88,7 @@ public class TransferenciaService {
     }
 
     /*
-        Devuelve todas las transferencias de una empresa
+        Devuelve todas las transferencias de una empresa en orden ascendente
         @author Diego
      */
     public List<TransferenciaDTO> findAllTransferenciasFromAEmpresa(Integer idEmpresa)
@@ -102,12 +102,26 @@ public class TransferenciaService {
         return res;
     }
 
+    /*
+        Devuelve todas las transferencias de una empresa en orden descendente
+        @author Diego
+     */
+    public List<TransferenciaDTO> findAllTransferenciasFromAEmpresaOrderDesc(Integer idEmpresa) {
+        List<TransferenciaDTO> res = new ArrayList<>();
+        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllByEmpresaIdOrderByDesc(idEmpresa);
+        for(TransferenciaEntity t : transferencias)
+        {
+            res.add(t.toDTO());
+        }
+        return res;
+    }
+
      /*
-        Devuelve todas las transferencias de una empresa cuya divisa y usuario equivalen a los parámetros. Orden fecha descendente.
+        Devuelve todas las transferencias de una empresa cuya divisa y id de cuenta equivalen a los parámetros. Orden fecha descendente.
         @author Diego
      */
 
-    public List<TransferenciaDTO> findAllTransferenciasFromAEmpresaByDivisaAndUsuarioIdOrderDesc(Integer idEmpresa, String divisa, Integer cuentaId) {
+    public List<TransferenciaDTO> findAllTransferenciasFromAEmpresaByDivisaAndCuentaIdOrderDesc(Integer idEmpresa, String divisa, Integer cuentaId) {
         List<TransferenciaDTO> res = new ArrayList<>();
         List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAEmpresaByDivisaAndUsuarioIdOrderDesc(idEmpresa,divisa,cuentaId);
         for(TransferenciaEntity t : transferencias)
@@ -116,4 +130,71 @@ public class TransferenciaService {
         }
         return res;
     }
+         /*
+        Devuelve todas las transferencias de una empresa cuya divisa y id de cuenta equivalen a los parámetros. Orden fecha ascendente.
+        @author Diego
+     */
+
+    public List<TransferenciaDTO> findAllTransferenciasFromAEmpresaByDivisaAndCuentaIdOrderAsc(Integer idEmpresa, String divisa, Integer cuentaId) {
+        List<TransferenciaDTO> res = new ArrayList<>();
+        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAEmpresaByDivisaAndUsuarioIdOrderAsc(idEmpresa,divisa,cuentaId);
+        for(TransferenciaEntity t : transferencias)
+        {
+            res.add(t.toDTO());
+        }
+        return res;
+    }
+    /*
+   Devuelve todas las transferencias de una empresa cuya divisa equivalen a los parámetros. Orden fecha descendente.
+   @author Diego
+*/
+    public List<TransferenciaDTO> findAllTransferenciasFromAEmpresaByDivisaOrderDesc(Integer idEmpresa, String divisa) {
+        List<TransferenciaDTO> res = new ArrayList<>();
+        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAEmpresaByDivisaOrderDesc(idEmpresa,divisa);
+        for(TransferenciaEntity t : transferencias)
+        {
+            res.add(t.toDTO());
+        }
+        return res;
+    }
+    /*
+   Devuelve todas las transferencias de una empresa cuya divisa equivalen a los parámetros. Orden fecha ascendente.
+   @author Diego
+*/
+    public List<TransferenciaDTO> findAllTransferenciasFromAEmpresaByDivisaOrderAsc(Integer idEmpresa, String divisa) {
+        List<TransferenciaDTO> res = new ArrayList<>();
+        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAEmpresaByDivisaOrderAsc(idEmpresa,divisa);
+        for(TransferenciaEntity t : transferencias)
+        {
+            res.add(t.toDTO());
+        }
+        return res;
+    }
+    /*
+   Devuelve todas las transferencias de una empresa cuyo id de cuenta equivalen a los parámetros. Orden fecha descendente.
+   @author Diego
+*/
+    public List<TransferenciaDTO> findAllTransferenciasFromAEmpresaByCuentaIdOrderDesc(Integer idEmpresa, Integer cuentaId) {
+        List<TransferenciaDTO> res = new ArrayList<>();
+        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAEmpresaByUsuarioIdOrderDesc(idEmpresa,cuentaId);
+        for(TransferenciaEntity t : transferencias)
+        {
+            res.add(t.toDTO());
+        }
+        return res;
+    }
+    /*
+   Devuelve todas las transferencias de una empresa cuyo id de cuenta equivalen a los parámetros. Orden fecha ascendente.
+   @author Diego
+*/
+    public List<TransferenciaDTO> findAllTransferenciasFromAEmpresaByCuentaIdOrderAsc(Integer idEmpresa, Integer cuentaId) {
+        List<TransferenciaDTO> res = new ArrayList<>();
+        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAEmpresaByUsuarioIdOrderAsc(idEmpresa,cuentaId);
+        for(TransferenciaEntity t : transferencias)
+        {
+            res.add(t.toDTO());
+        }
+        return res;
+    }
+
 }

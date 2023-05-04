@@ -21,11 +21,35 @@ public interface TransferenciasRepository extends JpaRepository<TransferenciaEnt
     @Query("select t from TransferenciaEntity  t where t.cuentaByCuentaDestino.usuarioByDuenyo.id = :id")
     public List<TransferenciaEntity> findAllByUsuarioDestino(Integer id);
 
-    // Busca todas las transfencias de una empresa @author Diego
-    @Query("select t from TransferenciaEntity t where t.cuentaByCuentaOrigen.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa OR t.cuentaByCuentaDestino.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa")
+    // Busca todas las transfencias de una empresa ordenadas por fecha ascendente @author Diego
+    @Query("select t from TransferenciaEntity t where t.cuentaByCuentaOrigen.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa OR t.cuentaByCuentaDestino.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa ORDER BY t.fecha ASC")
     List<TransferenciaEntity> findAllByEmpresaId(@Param("idEmpresa") Integer idEmpresa);
 
-    // Busca todas las transfencias de una empresa, un usuario y una divisa en orden de fecha descendente @author Diego
+    // Busca todas las transfencias de una empresa ordenadas por fecha descendente @author Diego
+    @Query("select t from TransferenciaEntity t where t.cuentaByCuentaOrigen.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa OR t.cuentaByCuentaDestino.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa ORDER BY t.fecha DESC")
+    List<TransferenciaEntity> findAllByEmpresaIdOrderByDesc(@Param("idEmpresa") Integer idEmpresa);
+
+    // Busca todas las transfencias de una empresa, una cuenta y una divisa en orden de fecha descendente @author Diego
     @Query("select t from TransferenciaEntity t where (t.cuentaByCuentaOrigen.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa OR t.cuentaByCuentaDestino.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa) AND (t.divisaByDivisaOrigen.nombre = :divisa) AND (t.cuentaByCuentaOrigen.id = :idCuenta OR t.cuentaByCuentaDestino.id = :idCuenta) ORDER BY t.fecha DESC ")
     List<TransferenciaEntity> findAllTransferenciasFromAEmpresaByDivisaAndUsuarioIdOrderDesc(@Param("idEmpresa") Integer idEmpresa, @Param("divisa") String divisa, @Param("idCuenta") Integer idCuenta);
+
+    // Busca todas las transfencias de una empresa, una cuenta y una divisa en orden de fecha ascendente @author Diego
+    @Query("select t from TransferenciaEntity t where (t.cuentaByCuentaOrigen.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa OR t.cuentaByCuentaDestino.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa) AND (t.divisaByDivisaOrigen.nombre = :divisa) AND (t.cuentaByCuentaOrigen.id = :idCuenta OR t.cuentaByCuentaDestino.id = :idCuenta) ORDER BY t.fecha ASC ")
+    List<TransferenciaEntity> findAllTransferenciasFromAEmpresaByDivisaAndUsuarioIdOrderAsc(@Param("idEmpresa") Integer idEmpresa, @Param("divisa") String divisa, @Param("idCuenta") Integer idCuenta);
+
+    // Busca todas las transfencias de una empresa y una divisa en orden de fecha descendente @author Diego
+    @Query("select t from TransferenciaEntity t where (t.cuentaByCuentaOrigen.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa OR t.cuentaByCuentaDestino.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa) AND (t.divisaByDivisaOrigen.nombre = :divisa) ORDER BY t.fecha DESC ")
+    List<TransferenciaEntity> findAllTransferenciasFromAEmpresaByDivisaOrderDesc(@Param("idEmpresa") Integer idEmpresa, @Param("divisa") String divisa);
+
+    // Busca todas las transfencias de una empresa y una divisa en orden de fecha ascendente @author Diego
+    @Query("select t from TransferenciaEntity t where (t.cuentaByCuentaOrigen.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa OR t.cuentaByCuentaDestino.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa) AND (t.divisaByDivisaOrigen.nombre = :divisa) ORDER BY t.fecha ASC ")
+    List<TransferenciaEntity> findAllTransferenciasFromAEmpresaByDivisaOrderAsc(@Param("idEmpresa") Integer idEmpresa, @Param("divisa") String divisa);
+
+    // Busca todas las transfencias de una empresa y una cuenta en orden de fecha descendente @author Diego
+    @Query("select t from TransferenciaEntity t where (t.cuentaByCuentaOrigen.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa OR t.cuentaByCuentaDestino.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa) AND (t.cuentaByCuentaOrigen.id = :idCuenta OR t.cuentaByCuentaDestino.id = :idCuenta) ORDER BY t.fecha DESC ")
+    List<TransferenciaEntity> findAllTransferenciasFromAEmpresaByUsuarioIdOrderDesc(@Param("idEmpresa") Integer idEmpresa, @Param("idCuenta") Integer idCuenta);
+
+    // Busca todas las transfencias de una empresa y una cuenta en orden de fecha ascendente @author Diego
+    @Query("select t from TransferenciaEntity t where (t.cuentaByCuentaOrigen.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa OR t.cuentaByCuentaDestino.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa) AND (t.cuentaByCuentaOrigen.id = :idCuenta OR t.cuentaByCuentaDestino.id = :idCuenta) ORDER BY t.fecha ASC ")
+    List<TransferenciaEntity> findAllTransferenciasFromAEmpresaByUsuarioIdOrderAsc(@Param("idEmpresa") Integer idEmpresa, @Param("idCuenta") Integer idCuenta);
 }

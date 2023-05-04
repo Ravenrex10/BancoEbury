@@ -1,6 +1,5 @@
 package com.ebury.controller;
 
-import com.ebury.dao.DivisaRepository;
 import com.ebury.dto.*;
 import com.ebury.exceptions.DivisaException;
 import com.ebury.service.*;
@@ -246,52 +245,64 @@ public class EmpresaController {
         return (listarTransferencias(model, null, session));
     }
 
-    private String listarTransferencias(Model model, FiltroTransferencias filtro, HttpSession session)
-    {
+    private String listarTransferencias(Model model, FiltroTransferencias filtro, HttpSession session) {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
         model.addAttribute("usuario", usuarioActual);
 
-        if(filtro == null || filtro.getDivisa().equals("0") && filtro.getUsuario().equals(0) && filtro.getOrdenPorFecha().equals("Ascendente"))
-        {
+        if (filtro == null || filtro.getDivisa().equals("0") && filtro.getCuenta().equals(0) && filtro.getOrdenPorFecha().equals("Ascendente")) {
             FiltroTransferencias newFiltro = new FiltroTransferencias();
             List<TransferenciaDTO> transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresa(usuarioActual.getEmpresa());
             newFiltro.setDivisa("0");
             newFiltro.setCuenta(0);
             newFiltro.setOrdenPorFecha("Ascendente");
-            model.addAttribute("transferencias",transferenciaDTOS);
-            model.addAttribute("newFiltro",newFiltro);
-        }
-        else{
+            model.addAttribute("transferencias", transferenciaDTOS);
+            model.addAttribute("newFiltro", newFiltro);
+        } else {
             List<TransferenciaDTO> transferenciaDTOS = new ArrayList<>();
-            if(!filtro.getDivisa().equals("0"))
-            {
-                if(!filtro.getCuenta().equals(0))
-                {
-                    if(filtro.getOrdenPorFecha().equals("Descendente"))
-                    {
-                       transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaAndUsuarioIdOrderDesc(usuarioActual.getEmpresa(),filtro.getDivisa(),filtro.getCuenta());
+            if (!filtro.getDivisa().equals("0")) {
+                if (!filtro.getCuenta().equals(0)) {
+                    if (filtro.getOrdenPorFecha().equals("Descendente")) {
+                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaAndCuentaIdOrderDesc(usuarioActual.getEmpresa(), filtro.getDivisa(), filtro.getCuenta());
+                    } else {
+                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaAndCuentaIdOrderAsc(usuarioActual.getEmpresa(), filtro.getDivisa(), filtro.getCuenta());
+                    }
+                } else {
+                    if (filtro.getOrdenPorFecha().equals("Descendente")) {
+                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaOrderDesc(usuarioActual.getEmpresa(), filtro.getDivisa());
+                    } else {
+                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaOrderAsc(usuarioActual.getEmpresa(), filtro.getDivisa());
                     }
                 }
+
+            } else if (!filtro.getCuenta().equals(0)) {
+                if (filtro.getOrdenPorFecha().equals("Descendente")) {
+                    transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByCuentaIdOrderDesc(usuarioActual.getEmpresa(), filtro.getCuenta());
+                } else {
+                    transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByCuentaIdOrderAsc(usuarioActual.getEmpresa(), filtro.getCuenta());
+                }
             }
-            model.addAttribute("transferencias",transferenciaDTOS);
+            else {
+                transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaOrderDesc(usuarioActual.getEmpresa());
+            }
+            model.addAttribute("transferencias", transferenciaDTOS);
+            model.addAttribute("newFiltro", filtro);
         }
         List<String> orden = new ArrayList<>();
         orden.add("Ascendente");
         orden.add("Descendente");
-        model.addAttribute("orden",orden);
+        model.addAttribute("orden", orden);
 
         List<String> divisas = this.divisaService.findAllDivisaNames();
-        model.addAttribute("divisas",divisas);
+        model.addAttribute("divisas", divisas);
 
         List<CuentaDTO> cuentaDTOS = this.cuentaService.findAllCuentasByEmpresa(usuarioActual.getEmpresa());
-        model.addAttribute("cuentasDTOS",cuentaDTOS);
-        return("empresa/empresaListaTransferencias");
+        model.addAttribute("cuentasDTOS", cuentaDTOS);
+        return ("empresa/empresaListaTransferencias");
     }
 
     @PostMapping("/filtrarTransferencias")
-    public String doFiltrarTransferencias(@ModelAttribute("newFiltro") FiltroTransferencias filtro, Model model, HttpSession session)
-    {
-        return listarTransferencias(model,filtro,session);
+    public String doFiltrarTransferencias(@ModelAttribute("newFiltro") FiltroTransferencias filtro, Model model, HttpSession session) {
+        return listarTransferencias(model, filtro, session);
     }
 
     private String getError(Model model, String error, HttpSession session) {
