@@ -280,8 +280,7 @@ public class EmpresaController {
                 } else {
                     transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByCuentaIdOrderAsc(usuarioActual.getEmpresa(), filtro.getCuenta());
                 }
-            }
-            else {
+            } else {
                 transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaOrderDesc(usuarioActual.getEmpresa());
             }
             model.addAttribute("transferencias", transferenciaDTOS);
