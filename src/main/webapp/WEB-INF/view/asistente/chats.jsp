@@ -18,8 +18,8 @@
 <h1>Chats</h1>
 <form:form action="/filtrarChats" modelAttribute="filtro" method="post">
     Ordenar por: <form:select path="criterioOrdenacion">
-        <form:option value="fechaCreacion">Fecha de creación</form:option>
-        <form:option value="fechaUltimoMensaje">Fecha del último mensaje</form:option>
+        <form:option value="ascendente">Fecha de creación ascendente</form:option>
+        <form:option value="descendente">Fecha de creación descendente</form:option>
     </form:select>
     Mostrar chats cerrados<form:checkbox path="mostrarCerrados" value="true"/>
     Mostrar solo mis chats<form:checkbox path="mostrarSoloPropios" value="true"/>

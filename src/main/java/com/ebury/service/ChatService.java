@@ -8,6 +8,7 @@ import com.ebury.dto.MensajeDTO;
 import com.ebury.entity.ChatEntity;
 import com.ebury.entity.MensajeEntity;
 import com.ebury.entity.UsuarioEntity;
+import com.ebury.ui.FiltroChats;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,6 +91,7 @@ public class ChatService {
             boolean enviadoPorUsuarioActual = mensajeEnviadoPor(chat, mensaje, usuarioActualId);
             MensajeDTO mensajeDTO = mensaje.toDto();
             mensajeDTO.setEnviadoPorUsuarioActual(enviadoPorUsuarioActual);
+
             mensajeDTOs.add(mensajeDTO);
         }
         return mensajeDTOs;
@@ -104,8 +106,7 @@ public class ChatService {
         if (usuario == null) return false;
         ChatEntity chat = chatRepository.findById(chatId).orElse(null);
         if (chat == null) return false;
-        return usuario.getRolByRol().getNombre().equals("Asistente") || chat.getUsuarioByClienteA().getId() == usuarioId
-                || chat.getUsuarioByClienteB().getId() == usuarioId;
+        return usuario.getRolByRol().getNombre().equals("Asistente") || usuarioParticipaEnChat(usuario, chat);
     }
 
     public boolean usuarioPuedeEnviarMensajeAChat(int usuarioId, int chatId) {
@@ -113,8 +114,12 @@ public class ChatService {
         if (usuario == null) return false;
         ChatEntity chat = chatRepository.findById(chatId).orElse(null);
         if (chat == null) return false;
-        return !chat.getCerrado() && (chat.getUsuarioByClienteA().getId() == usuarioId
-                || chat.getUsuarioByClienteB().getId() == usuarioId);
+        return !chat.getCerrado() && usuarioParticipaEnChat(usuario, chat);
+    }
+
+    private boolean usuarioParticipaEnChat(UsuarioEntity usuario, ChatEntity chat) {
+        return chat.getUsuarioByClienteA().getId() == usuario.getId() ||
+                chat.getUsuarioByClienteB().getId() == usuario.getId();
     }
 
     private boolean mensajeEnviadoPor(ChatEntity chat, MensajeEntity mensaje, int usuarioId) {
@@ -128,4 +133,21 @@ public class ChatService {
         chat.setCerrado(true);
         chatRepository.save(chat);
     }
+
+    public List<ChatDTO> filtrarChats(FiltroChats filtro, int usuarioId) {
+        UsuarioEntity usuario = usuarioRepository.findById(usuarioId).orElse(null);
+        List<ChatEntity> chats;
+
+        if (filtro.getCriterioOrdenacion().equals("ascendente")) {
+            chats = chatRepository.findAllByOrderByIdAsc();
+        } else {
+            chats = chatRepository.findAllByOrderByIdDesc();
+        }
+
+        return chats.stream()
+                .filter(chat -> !filtro.isMostrarCerrados() || !chat.getCerrado())
+                .filter(chat -> !filtro.isMostrarSoloPropios() || usuarioParticipaEnChat(usuario, chat))
+                .map(ChatEntity::toDTO).toList();
+    }
+
 }
