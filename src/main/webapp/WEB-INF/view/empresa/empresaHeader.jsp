@@ -45,7 +45,7 @@
             </ul>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item ms-auto me-auto">
-                    <a class="nav-link" href="/logout">Cerrar sesión</a>
+                    <a class="nav-link link-danger" href="/logout">Cerrar sesión</a>
                 </li>
             </ul>
 

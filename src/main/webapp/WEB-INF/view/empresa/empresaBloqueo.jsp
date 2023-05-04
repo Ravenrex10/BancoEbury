@@ -21,8 +21,8 @@
         Elija al usuario que desee bloquear:
     </h2>
     <form:form modelAttribute="blockUser" method="post" action="/empresa/bloquear">
-        <form:select path="id" itemLabel="email" itemValue="id" items="${listaUsuarios}"></form:select>
-        <form:button type="submit">Bloquear</form:button>
+        <form:select path="id" itemLabel="email" itemValue="id" items="${listaUsuarios}"></form:select><br><br>
+        <form:button type="submit" class="btn btn-danger">Bloquear</form:button>
     </form:form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

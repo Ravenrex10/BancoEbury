@@ -22,7 +22,7 @@
                 <form:option value="0" label=" "></form:option>
                 <form:options items="${rolesList}"></form:options>
             </form:select>
-            <form:button type="submit">Filtrar</form:button>
+            <form:button type="submit" class="btn btn-primary">Filtrar</form:button>
         </form:form>
     </div>
     <div class = "container">

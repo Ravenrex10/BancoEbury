@@ -36,7 +36,7 @@
         Email (*): <form:input path="newUsuario.email"></form:input><br>
         Contraseña (*): <form:input path="newUsuario.contrasenya" type="password"></form:input>
 
-        <input type="submit" value="Submit">
+        <form:button type="submit" value="Submit" class="btn btn-primary">Editar</form:button>
     </form:form>
 
 </div>

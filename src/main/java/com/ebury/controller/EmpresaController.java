@@ -51,6 +51,8 @@ public class EmpresaController {
     @GetMapping("/")
     public String getHome(HttpSession session, Model model) {
         model.addAttribute("usuario", session.getAttribute("usuario"));
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("empresa",this.empresaService.findById(usuarioActual.getEmpresa()));
         return "empresa/empresaHome";
     }
 

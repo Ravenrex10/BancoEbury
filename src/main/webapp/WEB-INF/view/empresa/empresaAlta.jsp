@@ -28,8 +28,8 @@
     </form:select><br>
         Fecha de nacimiento: <form:input type="date" path="fechaNacimiento"></form:input><br>
         Email: <form:input path="email"></form:input><br>
-        Contraseña: <form:input path="contrasenya" type="password"></form:input>
-        <input type="submit" value="Submit">
+        Contraseña: <form:input path="contrasenya" type="password"></form:input><br>
+        <form:button class="btn btn-primary" type="submit" value="Submit">Solicitar alta</form:button>
 
     </form:form>
 
