@@ -38,15 +38,17 @@
     </tr>
     <% } %>
     <h3>Necesitas ayuda? Solicita un chat con un asistente:</h3>
-    <form action="/nuevoChat" method="post">
+    <%-- <form action="/nuevoChat" method="post">
         <select name="chatUserId">
             <% for (UsuarioDTO usuario: usuarios) { %>
             <option value="<%=usuario.getId()%>"><%=usuario.getPrimerNombre()%></option>
             <% } %>
         </select>
         <button>Nuevo chat</button>
-    </form>
-
+    </form> --%>
 </table>
+<form action="/asistencia/asignarAsistente" method="post">
+    <button>Nuevo chat</button>
+</form>
 </body>
 </html>

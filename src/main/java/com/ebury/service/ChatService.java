@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -148,6 +149,13 @@ public class ChatService {
                 .filter(chat -> !filtro.isMostrarCerrados() || !chat.getCerrado())
                 .filter(chat -> !filtro.isMostrarSoloPropios() || usuarioParticipaEnChat(usuario, chat))
                 .map(ChatEntity::toDTO).toList();
+    }
+
+    public ChatDTO asignarChatACliente(int clienteId) {
+        List<UsuarioEntity> asistentes = usuarioRepository.findAllByRolByRolNombre("Asistente");
+        Random rng = new Random();
+        UsuarioEntity asistenteAsignado = asistentes.get(rng.nextInt(asistentes.size()));
+        return crearChatEntre(clienteId, asistenteAsignado.getId());
     }
 
 }

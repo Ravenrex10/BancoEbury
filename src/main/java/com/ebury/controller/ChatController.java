@@ -37,18 +37,30 @@ public class ChatController {
     String doListarChats(HttpSession session, Model model) {
         UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
         if (miUsuario == null) return "redirect:/";
-        List<UsuarioDTO> usuarios = usuarioService.findUsuarios();
-        List<ChatDTO> chats = chatService.findAllChats();
 
         FiltroChats filtro = new FiltroChats();
-        filtro.setCriterioOrdenacion("fechaCreacion");
+        filtro.setCriterioOrdenacion("ascendente");
         filtro.setMostrarCerrados(true);
         filtro.setMostrarSoloPropios(false);
+
+        listarChatsFiltrados(filtro, model, miUsuario.getId());
+        return "asistente/chats";
+    }
+
+    @PostMapping("/filtrarChats")
+    String doFiltrarChats(@ModelAttribute("filtro") FiltroChats filtro, HttpSession session, Model model) {
+        UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
+        listarChatsFiltrados(filtro, model, miUsuario.getId());
+        return "redirect:/chats";
+    }
+
+    private void listarChatsFiltrados(FiltroChats filtro, Model model, int usuarioId) {
+        List<UsuarioDTO> usuarios = usuarioService.findUsuarios();
+        List<ChatDTO> chats = chatService.filtrarChats(filtro, usuarioId);
 
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("chats", chats);
         model.addAttribute("filtro", filtro);
-        return "asistente/chats";
     }
 
     @PostMapping("/nuevoChat")
@@ -87,6 +99,7 @@ public class ChatController {
     @GetMapping("/asistencia")
     String doMostrarAsistencia(HttpSession session, Model model) {
         UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
+        if (miUsuario == null) return "redirect:/";
         List<ChatDTO> misChats = chatService.findChatsByUserId(miUsuario.getId());
         List<UsuarioDTO> asistentes = usuarioService.findUsuariosByRolNombre("Asistente");
         model.addAttribute("chats", misChats);
@@ -103,15 +116,18 @@ public class ChatController {
         }
     }
 
-    @PostMapping("/filtrarChats")
-    String doFiltrarChats(@ModelAttribute("filtro") FiltroChats filtro) {
-
-        return "redirect:/chats";
-    }
-
     @PostMapping("/chat/cerrar")
     String doCerrarChat(@RequestParam("chatId") int chatId) {
         chatService.cerrarChat(chatId);
         return "redirect:/asistencia";
     }
+
+    @PostMapping("/asistencia/asignarAsistente")
+    String doAsignarAsistente(HttpSession session) {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        ChatDTO nuevoChat = chatService.asignarChatACliente(usuarioActual.getId());
+        return "redirect:/chat?chatId=" + nuevoChat.getId();
+    }
+
+
 }
