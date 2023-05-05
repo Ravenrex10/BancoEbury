@@ -29,18 +29,14 @@
     <tr>
         <th>Usuario solicitante</th>
         <th>Asistente asignado</th>
-        <th>Fecha</th>
-        <th>Último mensaje</th>
         <th>Ir a chat</th>
-        <th>Cerrado</th>
+        <th></th>
 
     </tr>
     <% for (ChatDTO chat : chats) { %>
         <tr>
             <td><%=chat.getNombreUsuarioA()%></td>
             <td><%=chat.getNombreUsuarioB()%></td>
-            <td>N/A</td>
-            <td>N/A</td>
             <td>
                 <a href="/chat?chatId=<%=chat.getId()%>">Ir al chat</a>
             </td>

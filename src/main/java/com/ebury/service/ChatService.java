@@ -146,7 +146,7 @@ public class ChatService {
         }
 
         return chats.stream()
-                .filter(chat -> !filtro.isMostrarCerrados() || !chat.getCerrado())
+                .filter(chat -> filtro.isMostrarCerrados() || !chat.getCerrado())
                 .filter(chat -> !filtro.isMostrarSoloPropios() || usuarioParticipaEnChat(usuario, chat))
                 .map(ChatEntity::toDTO).toList();
     }

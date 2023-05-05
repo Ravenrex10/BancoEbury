@@ -16,19 +16,15 @@
 %>
 <body>
 <table>
-    <h1>CHATS</h1>
+    <h1>CENTRO DE AYUDA</h1>
     <tr>
         <th>Asistente</th>
         <th>Fecha</th>
         <th></th>
-        <th></th>
-        <th>Cerrado</th>
     </tr>
     <% for (ChatDTO chat : chats) { %>
     <tr>
         <td><%=chat.getNombreUsuarioB()%></td>
-        <td>N/A</td>
-        <td>N/A</td>
         <td>
             <a href="/chat?chatId=<%=chat.getId()%>">Ir al chat</a>
         </td>

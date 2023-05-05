@@ -51,7 +51,7 @@ public class ChatController {
     String doFiltrarChats(@ModelAttribute("filtro") FiltroChats filtro, HttpSession session, Model model) {
         UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
         listarChatsFiltrados(filtro, model, miUsuario.getId());
-        return "redirect:/chats";
+        return "asistente/chats";
     }
 
     private void listarChatsFiltrados(FiltroChats filtro, Model model, int usuarioId) {
