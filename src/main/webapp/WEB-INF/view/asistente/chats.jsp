@@ -9,12 +9,14 @@
 <html>
 <head>
     <title>Chats</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 </head>
 <%
     List<UsuarioDTO> usuarios = (List<UsuarioDTO>) request.getAttribute("usuarios");
     List<ChatDTO> chats = (List<ChatDTO>) request.getAttribute("chats");
 %>
 <body>
+<div class="container">
 <h1>Chats</h1>
 <form:form action="/filtrarChats" modelAttribute="filtro" method="post">
     Ordenar por: <form:select path="criterioOrdenacion">
@@ -54,5 +56,7 @@
     </form>
 
 </table>
+</div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </html>

@@ -8,15 +8,17 @@
 <%-- @author Daniel --%>
 <html>
 <head>
-    <title>CENTRO DE AYUDA</title>
+    <title>Centro de ayuda</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 </head>
 <%
     List<UsuarioDTO> usuarios = (List<UsuarioDTO>) request.getAttribute("usuarios");
     List<ChatDTO> chats = (List<ChatDTO>) request.getAttribute("chats");
 %>
 <body>
+<div class="container">
+<h1>CENTRO DE AYUDA</h1>
 <table>
-    <h1>CENTRO DE AYUDA</h1>
     <tr>
         <th>Asistente</th>
         <th>Fecha</th>
@@ -46,5 +48,7 @@
 <form action="/asistencia/asignarAsistente" method="post">
     <button>Nuevo chat</button>
 </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

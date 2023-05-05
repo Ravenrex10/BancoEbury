@@ -37,7 +37,7 @@ public class LoginController {
             session.setAttribute("usuario", usuario);
             switch (rolname){
                 case "Cliente": //Usuario es cliente
-                    urlTo+="cliente/";
+                    urlTo+="cliente";
                     break;
                 case "AutorizadoEmpresa": //Usuario es autorizado
                     urlTo+="empresa/";
@@ -67,6 +67,11 @@ public class LoginController {
     public String doLogout (HttpSession session) {
         session.invalidate();
         return "redirect:/";
+    }
+
+    @GetMapping("/cliente")
+    public String doCliente() {
+        return "cliente";
     }
 
 }

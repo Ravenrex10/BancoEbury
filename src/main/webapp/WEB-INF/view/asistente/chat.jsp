@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Chats</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 </head>
 <%
     ChatDTO chat = (ChatDTO) request.getAttribute("chat");
@@ -18,7 +19,7 @@
     boolean usuarioPuedeCerrar = (boolean) request.getAttribute("usuarioPuedeCerrar");
 %>
 <body>
-
+    <div class="container">
     <h3>Mostrando chat entre <%=chat.getNombreUsuarioA()%> y <%=chat.getNombreUsuarioB()%>, con ID <%=chat.getId()%></h3>
     <table>
         <tr>
@@ -56,5 +57,7 @@
         <button>Cerrar chat</button>
     </form>
     <% } %>
+        </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </html>
