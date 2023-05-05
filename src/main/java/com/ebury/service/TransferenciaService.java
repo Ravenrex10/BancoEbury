@@ -41,7 +41,7 @@ public class TransferenciaService {
         return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
     }
 
-    /*
+    /**
         Transfiere una cantidad de dinero desde una cuenta origen a una cuenta destino
         @author Diego
      */
@@ -50,8 +50,8 @@ public class TransferenciaService {
         CuentaEntity cuentaOrigen = this.cuentaRepository.findById(origen).orElse(null);
         CuentaEntity cuentaDestino = this.cuentaRepository.findById(destino).orElse(null);
 
-        SaldoEntity saldoOrigen = this.saldoRepository.findSaldoEntityByDivisaByDivisa_IdAndCuentaByCuenta_Id(cuentaOrigen.getId());
-        SaldoEntity saldoDestino = this.saldoRepository.findSaldoEntityByDivisaByDivisa_IdAndCuentaByCuenta_Id(cuentaDestino.getId());
+        SaldoEntity saldoOrigen = this.saldoRepository.findSaldoEntityByCuentaByCuenta_Id(cuentaOrigen.getId());
+        SaldoEntity saldoDestino = this.saldoRepository.findSaldoEntityByCuentaByCuenta_Id(cuentaDestino.getId());
 
         DivisaEntity divisaOrigen = saldoOrigen.getDivisaByDivisa();
         DivisaEntity divisaDestino = saldoDestino.getDivisaByDivisa();
@@ -87,7 +87,7 @@ public class TransferenciaService {
 
     }
 
-    /*
+    /**
         Devuelve todas las transferencias de una empresa en orden ascendente
         @author Diego
      */
@@ -102,7 +102,7 @@ public class TransferenciaService {
         return res;
     }
 
-    /*
+    /**
         Devuelve todas las transferencias de una empresa en orden descendente
         @author Diego
      */
@@ -116,7 +116,7 @@ public class TransferenciaService {
         return res;
     }
 
-     /*
+     /**
         Devuelve todas las transferencias de una empresa cuya divisa y id de cuenta equivalen a los parámetros. Orden fecha descendente.
         @author Diego
      */
@@ -130,7 +130,7 @@ public class TransferenciaService {
         }
         return res;
     }
-         /*
+         /**
         Devuelve todas las transferencias de una empresa cuya divisa y id de cuenta equivalen a los parámetros. Orden fecha ascendente.
         @author Diego
      */
@@ -144,7 +144,7 @@ public class TransferenciaService {
         }
         return res;
     }
-    /*
+    /**
    Devuelve todas las transferencias de una empresa cuya divisa equivalen a los parámetros. Orden fecha descendente.
    @author Diego
 */
@@ -157,7 +157,7 @@ public class TransferenciaService {
         }
         return res;
     }
-    /*
+    /**
    Devuelve todas las transferencias de una empresa cuya divisa equivalen a los parámetros. Orden fecha ascendente.
    @author Diego
 */
@@ -170,7 +170,7 @@ public class TransferenciaService {
         }
         return res;
     }
-    /*
+    /**
    Devuelve todas las transferencias de una empresa cuyo id de cuenta equivalen a los parámetros. Orden fecha descendente.
    @author Diego
 */

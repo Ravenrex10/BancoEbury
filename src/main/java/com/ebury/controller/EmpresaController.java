@@ -1,8 +1,10 @@
 package com.ebury.controller;
 
 import com.ebury.dto.*;
+import com.ebury.entity.DivisaEntity;
 import com.ebury.exceptions.DivisaException;
 import com.ebury.service.*;
+import com.ebury.ui.CuentaDivisaWrapper;
 import com.ebury.ui.EmpresaWrapper;
 import com.ebury.ui.FiltroTransferencias;
 import com.ebury.ui.FiltroUsuarios;
@@ -233,7 +235,7 @@ public class EmpresaController {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
         CuentaDTO cuentaDTO = this.cuentaService.findCuentaByIdToDto(transferenciaDTO.getCuentaOrigen().getId());
         if (!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada")) {
-            return getError(model, "Tu cuenta no está activada o tu usuario no ha sido dado de alta aún. Contacta con el gestor de tu empresa.", session);
+            return getError(model, "Tu cuenta está bloqueada/desactivada o tu usuario no ha sido dado de alta aún. Contacta con el gestor de tu empresa.", session);
         }
         try {
             return this.transferenciaService.transferir(transferenciaDTO.getCuentaOrigen().getId(), transferenciaDTO.getCuentaDestino().getId(), transferenciaDTO.getCantidad());
@@ -304,6 +306,36 @@ public class EmpresaController {
     @PostMapping("/filtrarTransferencias")
     public String doFiltrarTransferencias(@ModelAttribute("newFiltro") FiltroTransferencias filtro, Model model, HttpSession session) {
         return listarTransferencias(model, filtro, session);
+    }
+
+    @GetMapping("/cambioDivisa")
+    public String getCambioDivisa(Model model, HttpSession session)
+    {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuarioActual);
+
+        List<CuentaDTO> cuentaDTOS = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
+        model.addAttribute("cuentaDTOS",cuentaDTOS);
+
+        List<String> divisas = this.divisaService.findAllDivisaNames();
+        divisas.add(0," ");
+        model.addAttribute("divisas",divisas);
+
+        CuentaDivisaWrapper cuentaDivisaWrapper = new CuentaDivisaWrapper();
+        model.addAttribute("newDivisa",cuentaDivisaWrapper);
+
+        return ("empresa/empresaCambioDivisa");
+    }
+
+    @PostMapping("/cambiarDivisa")
+    public String doCambiarDivisa(@ModelAttribute("newDivisa")CuentaDivisaWrapper newDivisa, HttpSession session)
+    {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+
+        this.divisaService.creaCuentaDivisaNueva(newDivisa);
+
+        return("redirect:/empresa/");
+
     }
 
     private String getError(Model model, String error, HttpSession session) {

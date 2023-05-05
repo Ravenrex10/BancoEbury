@@ -122,7 +122,7 @@ public class UsuarioService {
         return usuario.toDTO();
     }
 
-    /*     Registra un socio nuevo en la empresa. Solo se puede llamar desde el rol FundadorEmpresa.
+    /**     Registra un socio nuevo en la empresa. Solo se puede llamar desde el rol FundadorEmpresa.
            @author Diego
        */
     public String makeRegister(UsuarioDTO u, int empresaId) {
@@ -155,7 +155,7 @@ public class UsuarioService {
         return ("redirect:/empresa/");
     }
 
-    /*     Devuelve al fundador y a todos los socios y autorizados de una empresa.
+    /**     Devuelve al fundador y a todos los socios y autorizados de una empresa.
            @author Diego
            */
     public List<UsuarioDTO> findFundadorSociosAndAutorizadosByEmpresaId(int id) {
@@ -167,7 +167,7 @@ public class UsuarioService {
         return usuarioDTOS;
     }
 
-    /*     Devuelve todos los socios y autorizados de una empresa.
+    /**     Devuelve todos los socios y autorizados de una empresa.
            @author Diego
            */
     public List<UsuarioDTO> findSociosAndAutorizadosByEmpresaId(int id) {
@@ -179,7 +179,7 @@ public class UsuarioService {
         return usuarioDTOS;
     }
 
-    /*
+    /**
           Cambia el estado de todas las cuentas del usuario a bloqueada.
           @author Diego
      */

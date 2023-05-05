@@ -27,7 +27,7 @@
                     <a class="nav-link" href="/empresa/transferencias">Realizar transferencia</a>
                 </li>
                 <li>
-                    <a class="nav-link">Cambio de divisas (TODO)</a>
+                    <a class="nav-link" href="/empresa/cambioDivisa">Cambio de divisas</a>
                 </li>
                 <% if (usuarioDTO.getRolName().equals("FundadorEmpresa")) { %>
                 <li class="nav-item">

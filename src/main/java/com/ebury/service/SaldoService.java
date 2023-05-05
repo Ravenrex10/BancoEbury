@@ -21,5 +21,4 @@ public class SaldoService {
         List<SaldoEntity> saldoEntities = saldoRepository.findAllByCuentaByCuenta_Id(id);
         return saldoEntities.stream().map(SaldoEntity::toDTO).collect(Collectors.toList());
     }
-
 }

@@ -1,6 +1,5 @@
 package com.ebury.dao;
 
-import com.ebury.entity.CuentaEntity;
 import com.ebury.entity.DivisaEntity;
 import com.ebury.entity.SaldoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,11 +13,12 @@ import java.util.List;
 public interface SaldoRepository extends JpaRepository<SaldoEntity, Integer> {
     List<SaldoEntity> findAllByCuentaByCuenta_Id(Integer id);
 
-    /*
+    /**
         Devuelve el saldo de una cuenta con una divisa en concreto
+        @author Diego
      */
     @Query("select s from SaldoEntity s where s.cuentaByCuenta.id = :cuentaId")
-    SaldoEntity findSaldoEntityByDivisaByDivisa_IdAndCuentaByCuenta_Id(@Param("cuentaId") Integer cuentaId);
+    SaldoEntity findSaldoEntityByCuentaByCuenta_Id(@Param("cuentaId") Integer cuentaId);
 
 
     @Query("select s.divisaByDivisa from SaldoEntity s where s.id = :saldoId")

@@ -15,4 +15,5 @@ public interface DivisaRepository extends JpaRepository<DivisaEntity, Integer> {
     List<String> findAllDivisaNames();
 
 
+    DivisaEntity findByNombre(String divisaString);
 }

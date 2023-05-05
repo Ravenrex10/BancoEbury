@@ -7,6 +7,10 @@ import com.ebury.entity.DireccionEntity;
 import com.ebury.entity.EmpresaEntity;
 import com.ebury.entity.UsuarioEntity;
 
+/**
+ * @author Diego
+ * Esta clase auxiliar sirve para crear el registro y edición de una empresa, socio y/o autorizado
+ */
 public class EmpresaWrapper {
     private EmpresaDTO newEmpresa;
     private DireccionDTO newDireccion;
