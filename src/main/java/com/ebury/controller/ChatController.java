@@ -105,6 +105,7 @@ public class ChatController {
 
     @PostMapping("/filtrarChats")
     String doFiltrarChats(@ModelAttribute("filtro") FiltroChats filtro) {
+
         return "redirect:/chats";
     }
 
