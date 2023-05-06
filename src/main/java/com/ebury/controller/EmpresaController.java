@@ -1,8 +1,8 @@
 package com.ebury.controller;
 
 import com.ebury.dto.*;
-import com.ebury.entity.DivisaEntity;
 import com.ebury.exceptions.DivisaException;
+import com.ebury.exceptions.NegativeImportException;
 import com.ebury.service.*;
 import com.ebury.ui.CuentaDivisaWrapper;
 import com.ebury.ui.EmpresaWrapper;
@@ -79,7 +79,6 @@ public class EmpresaController {
 
     @PostMapping("/edit")
     public String doEdit(HttpSession session, @ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper) {
-        //TODO: CONTROL DE ERRORES Y VALORES NULOS
         return (this.empresaService.makeEdit(empresaWrapper, session));
     }
 
@@ -99,7 +98,6 @@ public class EmpresaController {
 
     @PostMapping("/solicitarAlta")
     public String getSolicitarAlta(@ModelAttribute("newUsuarioDTO") UsuarioDTO usuarioDTO, HttpSession session, Model model) {
-        //TODO: CONTROL DE ERRORES Y VALORES NULOS
         UsuarioDTO fundador = (UsuarioDTO) session.getAttribute("usuario");
         if (!fundador.getRolName().equals("FundadorEmpresa")) {
             return getError(model, "Acceso denegado", session);
@@ -241,6 +239,9 @@ public class EmpresaController {
             return this.transferenciaService.transferir(transferenciaDTO.getCuentaOrigen().getId(), transferenciaDTO.getCuentaDestino().getId(), transferenciaDTO.getCantidad());
         } catch (DivisaException divisaException) {
             return this.getError(model, "Las divisas entre la cuenta de origen y destino son diferentes. Intenta cambiar de divisa.", session);
+        } catch (NegativeImportException exception)
+        {
+            return this.getError(model,"No se puede realizar importes menores o iguales a 0.",session);
         }
     }
 
@@ -328,9 +329,14 @@ public class EmpresaController {
     }
 
     @PostMapping("/cambiarDivisa")
-    public String doCambiarDivisa(@ModelAttribute("newDivisa")CuentaDivisaWrapper newDivisa, HttpSession session)
+    public String doCambiarDivisa(@ModelAttribute("newDivisa")CuentaDivisaWrapper newDivisa, HttpSession session, Model model)
     {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        CuentaDTO cuentaDTO = this.cuentaService.findCuentaByIdToDto(newDivisa.getCuentaId());
+
+        if (!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada")) {
+            return getError(model, "Tu cuenta está bloqueada/desactivada o tu usuario no ha sido dado de alta aún. Contacta con el gestor de tu empresa.", session);
+        }
 
         this.divisaService.creaCuentaDivisaNueva(newDivisa);
 

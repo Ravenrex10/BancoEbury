@@ -4,6 +4,7 @@ import com.ebury.dao.*;
 import com.ebury.dto.TransferenciaDTO;
 import com.ebury.entity.*;
 import com.ebury.exceptions.DivisaException;
+import com.ebury.exceptions.NegativeImportException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,10 @@ public class TransferenciaService {
      */
     public String transferir(Integer origen, Integer destino,Double cantidad)
     {
+        if(cantidad <= 0.0)
+        {
+            throw new NegativeImportException();
+        }
         CuentaEntity cuentaOrigen = this.cuentaRepository.findById(origen).orElse(null);
         CuentaEntity cuentaDestino = this.cuentaRepository.findById(destino).orElse(null);
 
@@ -183,7 +188,7 @@ public class TransferenciaService {
         }
         return res;
     }
-    /*
+    /**
    Devuelve todas las transferencias de una empresa cuyo id de cuenta equivalen a los parámetros. Orden fecha ascendente.
    @author Diego
 */

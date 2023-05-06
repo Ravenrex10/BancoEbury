@@ -114,5 +114,4 @@ public class UsuarioDTO {
         this.alta = alta;
     }
 
-    // TODO: extender con más campos cuando sea necesario
 }

@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface CuentaRepository extends JpaRepository<CuentaEntity, Integer> {
     public List<CuentaEntity> findAllByUsuarioByDuenyo(UsuarioEntity usuario);
+    public List<CuentaEntity> findAllByEstadoCuentaByEstado_Id(Integer id);
 
     // Busca todas las cuentas que no sean del usuario id @author Diego
     @Query("select c from CuentaEntity c where c.usuarioByDuenyo.id <> :idCuenta")

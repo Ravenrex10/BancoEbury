@@ -49,11 +49,9 @@ public class EmpresaService {
         }
     }
 
-    /* Modifica el usuario, la dirección y la empresa
+    /** Modifica el usuario, la dirección y la empresa
     / @author Diego*/
     public String makeEdit(EmpresaWrapper empresaWrapper, HttpSession session) {
-        //TODO: Control de valores nulos
-        //TODO: Control de errores
 
         EmpresaDTO e = empresaWrapper.getNewEmpresa();
         DireccionDTO d = empresaWrapper.getNewDireccion();

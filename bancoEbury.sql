@@ -184,7 +184,8 @@ INSERT INTO `EstadoCuenta` VALUES
 (0,'Desactivada'),
 (1,'Activada'),
 (2,'Bloqueada'),
-(3,'SolicitudBloqueada');
+(3,'SolicitudBloqueada'),
+(4,'Sospechosa');
 /*!40000 ALTER TABLE `EstadoCuenta` ENABLE KEYS */;
 UNLOCK TABLES;
 

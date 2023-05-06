@@ -14,7 +14,7 @@ public interface SaldoRepository extends JpaRepository<SaldoEntity, Integer> {
     List<SaldoEntity> findAllByCuentaByCuenta_Id(Integer id);
 
     /**
-        Devuelve el saldo de una cuenta con una divisa en concreto
+        Devuelve el saldo de una cuenta
         @author Diego
      */
     @Query("select s from SaldoEntity s where s.cuentaByCuenta.id = :cuentaId")
