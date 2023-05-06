@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.ebury.dto.UsuarioDTO" %>
+<%@ page import="com.ebury.dto.CuentaDTO" %>
 <html lang="es">
 <head>
     <title>Gestor</title>
@@ -8,7 +8,7 @@
 </head>
 <body>
 <%
-    List<UsuarioDTO> usuarios = (List<UsuarioDTO>) request.getAttribute("usuariosInactivos");
+    List<CuentaDTO> cuentas = (List<CuentaDTO>) request.getAttribute("cuentasSospechosas");
 %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -24,10 +24,10 @@
                     <a class="nav-link" href="gestorAlta">Solicitud de alta</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Transferencias Sospechosas</a>
+                    <a class="nav-link active" aria-current="page" href="#">Transferencias Sospechosas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Usuarios inactivos</a>
+                    <a class="nav-link" href="inactivos">Usuarios inactivos</a>
                 </li>
             </ul>
         </div>
@@ -35,29 +35,23 @@
 </nav>
 <br>
 <div class="container card">
-    <h2>Usuarios Inactivos</h2>
+    <h2>Transferencias Sospechosas</h2>
     <div class="d-flex align-items-center justify-content-between">
         <div class="col">
             <table class="table">
                 <%
-                    for(UsuarioDTO usuario: usuarios){
+                    for(CuentaDTO cuenta: cuentas){
                 %>
                 <tr>
                     <td>
-                        <%=usuario.getPrimerNombre()%>
-                        <%
-                            if(usuario.getSegundoNombre()!=null){
-                        %>
-                        <%=usuario.getSegundoNombre()%>
-                        <%
-                            }
-                        %>
-                        <%=usuario.getPrimerApellido()%>
-                        <%=usuario.getSegundoApellido()%>
+                        <b>Iban: </b><%=cuenta.getIban()%> <br>
+                        <b>Propietario: </b> <%=cuenta.getUsuario().getPrimerNombre() +
+                            " "+ cuenta.getUsuario().getSegundoNombre() +
+                            " " + cuenta.getUsuario().getPrimerApellido() +
+                            " " + cuenta.getUsuario().getSegundoApellido()%>
                     </td>
                     <td>
-                        <a href="informacionUsuario?usuario=<%=usuario.getId()%>" class="btn btn-primary">Ver información</a>
-                        <a href="desactivarCuenta?usuario=<%=usuario.getId()%>" class="btn btn-danger">Desactivar Cuenta</a>
+                        <a href="desactivarCuenta?cuenta=<%=cuenta.getId()%>" class="btn btn-danger">Desactivar Cuenta</a>
                     </td>
                 </tr>
                 <%

@@ -4,11 +4,10 @@ import com.ebury.dao.CuentaRepository;
 import com.ebury.dao.EstadoRepository;
 import com.ebury.dao.RolRepository;
 import com.ebury.dao.UsuarioRepository;
+import com.ebury.dto.CuentaDTO;
 import com.ebury.dto.TransferenciaDTO;
 import com.ebury.dto.UsuarioDTO;
-import com.ebury.entity.CuentaEntity;
-import com.ebury.entity.RolEntity;
-import com.ebury.entity.UsuarioEntity;
+import com.ebury.entity.*;
 import com.ebury.ui.FiltroTransferencias;
 import com.ebury.ui.FiltroUsuarios;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GestorService {
@@ -86,11 +86,35 @@ public class GestorService {
         return transferencias;
     }
 
-    public void desactivarCuenta(Integer usuario){
+    public void desactivarCuentas(Integer usuario){
         UsuarioEntity usuarioEntity = usuarioRepository.getById(usuario);
         for(CuentaEntity cuenta : cuentaRepository.findAllByUsuarioByDuenyo(usuarioEntity)){
             cuenta.setEstadoCuentaByEstado(estadoRepository.getReferenceById(0));
             cuentaRepository.save(cuenta);
         }
+    }
+
+    public void desactivarCuenta(Integer cuenta){
+        CuentaEntity cuentaEntity = cuentaRepository.getById(cuenta);
+        cuentaEntity.setEstadoCuentaByEstado(estadoRepository.getReferenceById(0));
+        cuentaRepository.save(cuentaEntity);
+    }
+
+    public List<CuentaDTO> getCuentasSospechosas(){
+        List<CuentaEntity> cuentas = cuentaRepository.findAllByEstadoCuentaByEstado_Id(4);
+        List<CuentaEntity> cuentasSospechosas = new ArrayList<CuentaEntity>();
+        Boolean sospechosa;
+        for(CuentaEntity cuenta : cuentaRepository.findAll()){
+            sospechosa = false;
+            for(TransferenciaEntity transferencia : cuenta.getTransferenciasById()){
+                if(transferencia.getCuentaByCuentaDestino().getEstadoCuentaByEstado().getId()==4){
+                    sospechosa = true;
+                }
+            }
+            if(sospechosa && cuenta.getEstadoCuentaByEstado().getId()==1){
+                cuentasSospechosas.add(cuenta);
+            }
+        }
+        return cuentasSospechosas.stream().map(CuentaEntity::toDTO).collect(Collectors.toList());
     }
 }

@@ -24,7 +24,7 @@
                     <a class="nav-link" href="gestorAlta">Solicitud de alta</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Transferencias Sospechosas</a>
+                    <a class="nav-link" href="cuentasSospechosas">Transferencias Sospechosas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">Usuarios inactivos</a>
