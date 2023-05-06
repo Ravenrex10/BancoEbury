@@ -236,7 +236,8 @@ public class EmpresaController {
             return getError(model, "Tu cuenta está bloqueada/desactivada o tu usuario no ha sido dado de alta aún. Contacta con el gestor de tu empresa.", session);
         }
         try {
-            return this.transferenciaService.transferir(transferenciaDTO.getCuentaOrigen().getId(), transferenciaDTO.getCuentaDestino().getId(), transferenciaDTO.getCantidad());
+            this.transferenciaService.transferir(transferenciaDTO.getCuentaOrigen().getId(), transferenciaDTO.getCuentaDestino().getId(), transferenciaDTO.getCantidad());
+            return "redirect:/empresa/";
         } catch (DivisaException divisaException) {
             return this.getError(model, "Las divisas entre la cuenta de origen y destino son diferentes. Intenta cambiar de divisa.", session);
         } catch (NegativeImportException exception)
@@ -338,7 +339,7 @@ public class EmpresaController {
             return getError(model, "Tu cuenta está bloqueada/desactivada o tu usuario no ha sido dado de alta aún. Contacta con el gestor de tu empresa.", session);
         }
 
-        this.divisaService.creaCuentaDivisaNueva(newDivisa);
+        this.divisaService.cambiarCuentaDivisa(newDivisa);
 
         return("redirect:/empresa/");
 

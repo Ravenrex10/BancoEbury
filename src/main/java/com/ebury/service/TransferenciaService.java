@@ -46,7 +46,7 @@ public class TransferenciaService {
         Transfiere una cantidad de dinero desde una cuenta origen a una cuenta destino
         @author Diego
      */
-    public String transferir(Integer origen, Integer destino,Double cantidad)
+    public void transferir(Integer origen, Integer destino,Double cantidad)
     {
         if(cantidad <= 0.0)
         {
@@ -87,15 +87,12 @@ public class TransferenciaService {
         this.cuentaRepository.save(cuentaDestino);
         this.usuarioRepository.save(usuarioOrigen);
 
-        return "redirect:/empresa/";
-
-
     }
 
     /**
         Devuelve todas las transferencias de una empresa en orden ascendente
         @author Diego
-     */
+    */
     public List<TransferenciaDTO> findAllTransferenciasFromAEmpresa(Integer idEmpresa)
     {
         List<TransferenciaDTO> res = new ArrayList<>();
