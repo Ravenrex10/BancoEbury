@@ -2,12 +2,10 @@ package com.ebury.service;
 
 import com.ebury.dao.CuentaRepository;
 import com.ebury.dao.EstadoRepository;
-import com.ebury.dao.RolRepository;
 import com.ebury.dao.UsuarioRepository;
 import com.ebury.dto.CuentaDTO;
 import com.ebury.entity.CuentaEntity;
 import com.ebury.entity.EstadoCuentaEntity;
-import com.ebury.entity.UsuarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +28,7 @@ public class CuentaService {
         return cuentas.stream().map(CuentaEntity::toDTO).collect(Collectors.toList());
     }
 
-    /*
+    /**
         Devuelve todas las cuentas excepto las del usuario pasado por parámetro
         @author Diego
      */
@@ -40,7 +38,7 @@ public class CuentaService {
         return cuentas.stream().map(CuentaEntity::toDTO).collect(Collectors.toList());
     }
 
-    /*
+    /**
         Cambia el estado de la cuenta a "SolicitudBloqueada"
         @author Diego
      */
@@ -54,7 +52,7 @@ public class CuentaService {
 
     }
 
-    /*
+    /**
         Busca la cuenta por el id y devuelve su dto
         @author Diego
      */
@@ -64,7 +62,7 @@ public class CuentaService {
         return cuenta.toDTO();
     }
 
-    /*
+    /**
         Busca todas las cuentas de una empresa
         @author Diego
      */

@@ -126,7 +126,6 @@ public class UsuarioService {
            @author Diego
        */
     public String makeRegister(UsuarioDTO u, int empresaId) {
-        // TODO: Control de errores
         UsuarioEntity usuario = new UsuarioEntity();
 
         usuario.setPrimerNombre(u.getPrimerNombre());

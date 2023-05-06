@@ -31,12 +31,10 @@ public class EmpresaRegisterService {
     @Autowired
     protected UsuarioRepository usuarioRepository;
 
-    /* Registra al socio fundador (fundador de la empresa, la empresa y su dirección)
+    /** Registra al socio fundador (fundador de la empresa, la empresa y su dirección)
        @author Diego
      */
     public String makeRegister(EmpresaWrapper empresaWrapper) {
-        //TODO: Control de valores nulos
-        //TODO: Control de errores
 
         EmpresaDTO e = empresaWrapper.getNewEmpresa();
         DireccionDTO d = empresaWrapper.getNewDireccion();
