@@ -117,4 +117,15 @@ public class GestorService {
         }
         return cuentasSospechosas.stream().map(CuentaEntity::toDTO).collect(Collectors.toList());
     }
+
+    public List<CuentaDTO> getCuentasBloqueadas(){
+        List<CuentaEntity> cuentasBloqueadas = cuentaRepository.findAllByEstadoCuentaByEstado_Id(3);
+        return cuentasBloqueadas.stream().map(CuentaEntity::toDTO).collect(Collectors.toList());
+    }
+
+    public void desbloquear(Integer idCuenta){
+        CuentaEntity cuenta = cuentaRepository.getById(idCuenta);
+        cuenta.setEstadoCuentaByEstado(estadoRepository.getReferenceById(1));
+        cuentaRepository.save(cuenta);
+    }
 }

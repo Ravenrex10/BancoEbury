@@ -107,6 +107,18 @@ public class GestorController {
         return("gestor/gestorSospechosas");
     }
 
+    @GetMapping("/bloqueadas")
+    public String getCuentasBloqueadas(Model model){
+        model.addAttribute("cuentasBloqueadas", gestorService.getCuentasBloqueadas());
+        return("gestor/gestorBloqueados");
+    }
+
+    @GetMapping("/desbloquear")
+    public String doDesbloquearCuenta(Model model, @RequestParam("cuenta") Integer idCuenta){
+        gestorService.desbloquear(idCuenta);
+        return("redirect:/gestorHome/bloqueadas");
+    }
+
     private String verInformacionUsuario(List<TransferenciaDTO> transferencias, Model model, Integer id){
         UsuarioDTO usuario = usuarioService.findUsuarioById(id);
         FiltroTransferencias filtro = new FiltroTransferencias();

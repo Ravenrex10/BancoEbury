@@ -27,6 +27,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="inactivos">Usuarios inactivos</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bloqueadas">Solicitudes de desbloqueo</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item ms-auto me-auto">
+                        <a class="nav-link" href="logout">Cerrar sesión</a>
+                    </li>
                 </ul>
             </div>
         </div>
