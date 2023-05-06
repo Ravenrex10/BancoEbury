@@ -173,7 +173,7 @@ public class EmpresaController {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
         model.addAttribute("usuario", usuarioActual);
 
-        List<UsuarioDTO> usuarioDTOList = this.usuarioService.findSociosAndAutorizadosByEmpresaId(usuarioActual.getEmpresa());
+        List<UsuarioDTO> usuarioDTOList = this.cuentaService.findSociosAndAutorizadosByEmpresaIdNotBloqueado(usuarioActual.getEmpresa());
         model.addAttribute("listaUsuarios", usuarioDTOList);
 
         UsuarioDTO usuarioABloquear = new UsuarioDTO();

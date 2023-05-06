@@ -6,7 +6,7 @@
 <%@ page import="com.ebury.dto.CuentaDTO" %>
 <html>
 <head>
-    <title>Cambio de Divisa</title>
+    <title>Cambio de Divisas</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
