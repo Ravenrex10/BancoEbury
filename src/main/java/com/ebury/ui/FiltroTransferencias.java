@@ -1,6 +1,10 @@
 package com.ebury.ui;
 
 public class FiltroTransferencias {
+    /**
+     * Filtro usado para filtrar las transferencias.
+     * @author Diego
+     */
     private String filtro;
     private String divisa;
     private Integer usuario;

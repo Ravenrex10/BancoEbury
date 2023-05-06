@@ -1,7 +1,5 @@
-<!--@author Diego-->
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.ebury.entity.EmpresaEntity" %>
-<%@ page import="com.ebury.dto.EmpresaDTO" %>
+
 <%@ page import="com.ebury.dto.UsuarioDTO" %>
 <html>
 <head>
@@ -11,13 +9,12 @@
 </head>
 <body>
 <% UsuarioDTO usuarioDTO = (UsuarioDTO) request.getAttribute("usuario"); %>
-<jsp:include page="empresaHeader.jsp"></jsp:include>
 <div class="container">
     <h1>
         Transferencia
     </h1>
-    <form:form modelAttribute="newTransferencia" method="post" action="/empresa/transferir">
-       Cuenta origen: <form:select path="cuentaOrigen.id" itemLabel="iban" itemValue="id" items="${cuentasUsuario}"></form:select><br>
+    <form:form modelAttribute="newTransferencia" method="post" action="/cajero/transferir">
+        Cuenta origen: <form:select path="cuentaOrigen.id" itemLabel="iban" itemValue="id" items="${cuentasUsuario}"></form:select><br>
         Cuenta destino: <form:select path="cuentaDestino.id" itemLabel="iban" itemValue="id" items="${cuentasDestino}"></form:select><br>
         Cantidad: <form:input path="cantidad"></form:input><br>
         <form:button type="submit" class="btn btn-primary">Transferir</form:button>

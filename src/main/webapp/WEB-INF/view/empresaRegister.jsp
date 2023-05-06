@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Registro de empresa</title>
+    <title>Registrar Empresa</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
@@ -34,8 +34,8 @@
         Fecha de nacimiento (*): <form:input type="date" path="newUsuario.fechaNacimiento"></form:input><br>
         Email (*): <form:input path="newUsuario.email"></form:input><br>
         Contraseña (*): <form:input path="newUsuario.contrasenya" type="password"></form:input>
-
-        <input type="submit" value="Submit">
+        <br>
+        <form:button type="submit" value="Submit" class="btn btn-primary">Registrar</form:button>
     </form:form>
 
 </div>

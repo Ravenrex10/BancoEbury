@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.ebury.dto.UsuarioDTO" %>
-<html>
+<%@ page import="com.ebury.dto.CuentaDTO" %>
+<html lang="es">
 <head>
     <title>Gestor</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
@@ -8,7 +9,7 @@
 </head>
 <body>
 <%
-    List<UsuarioDTO> usuarios = (List<UsuarioDTO>) request.getAttribute("usuariosSinAlta");
+    List<CuentaDTO> cuentas = (List<CuentaDTO>) request.getAttribute("cuentasBloqueadas");
 %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -21,7 +22,7 @@
                     <a class="nav-link" href="/gestorHome/">Usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Solicitud de alta</a>
+                    <a class="nav-link" href="gestorAlta">Solicitud de alta</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="cuentasSospechosas">Transferencias Sospechosas</a>
@@ -30,7 +31,7 @@
                     <a class="nav-link" href="inactivos">Usuarios inactivos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="bloqueadas">Solicitudes de desbloqueo</a>
+                    <a class="nav-link active" aria-current="page" href="#">Solicitudes de desbloqueo</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
@@ -43,30 +44,24 @@
 </nav>
 <br>
 <div class="container card">
-    <h2>Usuarios</h2>
+    <h2>Solicitudes de Desbloqueo</h2>
     <div class="d-flex align-items-center justify-content-between">
         <div class="col">
-            <table>
+            <table class="table">
                 <%
-                    for(UsuarioDTO usuario: usuarios){
+                    for(CuentaDTO cuenta: cuentas){
                 %>
                 <tr>
                     <td>
-                        <%=usuario.getPrimerNombre()%>
-                        <%
-                            if(usuario.getSegundoNombre()!=null){
-                        %>
-                        <%=usuario.getSegundoNombre()%>
-                        <%
-                            }
-                        %>
-                        <%=usuario.getPrimerApellido()%>
-                        <%=usuario.getSegundoApellido()%>
+                        <%=cuenta.getIban()%>
+                        <%=cuenta.getUsuario().getPrimerNombre()+" "
+                                +cuenta.getUsuario().getSegundoNombre()+" "
+                                +cuenta.getUsuario().getPrimerApellido()+" "
+                                +cuenta.getUsuario().getSegundoApellido()%>
                     </td>
                     <td>
-                        <a href="informacionUsuario?usuario=<%=usuario.getId()%>" class="btn btn-primary">Ver información</a>
-                        <a href="darDeAlta?usuario=<%=usuario.getId()%>" class="btn btn-primary">Validar</a>
-                        <a href="denegarAlta?usuario=<%=usuario.getId()%>" class="btn btn-danger">No validar</a>
+                        <a href="informacionUsuario?usuario=<%=cuenta.getUsuario().getId()%>" class="btn btn-primary">Ver información de Usuario</a>
+                        <a href="desbloquear?cuenta=<%=cuenta.getId()%>" class="btn btn-success">Desbloquear Cuenta</a>
                     </td>
                 </tr>
                 <%

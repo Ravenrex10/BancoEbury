@@ -91,13 +91,32 @@ public class GestorController {
 
     @GetMapping("/desactivarCuentas")
     public String doDesactivarCuentas(@RequestParam("usuario") Integer id){
-        gestorService.desactivarCuenta(id);
+        gestorService.desactivarCuentas(id);
         return("redirect:/gestorHome/inactivos");
+    }
+
+    @GetMapping("/desactivarCuenta")
+    public String doDesactivarCuenta(@RequestParam("cuenta") Integer id){
+        gestorService.desactivarCuenta(id);
+        return("redirect:/gestorHome/cuentasSospechosas");
     }
 
     @GetMapping("/cuentasSospechosas")
     public String getCuentasSospechosas(Model model){
-        return("gestor/gestorSospechosas.jsp");
+        model.addAttribute("cuentasSospechosas", gestorService.getCuentasSospechosas());
+        return("gestor/gestorSospechosas");
+    }
+
+    @GetMapping("/bloqueadas")
+    public String getCuentasBloqueadas(Model model){
+        model.addAttribute("cuentasBloqueadas", gestorService.getCuentasBloqueadas());
+        return("gestor/gestorBloqueados");
+    }
+
+    @GetMapping("/desbloquear")
+    public String doDesbloquearCuenta(Model model, @RequestParam("cuenta") Integer idCuenta){
+        gestorService.desbloquear(idCuenta);
+        return("redirect:/gestorHome/bloqueadas");
     }
 
     private String verInformacionUsuario(List<TransferenciaDTO> transferencias, Model model, Integer id){

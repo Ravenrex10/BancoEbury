@@ -1,21 +1,20 @@
-<!--@author Diego-->
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <%@ page import="com.ebury.dto.TransferenciaDTO" %>
 <%@ page import="java.util.List" %>
 <html>
 <head>
-    <title>Lista de Transferencias</title>
+    <title>Transferencias</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 <body>
-<jsp:include page="empresaHeader.jsp"></jsp:include>
 <% List<TransferenciaDTO> transferenciaDTO = (List<TransferenciaDTO>) request.getAttribute("transferencias"); %>
 <div class="container">
     <h1>Lista de transferencias</h1>
 
     <div class="container">
-        <form:form modelAttribute="newFiltro" action="/empresa/filtrarTransferencias" method="post">
+        <form:form modelAttribute="newFiltro" action="/cajero/filtrarTransferencias" method="post">
             <h5>Filtrar por:</h5>
             Cuenta:<br> <form:select path="cuenta">
             <form:option value="0" label=" "></form:option>
@@ -60,4 +59,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
+</html>
 </html>

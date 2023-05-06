@@ -1,8 +1,8 @@
 package com.ebury.controller;
 
 import com.ebury.dto.*;
-import com.ebury.entity.DivisaEntity;
 import com.ebury.exceptions.DivisaException;
+import com.ebury.exceptions.NegativeImportException;
 import com.ebury.service.*;
 import com.ebury.ui.CuentaDivisaWrapper;
 import com.ebury.ui.EmpresaWrapper;
@@ -79,7 +79,6 @@ public class EmpresaController {
 
     @PostMapping("/edit")
     public String doEdit(HttpSession session, @ModelAttribute("newEmpresaWrapper") EmpresaWrapper empresaWrapper) {
-        //TODO: CONTROL DE ERRORES Y VALORES NULOS
         return (this.empresaService.makeEdit(empresaWrapper, session));
     }
 
@@ -99,7 +98,6 @@ public class EmpresaController {
 
     @PostMapping("/solicitarAlta")
     public String getSolicitarAlta(@ModelAttribute("newUsuarioDTO") UsuarioDTO usuarioDTO, HttpSession session, Model model) {
-        //TODO: CONTROL DE ERRORES Y VALORES NULOS
         UsuarioDTO fundador = (UsuarioDTO) session.getAttribute("usuario");
         if (!fundador.getRolName().equals("FundadorEmpresa")) {
             return getError(model, "Acceso denegado", session);
@@ -175,7 +173,7 @@ public class EmpresaController {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
         model.addAttribute("usuario", usuarioActual);
 
-        List<UsuarioDTO> usuarioDTOList = this.usuarioService.findSociosAndAutorizadosByEmpresaId(usuarioActual.getEmpresa());
+        List<UsuarioDTO> usuarioDTOList = this.cuentaService.findSociosAndAutorizadosByEmpresaIdNotBloqueado(usuarioActual.getEmpresa());
         model.addAttribute("listaUsuarios", usuarioDTOList);
 
         UsuarioDTO usuarioABloquear = new UsuarioDTO();
@@ -238,9 +236,13 @@ public class EmpresaController {
             return getError(model, "Tu cuenta está bloqueada/desactivada o tu usuario no ha sido dado de alta aún. Contacta con el gestor de tu empresa.", session);
         }
         try {
-            return this.transferenciaService.transferir(transferenciaDTO.getCuentaOrigen().getId(), transferenciaDTO.getCuentaDestino().getId(), transferenciaDTO.getCantidad());
+            this.transferenciaService.transferir(transferenciaDTO.getCuentaOrigen().getId(), transferenciaDTO.getCuentaDestino().getId(), transferenciaDTO.getCantidad());
+            return "redirect:/empresa/";
         } catch (DivisaException divisaException) {
             return this.getError(model, "Las divisas entre la cuenta de origen y destino son diferentes. Intenta cambiar de divisa.", session);
+        } catch (NegativeImportException exception)
+        {
+            return this.getError(model,"No se puede realizar importes menores o iguales a 0.",session);
         }
     }
 
@@ -328,11 +330,16 @@ public class EmpresaController {
     }
 
     @PostMapping("/cambiarDivisa")
-    public String doCambiarDivisa(@ModelAttribute("newDivisa")CuentaDivisaWrapper newDivisa, HttpSession session)
+    public String doCambiarDivisa(@ModelAttribute("newDivisa")CuentaDivisaWrapper newDivisa, HttpSession session, Model model)
     {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        CuentaDTO cuentaDTO = this.cuentaService.findCuentaByIdToDto(newDivisa.getCuentaId());
 
-        this.divisaService.creaCuentaDivisaNueva(newDivisa);
+        if (!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada")) {
+            return getError(model, "Tu cuenta está bloqueada/desactivada o tu usuario no ha sido dado de alta aún. Contacta con el gestor de tu empresa.", session);
+        }
+
+        this.divisaService.cambiarCuentaDivisa(newDivisa);
 
         return("redirect:/empresa/");
 

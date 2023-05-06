@@ -2,9 +2,9 @@ package com.ebury.service;
 
 import com.ebury.dao.CuentaRepository;
 import com.ebury.dao.EstadoRepository;
-import com.ebury.dao.RolRepository;
 import com.ebury.dao.UsuarioRepository;
 import com.ebury.dto.CuentaDTO;
+import com.ebury.dto.UsuarioDTO;
 import com.ebury.entity.CuentaEntity;
 import com.ebury.entity.EstadoCuentaEntity;
 import com.ebury.entity.UsuarioEntity;
@@ -30,7 +30,7 @@ public class CuentaService {
         return cuentas.stream().map(CuentaEntity::toDTO).collect(Collectors.toList());
     }
 
-    /*
+    /**
         Devuelve todas las cuentas excepto las del usuario pasado por parámetro
         @author Diego
      */
@@ -40,7 +40,7 @@ public class CuentaService {
         return cuentas.stream().map(CuentaEntity::toDTO).collect(Collectors.toList());
     }
 
-    /*
+    /**
         Cambia el estado de la cuenta a "SolicitudBloqueada"
         @author Diego
      */
@@ -54,7 +54,7 @@ public class CuentaService {
 
     }
 
-    /*
+    /**
         Busca la cuenta por el id y devuelve su dto
         @author Diego
      */
@@ -64,7 +64,7 @@ public class CuentaService {
         return cuenta.toDTO();
     }
 
-    /*
+    /**
         Busca todas las cuentas de una empresa
         @author Diego
      */
@@ -75,6 +75,16 @@ public class CuentaService {
         for(CuentaEntity c : cuentaEntities)
         {
             res.add(c.toDTO());
+        }
+        return res;
+    }
+
+    public List<UsuarioDTO> findSociosAndAutorizadosByEmpresaIdNotBloqueado(Integer idEmpresa) {
+        List<UsuarioEntity> usuarioEntityList = this.cuentaRepository.findAllCuentasDeSociosYAutorizadosDeEmpresaIdNotBloqueado(idEmpresa);
+        List<UsuarioDTO> res = new ArrayList<>();
+        for(UsuarioEntity u : usuarioEntityList)
+        {
+            res.add(u.toDTO());
         }
         return res;
     }
