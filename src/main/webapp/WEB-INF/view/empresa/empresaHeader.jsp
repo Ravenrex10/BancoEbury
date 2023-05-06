@@ -21,13 +21,13 @@
                     <a class="nav-link" href="cuentas">Tus cuentas</a>
                 </li>
                 <li>
-                    <a class="nav-link" href="/empresa/listaTransferencias">Lista de transferencias</a>
-                </li>
-                <li>
                     <a class="nav-link" href="/empresa/transferencias">Realizar transferencia</a>
                 </li>
                 <li>
                     <a class="nav-link" href="/empresa/cambioDivisa">Cambio de divisas</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/empresa/listaTransferencias">Lista de transferencias</a>
                 </li>
                 <% if (usuarioDTO.getRolName().equals("FundadorEmpresa")) { %>
                 <li class="nav-item">

@@ -4,8 +4,10 @@ import com.ebury.dao.CuentaRepository;
 import com.ebury.dao.EstadoRepository;
 import com.ebury.dao.UsuarioRepository;
 import com.ebury.dto.CuentaDTO;
+import com.ebury.dto.UsuarioDTO;
 import com.ebury.entity.CuentaEntity;
 import com.ebury.entity.EstadoCuentaEntity;
+import com.ebury.entity.UsuarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,6 +75,16 @@ public class CuentaService {
         for(CuentaEntity c : cuentaEntities)
         {
             res.add(c.toDTO());
+        }
+        return res;
+    }
+
+    public List<UsuarioDTO> findSociosAndAutorizadosByEmpresaIdNotBloqueado(Integer idEmpresa) {
+        List<UsuarioEntity> usuarioEntityList = this.cuentaRepository.findAllCuentasDeSociosYAutorizadosDeEmpresaIdNotBloqueado(idEmpresa);
+        List<UsuarioDTO> res = new ArrayList<>();
+        for(UsuarioEntity u : usuarioEntityList)
+        {
+            res.add(u.toDTO());
         }
         return res;
     }

@@ -3,9 +3,6 @@ package com.ebury.service;
 import com.ebury.dao.CuentaRepository;
 import com.ebury.dao.DivisaRepository;
 import com.ebury.dao.SaldoRepository;
-import com.ebury.dto.CuentaDTO;
-import com.ebury.dto.SaldoDTO;
-import com.ebury.dto.UsuarioDTO;
 import com.ebury.entity.CuentaEntity;
 import com.ebury.entity.DivisaEntity;
 import com.ebury.entity.SaldoEntity;
@@ -35,11 +32,10 @@ public class DivisaService {
     }
 
     /**
-     * Crea una cuenta nueva con la divisa y el sueldo solicitado. Si el sueldo es mayor al de la cuenta,
-     * se lanza una excepción.
+     * Modifica la divisa de la cuenta y actualiza su saldo.
      * @author Diego
      */
-    public void creaCuentaDivisaNueva(CuentaDivisaWrapper newDivisa) {
+    public void cambiarCuentaDivisa(CuentaDivisaWrapper newDivisa) {
 
         Integer cuentaId = newDivisa.getCuentaId();
         String divisaString = newDivisa.getDivisaNombre();
