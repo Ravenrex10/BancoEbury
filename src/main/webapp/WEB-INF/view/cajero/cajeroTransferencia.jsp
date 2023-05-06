@@ -1,5 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!--Juan Salmerón-->
+
 <%@ page import="com.ebury.dto.UsuarioDTO" %>
 <html>
 <head>
