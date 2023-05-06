@@ -71,7 +71,7 @@ public class LoginController {
 
     @GetMapping("/cliente")
     public String doCliente() {
-        return "cliente";
+        return "cliente/clienteHome";
     }
 
 }

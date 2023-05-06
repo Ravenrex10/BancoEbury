@@ -30,7 +30,7 @@
 <div class="container">
     <h1>Registrarse</h1>
     <ul>
-        <li> Como usuario</li>
+        <li><a href="/registerUsuario"> Como usuario </a></li>
         <li><a href="/registerEmpresa">Como empresa</a></li>
     </ul>
 </div>
