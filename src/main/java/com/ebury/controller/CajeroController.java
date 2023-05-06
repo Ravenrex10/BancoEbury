@@ -1,4 +1,5 @@
 package com.ebury.controller;
+//Juan Salmeron
 
 import com.ebury.dto.CuentaDTO;
 import com.ebury.dto.TransferenciaDTO;
@@ -59,7 +60,7 @@ public class CajeroController {
         return "cajero/cajeroTransferencia";
     }
 
-    //#TODO: actualizar transferir con redirect y nueva excepcion de saldo nulo
+    //#TODO: nueva excepcion de saldo nulo
     @PostMapping("/transferir")
     public String doTransferir(@ModelAttribute("newTransferencia") TransferenciaDTO transferenciaDTO, HttpSession session, Model model) {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
@@ -68,7 +69,8 @@ public class CajeroController {
             return getError(model, "Tu cuenta está bloqueada", session);
         }
         try {
-            return this.transferenciaService.transferir(transferenciaDTO.getCuentaOrigen().getId(), transferenciaDTO.getCuentaDestino().getId(), transferenciaDTO.getCantidad());
+            this.transferenciaService.transferir(transferenciaDTO.getCuentaOrigen().getId(), transferenciaDTO.getCuentaDestino().getId(), transferenciaDTO.getCantidad());
+            return "redirect:/cajero/";
         } catch (DivisaException divisaException) {
             return this.getError(model, "Las divisas entre la cuenta de origen y destino son diferentes.", session);
         }
