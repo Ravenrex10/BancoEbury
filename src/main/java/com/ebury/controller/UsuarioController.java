@@ -146,42 +146,47 @@ public class UsuarioController {
         model.addAttribute("usuario", usuarioActual);
 
         if (filtro == null || filtro.getDivisa().equals("0") && filtro.getCuenta().equals(0) && filtro.getOrdenPorFecha().equals("Ascendente")) {
+            List<TransferenciaDTO> transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUser(usuarioActual.getId());
+            model.addAttribute("transferencias", transferenciaDTOS);
             FiltroTransferencias newFiltro = new FiltroTransferencias();
-            List<TransferenciaDTO> transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresa(usuarioActual.getEmpresa());
             newFiltro.setDivisa("0");
             newFiltro.setCuenta(0);
             newFiltro.setOrdenPorFecha("Ascendente");
-            model.addAttribute("transferencias", transferenciaDTOS);
             model.addAttribute("newFiltro", newFiltro);
-        } else {
+        }else {
             List<TransferenciaDTO> transferenciaDTOS = new ArrayList<>();
             if (!filtro.getDivisa().equals("0")) {
                 if (!filtro.getCuenta().equals(0)) {
                     if (filtro.getOrdenPorFecha().equals("Descendente")) {
-                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaAndCuentaIdOrderDesc(usuarioActual.getEmpresa(), filtro.getDivisa(), filtro.getCuenta());
+                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByDivisaAndCuentaIdOrderDesc(usuarioActual.getId(), filtro.getDivisa(), filtro.getCuenta());
                     } else {
-                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaAndCuentaIdOrderAsc(usuarioActual.getEmpresa(), filtro.getDivisa(), filtro.getCuenta());
+                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByDivisaAndCuentaIdOrderDesc(usuarioActual.getId(), filtro.getDivisa(), filtro.getCuenta());
+                        revlist(transferenciaDTOS);
                     }
                 } else {
                     if (filtro.getOrdenPorFecha().equals("Descendente")) {
-                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaOrderDesc(usuarioActual.getEmpresa(), filtro.getDivisa());
+                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByDivisaOrderDesc(usuarioActual.getId(), filtro.getDivisa());
                     } else {
-                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaOrderAsc(usuarioActual.getEmpresa(), filtro.getDivisa());
+                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByDivisaOrderDesc(usuarioActual.getId(), filtro.getDivisa());
+                        revlist(transferenciaDTOS);
                     }
                 }
 
             } else if (!filtro.getCuenta().equals(0)) {
                 if (filtro.getOrdenPorFecha().equals("Descendente")) {
-                    transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByCuentaIdOrderDesc(usuarioActual.getEmpresa(), filtro.getCuenta());
+                    //transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByCuentaIdOrderDesc(usuarioActual.getEmpresa(), filtro.getCuenta());
+                    transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByCuentaIdOrderDesc(usuarioActual.getId(), filtro.getCuenta());
                 } else {
-                    transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByCuentaIdOrderAsc(usuarioActual.getEmpresa(), filtro.getCuenta());
+                    transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByCuentaIdOrderDesc(usuarioActual.getId(), filtro.getCuenta());
+                    revlist(transferenciaDTOS);
                 }
             } else {
-                transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaOrderDesc(usuarioActual.getEmpresa());
+                transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUser(usuarioActual.getId());
+                revlist(transferenciaDTOS);
             }
             model.addAttribute("transferencias", transferenciaDTOS);
-            model.addAttribute("newFiltro", filtro);
         }
+
         List<String> orden = new ArrayList<>();
         orden.add("Ascendente");
         orden.add("Descendente");
@@ -193,6 +198,25 @@ public class UsuarioController {
         List<CuentaDTO> cuentaDTOS = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
         model.addAttribute("cuentasDTOS", cuentaDTOS);
         return ("cliente/clienteListarTransferencias");
+    }
+
+    public static <T> void revlist(List<T> list)
+    {
+        // base condition when the list size is 0
+        if (list.size() <= 1 || list == null)
+            return;
+
+
+        T value = list.remove(0);
+
+        // call the recursive function to reverse
+        // the list after removing the first element
+        revlist(list);
+
+        // now after the rest of the list has been
+        // reversed by the upper recursive call,
+        // add the first value at the end
+        list.add(value);
     }
 
     @PostMapping("/filtrarTransferencias")

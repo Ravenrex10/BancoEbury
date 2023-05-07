@@ -175,9 +175,19 @@ public class TransferenciaService {
         @author Diego
      */
 
-    public List<TransferenciaDTO> findAllTransferenciasFromAEmpresaByDivisaAndCuentaIdOrderDesc(Integer idEmpresa, String divisa, Integer cuentaId) {
+    public List<TransferenciaDTO> findAllTransferenciasFromAEmpresaByDivisaAndCuentaIdOrderDesc(Integer idUser, String divisa, Integer cuentaId) {
         List<TransferenciaDTO> res = new ArrayList<>();
-        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAEmpresaByDivisaAndUsuarioIdOrderDesc(idEmpresa,divisa,cuentaId);
+        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAEmpresaByDivisaAndUsuarioIdOrderDesc(idUser,divisa,cuentaId);
+        for(TransferenciaEntity t : transferencias)
+        {
+            res.add(t.toDTO());
+        }
+        return res;
+    }
+
+    public List<TransferenciaDTO> findAllTransferenciasFromAnUserByDivisaAndCuentaIdOrderDesc(Integer idUser, String divisa, Integer cuentaId) {
+        List<TransferenciaDTO> res = new ArrayList<>();
+        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAnUserByDivisaAndUsuarioIdOrderDesc(idUser,divisa,cuentaId);
         for(TransferenciaEntity t : transferencias)
         {
             res.add(t.toDTO());
@@ -211,6 +221,16 @@ public class TransferenciaService {
         }
         return res;
     }
+
+    public List<TransferenciaDTO> findAllTransferenciasFromAnUserByDivisaOrderDesc(Integer idUser, String divisa) {
+        List<TransferenciaDTO> res = new ArrayList<>();
+        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAnUserByDivisaOrderDesc(idUser,divisa);
+        for(TransferenciaEntity t : transferencias)
+        {
+            res.add(t.toDTO());
+        }
+        return res;
+    }
     /**
    Devuelve todas las transferencias de una empresa cuya divisa equivalen a los parámetros. Orden fecha ascendente.
    @author Diego
@@ -231,6 +251,16 @@ public class TransferenciaService {
     public List<TransferenciaDTO> findAllTransferenciasFromAEmpresaByCuentaIdOrderDesc(Integer idEmpresa, Integer cuentaId) {
         List<TransferenciaDTO> res = new ArrayList<>();
         List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAEmpresaByUsuarioIdOrderDesc(idEmpresa,cuentaId);
+        for(TransferenciaEntity t : transferencias)
+        {
+            res.add(t.toDTO());
+        }
+        return res;
+    }
+
+    public List<TransferenciaDTO> findAllTransferenciasFromAnUserByCuentaIdOrderDesc(Integer idUser, Integer cuentaId) {
+        List<TransferenciaDTO> res = new ArrayList<>();
+        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAnUserByUsuarioIdOrderDesc(idUser,cuentaId);
         for(TransferenciaEntity t : transferencias)
         {
             res.add(t.toDTO());

@@ -191,7 +191,7 @@ public class CajeroController {
 
     @PostMapping("/edit")
     public String doEdit(HttpSession session, @ModelAttribute("newUsuarioWrapper") UsuarioWrapper usuarioWrapper) {
-        return (this.usuarioService.makeEdit(usuarioWrapper, session));
+        return (this.usuarioService.makeEdit(usuarioWrapper.getNewUsuario(), session));
     }
 
     @GetMapping("/cambioDivisa")
