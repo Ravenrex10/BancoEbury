@@ -27,7 +27,7 @@
             <h5>Ordenar por fecha:</h5>
             <form:select path="ordenPorFecha" items="${orden}"></form:select><br><br>
 
-            <form:button class="btn btn-primary" type="submit">Filtrar</form:button>
+            <form:button class="btn btn-primary btn-lg" type="submit">Filtrar</form:button>
         </form:form>
     </div>
     <div class="container">
@@ -59,5 +59,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
-</html>
 </html>

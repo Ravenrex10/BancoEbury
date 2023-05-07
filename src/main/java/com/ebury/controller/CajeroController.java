@@ -10,7 +10,6 @@ import com.ebury.exceptions.NoCoinsException;
 import com.ebury.service.*;
 import com.ebury.ui.CuentaDivisaWrapper;
 import com.ebury.ui.FiltroTransferencias;
-import com.ebury.ui.UsuarioWrapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -121,42 +121,46 @@ public class CajeroController {
         model.addAttribute("usuario", usuarioActual);
 
         if (filtro == null || filtro.getDivisa().equals("0") && filtro.getCuenta().equals(0) && filtro.getOrdenPorFecha().equals("Ascendente")) {
+            List<TransferenciaDTO> transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUser(usuarioActual.getId());
+            model.addAttribute("transferencias", transferenciaDTOS);
             FiltroTransferencias newFiltro = new FiltroTransferencias();
-            List<TransferenciaDTO> transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresa(usuarioActual.getEmpresa());
             newFiltro.setDivisa("0");
             newFiltro.setCuenta(0);
             newFiltro.setOrdenPorFecha("Ascendente");
-            model.addAttribute("transferencias", transferenciaDTOS);
             model.addAttribute("newFiltro", newFiltro);
-        } else {
+        }else {
             List<TransferenciaDTO> transferenciaDTOS = new ArrayList<>();
             if (!filtro.getDivisa().equals("0")) {
                 if (!filtro.getCuenta().equals(0)) {
                     if (filtro.getOrdenPorFecha().equals("Descendente")) {
-                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaAndCuentaIdOrderDesc(usuarioActual.getEmpresa(), filtro.getDivisa(), filtro.getCuenta());
+                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByDivisaAndCuentaIdOrderDesc(usuarioActual.getId(), filtro.getDivisa(), filtro.getCuenta());
                     } else {
-                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaAndCuentaIdOrderAsc(usuarioActual.getEmpresa(), filtro.getDivisa(), filtro.getCuenta());
+                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByDivisaAndCuentaIdOrderDesc(usuarioActual.getId(), filtro.getDivisa(), filtro.getCuenta());
+                        Collections.reverse(transferenciaDTOS);
                     }
                 } else {
                     if (filtro.getOrdenPorFecha().equals("Descendente")) {
-                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaOrderDesc(usuarioActual.getEmpresa(), filtro.getDivisa());
+                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByDivisaOrderDesc(usuarioActual.getId(), filtro.getDivisa());
                     } else {
-                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByDivisaOrderAsc(usuarioActual.getEmpresa(), filtro.getDivisa());
+                        transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByDivisaOrderDesc(usuarioActual.getId(), filtro.getDivisa());
+                        Collections.reverse(transferenciaDTOS);
                     }
                 }
 
             } else if (!filtro.getCuenta().equals(0)) {
                 if (filtro.getOrdenPorFecha().equals("Descendente")) {
-                    transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByCuentaIdOrderDesc(usuarioActual.getEmpresa(), filtro.getCuenta());
+                    transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByCuentaIdOrderDesc(usuarioActual.getId(), filtro.getCuenta());
                 } else {
-                    transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaByCuentaIdOrderAsc(usuarioActual.getEmpresa(), filtro.getCuenta());
+                    transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByCuentaIdOrderDesc(usuarioActual.getId(), filtro.getCuenta());
+                    Collections.reverse(transferenciaDTOS);
                 }
             } else {
-                transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAEmpresaOrderDesc(usuarioActual.getEmpresa());
+                transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUser(usuarioActual.getId());
+                Collections.reverse(transferenciaDTOS);
             }
             model.addAttribute("transferencias", transferenciaDTOS);
-            model.addAttribute("newFiltro", filtro);
         }
+
         List<String> orden = new ArrayList<>();
         orden.add("Ascendente");
         orden.add("Descendente");
@@ -167,6 +171,7 @@ public class CajeroController {
 
         List<CuentaDTO> cuentaDTOS = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
         model.addAttribute("cuentasDTOS", cuentaDTOS);
+
         return ("cajero/cajeroListaTransferencias");
     }
 
@@ -224,7 +229,7 @@ public class CajeroController {
 
         this.divisaService.cambiarCuentaDivisa(newDivisa);
 
-        return("redirect:/cajero/");
+        return("redirect:/cajero/efectivo");
     }
 
     @GetMapping("/logout")
