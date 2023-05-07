@@ -5,8 +5,12 @@ import com.ebury.dto.CuentaDTO;
 import com.ebury.dto.TransferenciaDTO;
 import com.ebury.dto.UsuarioDTO;
 import com.ebury.exceptions.DivisaException;
+import com.ebury.exceptions.NegativeImportException;
+import com.ebury.exceptions.NoCoinsException;
 import com.ebury.service.*;
+import com.ebury.ui.CuentaDivisaWrapper;
 import com.ebury.ui.FiltroTransferencias;
+import com.ebury.ui.UsuarioWrapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,7 +64,6 @@ public class CajeroController {
         return "cajero/cajeroTransferencia";
     }
 
-    //#TODO: nueva excepcion de saldo nulo
     @PostMapping("/transferir")
     public String doTransferir(@ModelAttribute("newTransferencia") TransferenciaDTO transferenciaDTO, HttpSession session, Model model) {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
@@ -73,6 +76,39 @@ public class CajeroController {
             return "redirect:/cajero/";
         } catch (DivisaException divisaException) {
             return this.getError(model, "Las divisas entre la cuenta de origen y destino son diferentes.", session);
+        } catch (NegativeImportException exception) {
+            return this.getError(model,"No se puede realizar importes menores o iguales a 0.",session);
+        }
+    }
+
+    @GetMapping("/efectivo")
+    public String getEfectivo(HttpSession session, Model model) {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuarioActual);
+
+        TransferenciaDTO transferenciaDTO = new TransferenciaDTO();
+        model.addAttribute("newTransferencia", transferenciaDTO);
+
+        List<CuentaDTO> cuentasUsuario = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
+        model.addAttribute("cuentasUsuario", cuentasUsuario);
+
+        return "cajero/cajeroEfectivo";
+    }
+
+    @PostMapping("/sacarEfectivo")
+    public String doSacarEfectivo(@ModelAttribute("newTransferencia") TransferenciaDTO transferenciaDTO, HttpSession session, Model model) {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        CuentaDTO cuentaDTO = this.cuentaService.findCuentaByIdToDto(transferenciaDTO.getCuentaOrigen().getId());
+        if (!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada")) {
+            return getError(model, "Tu cuenta está bloqueada", session);
+        }
+        try {
+            this.transferenciaService.sacarEfectivo(transferenciaDTO.getCuentaOrigen().getId(), transferenciaDTO.getCantidad());
+            return "redirect:/cajero/";
+        } catch (NegativeImportException exception) {
+            return this.getError(model,"No se puede realizar importes menores o iguales a 0.",session);
+        } catch (NoCoinsException exception) {
+            return this.getError(model,"No disponemos de monedas y billetes pequeños. Por favor, pruebe con un múltiplo de 10.",session);
         }
     }
     @GetMapping("/listaTransferencias")
@@ -143,6 +179,53 @@ public class CajeroController {
         model.addAttribute("error", error);
         model.addAttribute("usuario", session.getAttribute("usuario"));
         return "cajero/cajeroError";
+    }
+
+    @GetMapping("/datos")
+    public String getDatos(HttpSession session, Model model) {
+        model.addAttribute("usuario", session.getAttribute("usuario"));
+        UsuarioWrapper usuarioWrapper = new UsuarioWrapper();
+        model.addAttribute("newUsuarioWrapper", usuarioWrapper);
+        return "cajero/cajeroEdit";
+    }
+
+    @PostMapping("/edit")
+    public String doEdit(HttpSession session, @ModelAttribute("newUsuarioWrapper") UsuarioWrapper usuarioWrapper) {
+        return (this.usuarioService.makeEdit(usuarioWrapper, session));
+    }
+
+    @GetMapping("/cambioDivisa")
+    public String getCambioDivisa(Model model, HttpSession session)
+    {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuarioActual);
+
+        List<CuentaDTO> cuentaDTOS = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
+        model.addAttribute("cuentaDTOS",cuentaDTOS);
+
+        List<String> divisas = this.divisaService.findAllDivisaNames();
+        divisas.add(0," ");
+        model.addAttribute("divisas",divisas);
+
+        CuentaDivisaWrapper cuentaDivisaWrapper = new CuentaDivisaWrapper();
+        model.addAttribute("newDivisa",cuentaDivisaWrapper);
+
+        return ("cajero/cajeroCambioDivisas");
+    }
+
+    @PostMapping("/cambiarDivisa")
+    public String doCambiarDivisa(@ModelAttribute("newDivisa")CuentaDivisaWrapper newDivisa, HttpSession session, Model model)
+    {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        CuentaDTO cuentaDTO = this.cuentaService.findCuentaByIdToDto(newDivisa.getCuentaId());
+
+        if (!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada")) {
+            return getError(model, "Tu cuenta está bloqueada.", session);
+        }
+
+        this.divisaService.cambiarCuentaDivisa(newDivisa);
+
+        return("redirect:/cajero/");
     }
 
     @GetMapping("/logout")

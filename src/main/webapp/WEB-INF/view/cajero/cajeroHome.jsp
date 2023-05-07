@@ -13,11 +13,11 @@
     <a class="btn btn-primary btn-lg" role="button">Sacar dinero</a>
     <a class="btn btn-primary btn-lg" href="/cajero/transferencias" role="button">Realizar transferencia</a>
     <br>
-    <a class="btn btn-primary btn-lg" role="button">Cambiar divisa</a>
+    <a class="btn btn-primary btn-lg" href="/cajero/cambioDivisa" role="button">Cambiar divisas</a>
     <a class="btn btn-primary btn-lg" href="/cajero/listaTransferencias" role="button">Revisar operaciones</a>
     <br>
     <br>
-    <a href="#" class="link-primary">¿Quieres modificar tus datos? Haz click aquí</a>
+    <a href="/cajero/datos" class="link-primary">¿Quieres modificar tus datos? Haz click aquí</a>
     <br>
     <a href="#" class="link-danger">¿Cuenta bloqueada? Haga click aquí para pedir su desbloqueo</a>
 </div>
