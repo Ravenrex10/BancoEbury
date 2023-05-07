@@ -35,22 +35,22 @@ public class ChatController {
 
     @GetMapping("/chats")
     String doListarChats(HttpSession session, Model model) {
-        UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
-        if (miUsuario == null || !miUsuario.getRolName().equals("Asistente")) return "redirect:/";
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        if (usuarioActual == null || !usuarioActual.getRolName().equals("Asistente")) return "redirect:/";
 
         FiltroChats filtro = new FiltroChats();
         filtro.setCriterioOrdenacion("ascendente");
         filtro.setMostrarCerrados(true);
         filtro.setMostrarSoloPropios(false);
 
-        listarChatsFiltrados(filtro, model, miUsuario.getId());
+        listarChatsFiltrados(filtro, model, usuarioActual.getId());
         return "asistente/chats";
     }
 
     @PostMapping("/chats/filtrar")
     String doFiltrarChats(@ModelAttribute("filtro") FiltroChats filtro, HttpSession session, Model model) {
-        UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
-        listarChatsFiltrados(filtro, model, miUsuario.getId());
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        listarChatsFiltrados(filtro, model, usuarioActual.getId());
         return "asistente/chats";
     }
 
@@ -73,14 +73,14 @@ public class ChatController {
 
     @GetMapping("/chat")
     String doMostrarChat(@RequestParam("chatId") int chatId, Model model, HttpSession session) {
-        UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
-        if (!chatService.usuarioTieneAccesoAChat(miUsuario.getId(), chatId)) {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        if (!chatService.usuarioTieneAccesoAChat(usuarioActual.getId(), chatId)) {
             return "asistente/accesoDenegado";
         }
         ChatDTO chat = chatService.findChatByChatId(chatId);
-        List<MensajeDTO> mensajes = chatService.findMensajesByChatId(chatId, miUsuario.getId());
-        boolean usuarioPuedeEscribir = chatService.usuarioPuedeEnviarMensajeAChat(miUsuario.getId(), chatId);
-        boolean usuarioPuedeCerrar = !miUsuario.getRolName().equals("Asistente") && !chat.isCerrado();
+        List<MensajeDTO> mensajes = chatService.findMensajesByChatId(chatId, usuarioActual.getId());
+        boolean usuarioPuedeEscribir = chatService.usuarioPuedeEnviarMensajeAChat(usuarioActual.getId(), chatId);
+        boolean usuarioPuedeCerrar = !usuarioActual.getRolName().equals("Asistente") && !chat.isCerrado();
         model.addAttribute("chat", chat);
         model.addAttribute("mensajes", mensajes);
         model.addAttribute("usuarioPuedeEscribir", usuarioPuedeEscribir);
@@ -90,17 +90,17 @@ public class ChatController {
 
     @PostMapping("/chat/enviar")
     String doEnviarMensaje(@RequestParam("mensaje") String mensaje, @RequestParam("chatId") int chatId, HttpSession session) {
-        UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
-        chatService.enviarMensaje(chatId, miUsuario.getId(), mensaje);
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        chatService.enviarMensaje(chatId, usuarioActual.getId(), mensaje);
         return "redirect:/chat?chatId=" + chatId;
     }
 
     // si soy cliente, quiero ver un listado de todos mis chats con asistentes
     @GetMapping("/asistencia")
     String doMostrarAsistencia(HttpSession session, Model model) {
-        UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
-        if (miUsuario == null) return "redirect:/";
-        List<ChatDTO> misChats = chatService.findChatsByUserId(miUsuario.getId());
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        if (usuarioActual == null || usuarioActual.getRolName().equals("Asistente")) return "redirect:/";
+        List<ChatDTO> misChats = chatService.findChatsByUserId(usuarioActual.getId());
         List<UsuarioDTO> asistentes = usuarioService.findUsuariosByRolNombre("Asistente");
         model.addAttribute("chats", misChats);
         model.addAttribute("usuarios", asistentes);
