@@ -144,6 +144,39 @@ public class UsuarioService {
     /**     Registra un socio nuevo en la empresa. Solo se puede llamar desde el rol FundadorEmpresa.
            @author Diego
        */
+    public String makeRegisterEmpresa(UsuarioDTO u, int empresaId) {
+        UsuarioEntity usuario = new UsuarioEntity();
+
+        usuario.setPrimerNombre(u.getPrimerNombre());
+        usuario.setSegundoNombre(u.getSegundoNombre());
+        usuario.setPrimerApellido(u.getPrimerApellido());
+        usuario.setSegundoApellido(u.getSegundoApellido());
+        usuario.setContrasenya(u.getContrasenya());
+        usuario.setEmail(u.getEmail());
+        usuario.setNif(u.getNif());
+        usuario.setFechaNacimiento(u.getFechaNacimiento());
+
+        EmpresaEntity empresa = this.empresaRepository.findById(empresaId).orElse(null);
+
+        usuario.setRolByRol(this.rolRepository.findByNombre(u.getRolName()));
+        usuario.setEmpresaByEmpresa(empresa);
+        usuario.setAlta(false);
+        usuario.setAltaSolicitada(true);
+
+        List<UsuarioEntity> usuarioEntityList = (List<UsuarioEntity>) empresa.getUsuariosById();
+        usuarioEntityList.add(usuario);
+        empresa.setUsuariosById(usuarioEntityList);
+
+        this.empresaRepository.save(empresa);
+        this.usuarioRepository.save(usuario);
+
+        return ("redirect:/empresa/");
+
+    }
+
+    /**
+     @author Jaime
+     */
     public String makeRegister(UsuarioDTO u, int empresaId) {
         UsuarioEntity usuario = new UsuarioEntity();
 

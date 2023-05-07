@@ -103,7 +103,7 @@ public class EmpresaController {
             return getError(model, "Acceso denegado", session);
         }
         int empresaId = fundador.getEmpresa();
-        return this.usuarioService.makeRegister(usuarioDTO, empresaId);
+        return this.usuarioService.makeRegisterEmpresa(usuarioDTO, empresaId);
     }
 
     @GetMapping("/listaUsuarios")
