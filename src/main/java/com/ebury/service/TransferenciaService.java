@@ -56,6 +56,7 @@ public class TransferenciaService {
                 break;
 
             case "Cantidad Descendente": transferenciaEntities = transferenciasRepository.findAllByUsuarioOrderByCantidadDescendente(usuario);
+                break;
 
             default: transferenciaEntities = transferenciasRepository.findAll();
         }
