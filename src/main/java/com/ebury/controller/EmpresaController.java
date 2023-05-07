@@ -231,8 +231,12 @@ public class EmpresaController {
     @PostMapping("/transferir")
     public String doTransferir(@ModelAttribute("newTransferencia") TransferenciaDTO transferenciaDTO, HttpSession session, Model model) {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        if(transferenciaDTO.getCuentaOrigen() == null)
+        {
+            return getError(model, "Aún no tienes una cuenta asignada. Contacta con el gestor de tu empresa.", session);
+        }
         CuentaDTO cuentaDTO = this.cuentaService.findCuentaByIdToDto(transferenciaDTO.getCuentaOrigen().getId());
-        if (!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada")) {
+        if (!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada") ) {
             return getError(model, "Tu cuenta está bloqueada/desactivada o tu usuario no ha sido dado de alta aún. Contacta con el gestor de tu empresa.", session);
         }
         try {
@@ -333,6 +337,10 @@ public class EmpresaController {
     public String doCambiarDivisa(@ModelAttribute("newDivisa")CuentaDivisaWrapper newDivisa, HttpSession session, Model model)
     {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        if(newDivisa.getCuentaId() == 0 || newDivisa.getDivisaNombre().equals("0"))
+        {
+            return getError(model, "Has dejado algún campo sin rellenar. Revisa los datos e inténtalo de nuevo.",session);
+        }
         CuentaDTO cuentaDTO = this.cuentaService.findCuentaByIdToDto(newDivisa.getCuentaId());
 
         if (!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada")) {
