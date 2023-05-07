@@ -165,7 +165,7 @@ public class CajeroController {
         List<String> divisas = this.divisaService.findAllDivisaNames();
         model.addAttribute("divisas", divisas);
 
-        List<CuentaDTO> cuentaDTOS = this.cuentaService.findAllCuentasByEmpresa(usuarioActual.getEmpresa());
+        List<CuentaDTO> cuentaDTOS = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
         model.addAttribute("cuentasDTOS", cuentaDTOS);
         return ("cajero/cajeroListaTransferencias");
     }
@@ -183,15 +183,14 @@ public class CajeroController {
 
     @GetMapping("/datos")
     public String getDatos(HttpSession session, Model model) {
-        model.addAttribute("usuario", session.getAttribute("usuario"));
-        UsuarioWrapper usuarioWrapper = new UsuarioWrapper();
-        model.addAttribute("newUsuarioWrapper", usuarioWrapper);
+        UsuarioDTO usuarioDTO = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuarioDTO);
         return "cajero/cajeroEdit";
     }
 
     @PostMapping("/edit")
-    public String doEdit(HttpSession session, @ModelAttribute("newUsuarioWrapper") UsuarioWrapper usuarioWrapper) {
-        return (this.usuarioService.makeEdit(usuarioWrapper, session));
+    public String doEdit(HttpSession session, @ModelAttribute("usuario") UsuarioDTO usuarioDTO) {
+        return (this.usuarioService.makeEdit(usuarioDTO, session));
     }
 
     @GetMapping("/cambioDivisa")
