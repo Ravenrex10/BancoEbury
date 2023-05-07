@@ -54,7 +54,7 @@ public class EmpresaController {
     public String getHome(HttpSession session, Model model) {
         model.addAttribute("usuario", session.getAttribute("usuario"));
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
-        model.addAttribute("empresa",this.empresaService.findById(usuarioActual.getEmpresa()));
+        model.addAttribute("empresa", this.empresaService.findById(usuarioActual.getEmpresa()));
         return "empresa/empresaHome";
     }
 
@@ -231,6 +231,9 @@ public class EmpresaController {
     @PostMapping("/transferir")
     public String doTransferir(@ModelAttribute("newTransferencia") TransferenciaDTO transferenciaDTO, HttpSession session, Model model) {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        if (transferenciaDTO.getCuentaOrigen() == null) {
+            return getError(model, "Aún no tienes una cuenta asignada. Contacta con el gestor de tu empresa.", session);
+        }
         CuentaDTO cuentaDTO = this.cuentaService.findCuentaByIdToDto(transferenciaDTO.getCuentaOrigen().getId());
         if (!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada")) {
             return getError(model, "Tu cuenta está bloqueada/desactivada o tu usuario no ha sido dado de alta aún. Contacta con el gestor de tu empresa.", session);
@@ -240,9 +243,8 @@ public class EmpresaController {
             return "redirect:/empresa/";
         } catch (DivisaException divisaException) {
             return this.getError(model, "Las divisas entre la cuenta de origen y destino son diferentes. Intenta cambiar de divisa.", session);
-        } catch (NegativeImportException exception)
-        {
-            return this.getError(model,"No se puede realizar importes menores o iguales a 0.",session);
+        } catch (NegativeImportException exception) {
+            return this.getError(model, "No se puede realizar importes menores o iguales a 0.", session);
         }
     }
 
@@ -311,28 +313,29 @@ public class EmpresaController {
     }
 
     @GetMapping("/cambioDivisa")
-    public String getCambioDivisa(Model model, HttpSession session)
-    {
+    public String getCambioDivisa(Model model, HttpSession session) {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
         model.addAttribute("usuario", usuarioActual);
 
         List<CuentaDTO> cuentaDTOS = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
-        model.addAttribute("cuentaDTOS",cuentaDTOS);
+        model.addAttribute("cuentaDTOS", cuentaDTOS);
 
         List<String> divisas = this.divisaService.findAllDivisaNames();
-        divisas.add(0," ");
-        model.addAttribute("divisas",divisas);
+        divisas.add(0, " ");
+        model.addAttribute("divisas", divisas);
 
         CuentaDivisaWrapper cuentaDivisaWrapper = new CuentaDivisaWrapper();
-        model.addAttribute("newDivisa",cuentaDivisaWrapper);
+        model.addAttribute("newDivisa", cuentaDivisaWrapper);
 
         return ("empresa/empresaCambioDivisa");
     }
 
     @PostMapping("/cambiarDivisa")
-    public String doCambiarDivisa(@ModelAttribute("newDivisa")CuentaDivisaWrapper newDivisa, HttpSession session, Model model)
-    {
+    public String doCambiarDivisa(@ModelAttribute("newDivisa") CuentaDivisaWrapper newDivisa, HttpSession session, Model model) {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        if (newDivisa.getCuentaId() == 0 || newDivisa.getDivisaNombre().equals("0")) {
+            return getError(model, "Has dejado algún campo sin rellenar. Revisa los datos e inténtalo de nuevo.", session);
+        }
         CuentaDTO cuentaDTO = this.cuentaService.findCuentaByIdToDto(newDivisa.getCuentaId());
 
         if (!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada")) {
@@ -341,7 +344,7 @@ public class EmpresaController {
 
         this.divisaService.cambiarCuentaDivisa(newDivisa);
 
-        return("redirect:/empresa/");
+        return ("redirect:/empresa/");
 
     }
 

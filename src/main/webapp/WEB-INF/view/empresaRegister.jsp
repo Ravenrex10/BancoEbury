@@ -9,12 +9,13 @@
 <body>
 <div class="container">
     <form:form method="post" action="/registerEmpresa/register" modelAttribute="newEmpresaWrapper">
-        <h1>Datos de la empresa: </h1>
+        <h1>Registrar empresa:</h1>
+        <h2>Datos de la empresa: </h2>
         <form:hidden path="newEmpresa.id"></form:hidden>
         Cif (*): <form:input path="newEmpresa.cif"></form:input><br>
         Nombre de la empresa (*): <form:input path="newEmpresa.nombre"></form:input><br>
 
-        <h1>Dirección: </h1>
+        <h2>Dirección: </h2>
 
         <form:hidden path="newDireccion.id"></form:hidden>
         Calle (*): <form:input path="newDireccion.calle"></form:input><br>
@@ -24,7 +25,7 @@
         País (*): <form:input path="newDireccion.pais"></form:input><br>
         Código Postal (*): <form:input path="newDireccion.cp"></form:input><br>
 
-        <h1>Socio fundador: </h1>
+        <h2>Socio fundador: </h2>
         <form:hidden path="newUsuario.id"></form:hidden>
         NIF (*): <form:input path="newUsuario.nif"></form:input><br>
         Primer nombre (*): <form:input path="newUsuario.primerNombre"></form:input><br>
