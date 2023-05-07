@@ -18,6 +18,9 @@
                     <a class="nav-link" href="/cliente/listaTransferencias">Historial de operaciones</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link link-warning" href="/cajero">Acceder al cajero</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="">Bloquear Cuenta</a>
                 </li>
                 <li class="nav-item">
