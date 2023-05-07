@@ -37,7 +37,7 @@ public class LoginController {
             session.setAttribute("usuario", usuario);
             switch (rolname){
                 case "Cliente": //Usuario es cliente
-                    urlTo+="cliente";
+                    urlTo+="cliente/";
                     break;
                 case "AutorizadoEmpresa": //Usuario es autorizado
                     urlTo+="empresa/";

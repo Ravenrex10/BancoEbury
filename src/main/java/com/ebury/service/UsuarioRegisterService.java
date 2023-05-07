@@ -34,6 +34,8 @@ public class UsuarioRegisterService {
 
         usuarioEntity.setRolByRol(rolRepository.findByNombre("Cliente"));
 
+        usuarioEntity.setAlta(true);
+
         this.usuarioRepository.save(usuarioEntity);
 
         return ("redirect:/");
