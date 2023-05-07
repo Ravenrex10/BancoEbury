@@ -1,6 +1,10 @@
 package com.ebury.dto;
 import java.sql.Date;
 public class TransferenciaDTO {
+    /**
+     * @author 50% Diego
+     * @author 50% Lucas Colbert Eastgate
+     */
     private Double cantidad;
     private Date fecha;
     private String divisaOrigen;

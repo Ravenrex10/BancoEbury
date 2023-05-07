@@ -3,6 +3,9 @@ package com.ebury.dto;
 import java.util.Collection;
 
 public class DireccionDTO {
+    /**
+     * @author Diego
+     */
     private int id;
     private String calle;
     private String numero;

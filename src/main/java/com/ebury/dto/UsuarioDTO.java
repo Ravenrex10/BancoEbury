@@ -3,6 +3,11 @@ package com.ebury.dto;
 import java.sql.Date;
 
 public class UsuarioDTO {
+    /**
+     * @author Dani 33,33%
+     * @author Diego 33,33%
+     * @author Lucas Colbert Eastgate 33,33%
+     */
 
     private int id;
     private int nif;

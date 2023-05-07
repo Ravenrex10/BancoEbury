@@ -3,6 +3,9 @@ package com.ebury.dto;
 import java.util.Collection;
 
 public class EmpresaDTO {
+    /**
+     * @author Diego
+     */
     private int id;
     private int cif;
     private String nombre;

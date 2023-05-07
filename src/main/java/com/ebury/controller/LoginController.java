@@ -25,50 +25,56 @@ public class LoginController {
     protected EmpresaService empresaService;
 
     @GetMapping("/")
-    public String doLogin(){
+    public String doLogin() {
         return "entrada";
     }
+
     @PostMapping("/")
-    public String getHome(Model model, @RequestParam("usuario") String user, @RequestParam("clave") String clave, HttpSession session){
+    public String getHome(Model model, @RequestParam("usuario") String user, @RequestParam("clave") String clave, HttpSession session) {
         String urlTo = "redirect:/";
         UsuarioDTO usuario = this.usuarioService.autenticar(user, clave);
-        if(usuario!=null){
+        if (usuario != null) {
             String rolname = usuario.getRolName();
             session.setAttribute("usuario", usuario);
-            switch (rolname){
+            switch (rolname) {
                 case "Cliente": //Usuario es cliente
-                    urlTo+="cliente/";
+                    urlTo += "cliente/";
                     break;
                 case "AutorizadoEmpresa": //Usuario es autorizado
-                    urlTo+="empresa/";
+                    urlTo += "empresa/";
                     break;
                 case "FundadorEmpresa": // Usuario es fundador
-                    urlTo+="empresa/";
+                    urlTo += "empresa/";
                     break;
                 case "Gestor": //Usuario es gestor
-                    urlTo+="gestorHome/";
+                    urlTo += "gestorHome/";
                     break;
                 case "Asistente": //Usuario es asistente
-                    urlTo+="asistente";
+                    urlTo += "asistente";
                     break;
                 case "SocioEmpresa": //Usuario es socio
-                    urlTo+="empresa/";
+                    urlTo += "empresa/";
                     break;
             }
-        }else{
+        } else {
             System.out.println("Error");
         }
         return urlTo;
     }
 
-    // Cierra la sesión actual
-    // @author Diego
+    /**
+     * Cierra la sesión actual
+     *
+     * @author Diego
+     */
     @GetMapping("/logout")
-    public String doLogout (HttpSession session) {
+    public String doLogout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }
-
+    /**
+     * @author Jaime
+     */
     @GetMapping("/cliente")
     public String doCliente() {
         return "cliente/clienteHome";

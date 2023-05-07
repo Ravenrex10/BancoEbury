@@ -2,6 +2,9 @@ package com.ebury.ui;
 
 import com.ebury.dto.UsuarioDTO;
 
+/**
+ * @author Jaime
+ */
 public class UsuarioWrapper {
 
     private UsuarioDTO newUsuario;

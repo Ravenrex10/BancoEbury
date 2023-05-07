@@ -265,10 +265,18 @@ public class UsuarioService {
         return usuariosInactivosConCuentasActivadas.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
     }
 
+    /**
+     *
+     * @author Dani
+     */
     public List<UsuarioDTO> findAllUsuariosQueParticipanEnChat() {
         return usuarioRepository.findAllUsuariosQueParticipanEnChat().stream().map(UsuarioEntity::toDTO).toList();
     }
 
+    /**
+     *
+     * @author Jaime
+     */
     public void solicitarActivacion(Integer id) {
         cuentaService.solicitarDesbloqueoCuenta(id);
     }

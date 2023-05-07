@@ -1,6 +1,9 @@
 package com.ebury.dto;
 
 public class SaldoDTO {
+    /**
+     * @author Diego
+     */
     private double cantidad;
     private String divisa;
 
