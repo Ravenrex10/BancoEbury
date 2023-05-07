@@ -6,6 +6,7 @@ import com.ebury.dto.UsuarioDTO;
 import com.ebury.service.*;
 import com.ebury.ui.FiltroTransferencias;
 import com.ebury.ui.FiltroUsuarios;
+import com.ebury.ui.OrdenaTransferencias;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -119,8 +120,23 @@ public class GestorController {
         return("redirect:/gestorHome/bloqueadas");
     }
 
+    @PostMapping("/ordenar")
+    public String doOrdenar(Model model, @ModelAttribute("ordenTransferencias") OrdenaTransferencias ordenaTransferencias){
+        Integer usuario = ordenaTransferencias.getUsuarioId();
+
+        List<TransferenciaDTO> transferencias = transferenciaService.findAllTransferenciasOrdenadas(usuario, ordenaTransferencias.getOrden());
+
+        return verInformacionUsuario(transferencias, model, usuario);
+    }
+
     private String verInformacionUsuario(List<TransferenciaDTO> transferencias, Model model, Integer id){
         UsuarioDTO usuario = usuarioService.findUsuarioById(id);
+
+        OrdenaTransferencias orden = new OrdenaTransferencias();
+        model.addAttribute("ordenTransferencias", orden);
+        orden.setOrden("Fecha");
+        orden.setUsuarioId(id);
+
         FiltroTransferencias filtro = new FiltroTransferencias();
         filtro.setFiltro("0");
         filtro.setUsuario(id);

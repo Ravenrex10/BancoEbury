@@ -43,6 +43,26 @@ public class TransferenciaService {
         return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
     }
 
+    public List<TransferenciaDTO> findAllTransferenciasOrdenadas(Integer usuario, String orden){
+        List<TransferenciaEntity> transferenciaEntities;
+        switch (orden){
+            case "Fecha Ascendente": transferenciaEntities = transferenciasRepository.findAllByUsuarioOrderByFechaAscendente(usuario);
+                break;
+
+            case "Fecha Descendente": transferenciaEntities = transferenciasRepository.findAllByUsuarioOrderByFechaDescendente(usuario);
+                break;
+
+            case "Cantidad Ascendente": transferenciaEntities = transferenciasRepository.findAllByUsuarioOrderByCantidadAscendente(usuario);
+                break;
+
+            case "Cantidad Descendente": transferenciaEntities = transferenciasRepository.findAllByUsuarioOrderByCantidadDescendente(usuario);
+
+            default: transferenciaEntities = transferenciasRepository.findAll();
+        }
+
+        return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
+    }
+
     /**
         Transfiere una cantidad de dinero desde una cuenta origen a una cuenta destino
         @author Diego
