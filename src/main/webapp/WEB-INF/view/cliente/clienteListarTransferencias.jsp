@@ -15,7 +15,7 @@
     <h1>Lista de transferencias</h1>
 
     <div class="container">
-        <form:form modelAttribute="newFiltro" action="/empresa/filtrarTransferencias" method="post">
+        <form:form modelAttribute="newFiltro" action="/cliente/filtrarTransferencias" method="post">
             <h5>Filtrar por:</h5>
             Cuenta:<br> <form:select path="cuenta">
             <form:option value="0" label=" "></form:option>

@@ -158,14 +158,11 @@ public class UsuarioService {
         return ("redirect:/empresa/");
     }
 
-    public String makeEdit(UsuarioWrapper usuarioWrapper, HttpSession session) {
-        UsuarioDTO u = usuarioWrapper.getNewUsuario();
-
+    public String makeEdit(UsuarioDTO u, HttpSession session) {
         UsuarioDTO userActual = (UsuarioDTO) session.getAttribute("usuario");
 
-        UsuarioEntity usuario = new UsuarioEntity();
+        UsuarioEntity usuario = this.usuarioRepository.findById(userActual.getId()).orElse(null);
 
-        usuario.setId(u.getId());
         usuario.setPrimerNombre(u.getPrimerNombre());
         usuario.setSegundoNombre(u.getSegundoNombre());
         usuario.setPrimerApellido(u.getPrimerApellido());
@@ -174,12 +171,6 @@ public class UsuarioService {
         usuario.setEmail(u.getEmail());
         usuario.setNif(u.getNif());
         usuario.setFechaNacimiento(u.getFechaNacimiento());
-
-        UsuarioEntity userActualEntity = this.usuarioRepository.findById(userActual.getId()).orElse(null);
-
-        usuario.setRolByRol(this.rolRepository.findByNombre(userActual.getRolName()));
-        usuario.setAlta(userActualEntity.getAlta());
-        usuario.setAltaSolicitada(userActualEntity.getAltaSolicitada());
 
         // Insertar
         this.usuarioRepository.save(usuario);

@@ -104,6 +104,18 @@ public class TransferenciaService {
         return res;
     }
 
+    public List<TransferenciaDTO> findAllTransferenciasFromAnUser(Integer idUser)
+    {
+        List<TransferenciaDTO> res = new ArrayList<>();
+        //List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllByEmpresaId(idEmpresa);
+        List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllByUsuario(idUser);
+        for(TransferenciaEntity t : transferencias)
+        {
+            res.add(t.toDTO());
+        }
+        return res;
+    }
+
     /**
         Devuelve todas las transferencias de una empresa en orden descendente
         @author Diego

@@ -50,15 +50,15 @@ public class UsuarioController {
 
     @GetMapping("/edit")
     public String getDatos(HttpSession session, Model model) {
-        model.addAttribute("usuario", session.getAttribute("usuario"));
-        UsuarioWrapper usuarioWrapper = new UsuarioWrapper();
-        model.addAttribute("newUsuarioWrapper", usuarioWrapper);
+        UsuarioDTO usuarioDTO = (UsuarioDTO) session.getAttribute("usuario");
+
+        model.addAttribute("usuario", usuarioDTO);
         return "cliente/clienteEdit";
     }
 
-    @PostMapping("/edit")
-    public String doEdit(HttpSession session, @ModelAttribute("newUsuarioWrapper") UsuarioWrapper usuarioWrapper) {
-        return (this.usuarioService.makeEdit(usuarioWrapper, session));
+    @PostMapping("/edited")
+    public String doEdit(HttpSession session, @ModelAttribute("usuario") UsuarioDTO usuarioDTO) {
+        return (this.usuarioService.makeEdit(usuarioDTO, session));
     }
 
     @GetMapping("/transferencia")
@@ -190,7 +190,7 @@ public class UsuarioController {
         List<String> divisas = this.divisaService.findAllDivisaNames();
         model.addAttribute("divisas", divisas);
 
-        List<CuentaDTO> cuentaDTOS = this.cuentaService.findAllCuentasByEmpresa(usuarioActual.getEmpresa());
+        List<CuentaDTO> cuentaDTOS = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
         model.addAttribute("cuentasDTOS", cuentaDTOS);
         return ("cliente/clienteListarTransferencias");
     }
@@ -198,5 +198,10 @@ public class UsuarioController {
     @PostMapping("/filtrarTransferencias")
     public String doFiltrarTransferencias(@ModelAttribute("newFiltro") FiltroTransferencias filtro, Model model, HttpSession session) {
         return listarTransferencias(model, filtro, session);
+    }
+
+    @GetMapping("/logout")
+    public String doLogOut() {
+        return "redirect:/";
     }
 }

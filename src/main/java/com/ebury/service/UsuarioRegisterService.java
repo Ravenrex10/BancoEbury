@@ -34,7 +34,8 @@ public class UsuarioRegisterService {
 
         usuarioEntity.setRolByRol(rolRepository.findByNombre("Cliente"));
 
-        usuarioEntity.setAlta(true);
+        usuarioEntity.setAlta(false);
+        usuarioEntity.setAltaSolicitada(true);
 
         this.usuarioRepository.save(usuarioEntity);
 
