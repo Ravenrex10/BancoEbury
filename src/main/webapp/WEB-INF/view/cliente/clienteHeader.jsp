@@ -18,7 +18,7 @@
                     <a class="nav-link" href="/cliente/listaTransferencias">Historial de operaciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Bloquear Cuenta</a>
+                    <a class="nav-link" href="/cliente/solicitarActivacionDesbloqueo">Solicitar Activacion/Desbloqueo</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/asistencia">Servicio de asistencia</a>

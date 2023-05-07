@@ -141,6 +141,10 @@ public class UsuarioController {
         return (listarTransferencias(model, null, session));
     }
 
+    /*
+
+    // Filtro sin refactorizar
+
     private String listarTransferencias(Model model, FiltroTransferencias filtro, HttpSession session) {
         UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
         model.addAttribute("usuario", usuarioActual);
@@ -200,28 +204,77 @@ public class UsuarioController {
         return ("cliente/clienteListarTransferencias");
     }
 
+     */
+
+    // Filtro refactorizado
+    private String listarTransferencias(Model model, FiltroTransferencias filtro, HttpSession session) {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuarioActual);
+
+        if (filtro == null || filtro.getDivisa().equals("0") && filtro.getCuenta().equals(0) && filtro.getOrdenPorFecha().equals("Ascendente")) {
+            List<TransferenciaDTO> transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUser(usuarioActual.getId());
+            model.addAttribute("transferencias", transferenciaDTOS);
+            FiltroTransferencias newFiltro = new FiltroTransferencias();
+            newFiltro.setDivisa("0");
+            newFiltro.setCuenta(0);
+            newFiltro.setOrdenPorFecha("Ascendente");
+            model.addAttribute("newFiltro", newFiltro);
+        }else {
+            List<TransferenciaDTO> transferenciaDTOS = new ArrayList<>();
+            if (!filtro.getDivisa().equals("0")) {
+                if (!filtro.getCuenta().equals(0)) {
+                    transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByDivisaAndCuentaIdOrderDesc(usuarioActual.getId(), filtro.getDivisa(), filtro.getCuenta());
+                } else {
+                    transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByDivisaOrderDesc(usuarioActual.getId(), filtro.getDivisa());
+                }
+
+            } else if (!filtro.getCuenta().equals(0)) {
+                transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUserByCuentaIdOrderDesc(usuarioActual.getId(), filtro.getCuenta());
+            } else {
+                transferenciaDTOS = this.transferenciaService.findAllTransferenciasFromAnUser(usuarioActual.getId());
+                revlist(transferenciaDTOS);
+            }
+
+            if (filtro.getOrdenPorFecha().equals("Descendente")) {
+                revlist(transferenciaDTOS);
+            }
+
+            model.addAttribute("transferencias", transferenciaDTOS);
+        }
+
+        List<String> orden = new ArrayList<>();
+        orden.add("Ascendente");
+        orden.add("Descendente");
+        model.addAttribute("orden", orden);
+
+        List<String> divisas = this.divisaService.findAllDivisaNames();
+        model.addAttribute("divisas", divisas);
+
+        List<CuentaDTO> cuentaDTOS = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
+        model.addAttribute("cuentasDTOS", cuentaDTOS);
+        return ("cliente/clienteListarTransferencias");
+    }
+
     public static <T> void revlist(List<T> list)
     {
-        // base condition when the list size is 0
         if (list.size() <= 1 || list == null)
             return;
 
-
         T value = list.remove(0);
 
-        // call the recursive function to reverse
-        // the list after removing the first element
         revlist(list);
-
-        // now after the rest of the list has been
-        // reversed by the upper recursive call,
-        // add the first value at the end
         list.add(value);
     }
 
     @PostMapping("/filtrarTransferencias")
     public String doFiltrarTransferencias(@ModelAttribute("newFiltro") FiltroTransferencias filtro, Model model, HttpSession session) {
         return listarTransferencias(model, filtro, session);
+    }
+
+    @GetMapping("/solicitarActivacionDesbloqueo")
+    public String doSolicitarActivacionDesbloqueo(HttpSession session, Model model) {
+        model.addAttribute("usuario", session.getAttribute("usuario"));
+        return "cliente/clienteSolicitarActivacionDesbloqueo";
     }
 
     @GetMapping("/logout")
