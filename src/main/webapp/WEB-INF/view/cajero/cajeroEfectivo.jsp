@@ -22,6 +22,7 @@
         <br>
         Cantidad: <form:input path="cantidad"></form:input>
         <br>
+        <br>
         <form:button type="submit" class="btn btn-primary btn-lg">Sacar Efectivo</form:button>
     </form:form>
 </div>

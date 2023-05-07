@@ -56,21 +56,33 @@ public class UsuarioService {
         }
     }
 
+    /***
+     * @author Lucas Colbert Eastgate
+     */
     public List<UsuarioDTO> findAllClientes() {
         List<UsuarioEntity> usuariosEntity = usuarioRepository.findAllClientes();
         return usuariosEntity.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
     }
 
+    /***
+     * @author Lucas Colbert Eastgate
+     */
     public List<UsuarioDTO> findClientesFiltrados(String filtroUsuario) {
         List<UsuarioEntity> usuariosEntity = usuarioRepository.findAllByRolByRolNombre(filtroUsuario);
         return usuariosEntity.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
     }
 
+    /***
+     * @author Lucas Colbert Eastgate
+     */
     public List<UsuarioDTO> findAllByAltaSolicitada() {
         List<UsuarioEntity> usuariosEntity = usuarioRepository.findAllByAltaSolicitada(true);
         return usuariosEntity.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
     }
 
+    /***
+     * @author Lucas Colbert Eastgate
+     */
     public void darDeAltaUsuario(Integer usuario) {
         UsuarioEntity usuarioEntity = (UsuarioEntity) usuarioRepository.findById(usuario).orElse(null);
 
@@ -94,6 +106,9 @@ public class UsuarioService {
         saldoRepository.save(saldo);
     }
 
+    /***
+     * @author Lucas Colbert Eastgate
+     */
     public void denegarAltaUsuario(Integer usuario) {
         UsuarioEntity usuarioEntity = (UsuarioEntity) usuarioRepository.findById(usuario).orElse(null);
 
@@ -102,6 +117,9 @@ public class UsuarioService {
         usuarioRepository.save(usuarioEntity);
     }
 
+    /***
+     * @author Lucas Colbert Eastgate
+     */
     public List<TransferenciaDTO> findAllTransferencias(Integer usuario) {
         List<TransferenciaEntity> transferenciaEntities = transferenciasRepository.findAllByUsuario(usuario);
         return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
@@ -224,6 +242,9 @@ public class UsuarioService {
         this.usuarioRepository.save(usuarioBloqueado);
     }
 
+    /***
+     * @author Lucas Colbert Eastgate
+     */
     public List<UsuarioDTO> getUsuariosInactivos(){
         List<UsuarioEntity> inactivos = usuarioRepository.findAllUsuariosInactivos();
         List<UsuarioEntity> usuariosInactivosConCuentasActivadas = inactivos;

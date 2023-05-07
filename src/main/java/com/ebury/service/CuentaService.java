@@ -25,6 +25,9 @@ public class CuentaService {
     @Autowired
     EstadoRepository estadoRepository;
 
+    /***
+     * @author Lucas Colbert Eastgate
+     */
     public List<CuentaDTO> findAllCuentasByUsuario(Integer usuario){
         List<CuentaEntity> cuentas = cuentaRepository.findAllByUsuarioByDuenyo(usuarioRepository.findById(usuario).orElse(null));
         return cuentas.stream().map(CuentaEntity::toDTO).collect(Collectors.toList());
@@ -79,6 +82,9 @@ public class CuentaService {
         return res;
     }
 
+    /**
+     @author Diego
+     */
     public List<UsuarioDTO> findSociosAndAutorizadosByEmpresaIdNotBloqueado(Integer idEmpresa) {
         List<UsuarioEntity> usuarioEntityList = this.cuentaRepository.findAllCuentasDeSociosYAutorizadosDeEmpresaIdNotBloqueado(idEmpresa);
         List<UsuarioDTO> res = new ArrayList<>();

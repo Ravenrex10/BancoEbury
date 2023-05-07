@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/***
+ * @author Lucas Colbert Eastgate
+ */
+
 @Service
 public class GestorService {
 
@@ -34,7 +38,7 @@ public class GestorService {
     @Autowired
     TransferenciaService transferenciaService;
 
-    //Autor Lucas Colbert Eastgate
+
     public List<String> getRoles(){
         List<RolEntity> roles = rolRepository.findAll();
         List<String> rolesNombres = new ArrayList<>();
@@ -44,7 +48,6 @@ public class GestorService {
         return rolesNombres;
     }
 
-    //Lucas Colbert Eastgate
     public List<UsuarioDTO> filtrar(FiltroUsuarios filtroUsuario){
         List<UsuarioDTO> usuarios;
         if(filtroUsuario.getFiltro().equals("0")){
@@ -68,7 +71,6 @@ public class GestorService {
         return usuarios;
     }
 
-    //Lucas Colbert Eastgate
     public List<TransferenciaDTO> filtrarTransferencias(FiltroTransferencias filtroTransferencias, Integer usuario){
         List<TransferenciaDTO> transferencias;
         switch (filtroTransferencias.getFiltro()){

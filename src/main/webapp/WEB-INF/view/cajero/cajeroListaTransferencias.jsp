@@ -1,5 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<!--Juan Salmerón-->
 <%@ page import="com.ebury.dto.TransferenciaDTO" %>
 <%@ page import="java.util.List" %>
 <html>
@@ -38,7 +38,7 @@
                 <th>Cuenta Origen</th>
                 <th>Cuenta Destino</th>
                 <th>Cantidad</th>
-                <th>Divisa usada</th>
+                <th>Divisa</th>
                 <th>Fecha</th>
             </tr>
             <% for (TransferenciaDTO t : transferenciaDTO) { %>
