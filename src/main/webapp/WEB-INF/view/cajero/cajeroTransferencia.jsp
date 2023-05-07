@@ -1,5 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<!--Juan Salmerón-->
 <%@ page import="com.ebury.dto.UsuarioDTO" %>
 <html>
 <head>
@@ -18,10 +18,12 @@
     <form:form modelAttribute="newTransferencia" method="post" action="/cajero/transferir">
         Cuenta origen: <form:select path="cuentaOrigen.id" itemLabel="iban" itemValue="id" items="${cuentasUsuario}"></form:select>
         <br>
+        <br>
         Cuenta destino: <form:select path="cuentaDestino.id" itemLabel="iban" itemValue="id" items="${cuentasDestino}"></form:select>
         <br>
         <br>
         Cantidad: <form:input path="cantidad"></form:input>
+        <br>
         <br>
         <form:button type="submit" class="btn btn-primary btn-lg">Transferir</form:button>
     </form:form>
