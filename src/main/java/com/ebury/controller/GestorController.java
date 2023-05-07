@@ -134,7 +134,7 @@ public class GestorController {
 
         OrdenaTransferencias orden = new OrdenaTransferencias();
         model.addAttribute("ordenTransferencias", orden);
-        orden.setOrden("Fecha");
+        orden.setOrden("Fecha Descendente");
         orden.setUsuarioId(id);
 
         FiltroTransferencias filtro = new FiltroTransferencias();

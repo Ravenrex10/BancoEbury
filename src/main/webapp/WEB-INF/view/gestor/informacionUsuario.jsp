@@ -109,8 +109,8 @@
                                     <form:form method="post" action="ordenar" modelAttribute="ordenTransferencias">
                                         <form:hidden path="usuarioId"></form:hidden>
                                         <form:select path="orden">
-                                            <form:option value="Fecha Ascendente"></form:option>
                                             <form:option value="Fecha Descendente"></form:option>
+                                            <form:option value="Fecha Ascendente"></form:option>
                                             <form:option value="Cantidad Ascendente"></form:option>
                                             <form:option value="Cantidad Descendente"></form:option>
                                         </form:select>
@@ -136,6 +136,7 @@
                                     <%
                                         }
                                     %>
+                                    <%=transferencia.getFecha()%>
 
                                 </td>
                             </tr>

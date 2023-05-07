@@ -39,7 +39,7 @@ public class TransferenciaService {
     }
 
     public List<TransferenciaDTO> findAllTransferencias(Integer usuario) {
-        List<TransferenciaEntity> transferenciaEntities = transferenciasRepository.findAllByUsuario(usuario);
+        List<TransferenciaEntity> transferenciaEntities = transferenciasRepository.findAllByUsuarioOrderByFechaDescendente(usuario);
         return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
     }
 
