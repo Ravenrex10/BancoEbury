@@ -32,9 +32,9 @@
             </td>
             <td>
                 <%if(cuenta.getEstado().equals("Bloqueada")){ %>
-                <a href="solicitarDesbloqueo?cuenta=<%=cuenta.getId()%>" class="btn btn-primary btn-lg">Solicitar Desbloqueo</a>
+                <a href="solicitarDesbloqueo?cuenta=<%=cuenta.getId()%>" class="btn btn-primary">Solicitar Desbloqueo</a>
                 <%} else {%>
-                <a href="solicitarDesbloqueo?cuenta=<%=cuenta.getId()%>" class="btn btn-primary btn-lg disabled" >Solicitar Desbloqueo</a>
+                <a href="solicitarDesbloqueo?cuenta=<%=cuenta.getId()%>" class="btn btn-primary disabled" >Solicitar Desbloqueo</a>
                 <%}%>
             </td>
 
