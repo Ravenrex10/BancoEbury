@@ -17,18 +17,24 @@
 %>
 <body>
 <div class="container">
-<h1>Chats</h1>
-<form:form action="/filtrarChats" modelAttribute="filtro" method="post">
+<h1>Panel de control de asistente</h1>
+<form:form action="/chats/filtrar" modelAttribute="filtro" method="post">
     Ordenar por: <form:select path="criterioOrdenacion">
         <form:option value="ascendente">Fecha de creación ascendente</form:option>
         <form:option value="descendente">Fecha de creación descendente</form:option>
-    </form:select>
-    Mostrar chats cerrados<form:checkbox path="mostrarCerrados" value="true"/>
-    Mostrar solo mis chats<form:checkbox path="mostrarSoloPropios" value="true"/>
+    </form:select> <br/>
+    Filtrar por usuario: <form:select path="filtroUsuario">
+        <form:option value="-1" label="Todos">Todos</form:option>
+        <form:options items="${usuarios}" itemValue="id" itemLabel="email"/>
+    </form:select> <br/>
+    Mostrar chats cerrados <form:checkbox path="mostrarCerrados" value="true"/>
+    Mostrar solo mis chats <form:checkbox path="mostrarSoloPropios" value="true"/>
     <br/><form:button>Actualizar</form:button>
 </form:form>
-<table>
+    <h3>Chats</h3>
+<table class="table">
     <tr>
+        <th>ID</th>
         <th>Usuario solicitante</th>
         <th>Asistente asignado</th>
         <th>Ir a chat</th>
@@ -37,6 +43,7 @@
     </tr>
     <% for (ChatDTO chat : chats) { %>
         <tr>
+            <td><%=chat.getId()%></td>
             <td><%=chat.getNombreUsuarioA()%></td>
             <td><%=chat.getNombreUsuarioB()%></td>
             <td>
@@ -45,7 +52,7 @@
             <td><strong><%=chat.isCerrado()? "Cerrado" : ""%></strong></td>
         </tr>
     <% } %>
-    <h3>Nuevo chat</h3>
+    <%--<h3>Nuevo chat</h3>
     <form action="/nuevoChat" method="post">
         <select name="chatUserId">
             <% for (UsuarioDTO usuario: usuarios) { %>
@@ -53,7 +60,7 @@
             <% } %>
         </select>
         <button>Nuevo chat</button>
-    </form>
+    </form> --%>
 
 </table>
 </div>

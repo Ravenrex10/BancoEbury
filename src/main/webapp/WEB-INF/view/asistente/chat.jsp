@@ -20,7 +20,7 @@
 %>
 <body>
     <div class="container">
-    <h3>Mostrando chat entre <%=chat.getNombreUsuarioA()%> y <%=chat.getNombreUsuarioB()%>, con ID <%=chat.getId()%></h3>
+    <h3>Chat entre <%=chat.getNombreUsuarioA()%> y <%=chat.getNombreUsuarioB()%></h3>
     <table>
         <tr>
             <th>Fecha</th>
@@ -40,7 +40,7 @@
         <% } %>
     </table>
     <% if (usuarioPuedeEscribir) { %>
-    <form action="/enviarMensaje" method="post">
+    <form action="/chat/enviar" method="post">
         <input type="text" name="mensaje" maxlength="50"/>
         <input type="hidden" name="chatId" value="<%=chat.getId()%>"/>
         <button>Enviar</button>

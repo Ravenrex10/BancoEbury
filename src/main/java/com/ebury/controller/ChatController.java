@@ -36,7 +36,7 @@ public class ChatController {
     @GetMapping("/chats")
     String doListarChats(HttpSession session, Model model) {
         UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
-        if (miUsuario == null) return "redirect:/";
+        if (miUsuario == null || !miUsuario.getRolName().equals("Asistente")) return "redirect:/";
 
         FiltroChats filtro = new FiltroChats();
         filtro.setCriterioOrdenacion("ascendente");
@@ -47,7 +47,7 @@ public class ChatController {
         return "asistente/chats";
     }
 
-    @PostMapping("/filtrarChats")
+    @PostMapping("/chats/filtrar")
     String doFiltrarChats(@ModelAttribute("filtro") FiltroChats filtro, HttpSession session, Model model) {
         UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
         listarChatsFiltrados(filtro, model, miUsuario.getId());
@@ -55,7 +55,7 @@ public class ChatController {
     }
 
     private void listarChatsFiltrados(FiltroChats filtro, Model model, int usuarioId) {
-        List<UsuarioDTO> usuarios = usuarioService.findUsuarios();
+        List<UsuarioDTO> usuarios = usuarioService.findAllUsuariosQueParticipanEnChat();
         List<ChatDTO> chats = chatService.filtrarChats(filtro, usuarioId);
 
         model.addAttribute("usuarios", usuarios);
@@ -88,7 +88,7 @@ public class ChatController {
         return "asistente/chat";
     }
 
-    @PostMapping("/enviarMensaje")
+    @PostMapping("/chat/enviar")
     String doEnviarMensaje(@RequestParam("mensaje") String mensaje, @RequestParam("chatId") int chatId, HttpSession session) {
         UsuarioDTO miUsuario = (UsuarioDTO) session.getAttribute("usuario");
         chatService.enviarMensaje(chatId, miUsuario.getId(), mensaje);
