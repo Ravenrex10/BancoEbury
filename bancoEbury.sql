@@ -65,7 +65,8 @@ CREATE TABLE `Cuenta` (
   CONSTRAINT `Cuenta_ibfk_2` FOREIGN KEY (`estado`) REFERENCES `EstadoCuenta` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO `Cuenta` VALUES
+(1,'CUENTA SOSPECHOSA',1,4);
 --
 -- Dumping data for table `Cuenta`
 --
@@ -267,6 +268,9 @@ CREATE TABLE `Saldo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+INSERT INTO `Saldo` VALUES
+(1,1,0.0,1);
+
 --
 -- Dumping data for table `Saldo`
 --
@@ -341,7 +345,16 @@ CREATE TABLE `Usuario` (
   CONSTRAINT `Usuario_ibfk_2` FOREIGN KEY (`rol`) REFERENCES `Rol` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO `Usuario` VALUES
+(1,1234,'antonio@email.com','Antonio','Robles','Perez', 'Torres', '2002-01-01', '1234', null, 1, 1, 0, '2023-05-07'),
+(2,4321,'lucas@email.com','Lucas','Scott','Colbert', 'Eastgate', '2002-02-27', '1234', null, 1, 0, 1, '2023-05-01'),
+(3,1111,'diego@email.com','Diego','Delta','López', 'Reduello', '2002-04-20', '1234', null, 1, 0, 1, '2023-03-07'),
+(4,2222,'jaime@email.com','Jaime','Luis','Mesa', 'Víquez', '2002-09-01', '1234', null, 1, 0, 1, '2023-01-07'),
+(5,3333,'daniel@email.com','Daniel','Ramirez','De Lizaur', 'García', '2002-02-10', '1234', null, 1, 0, 1, '2023-05-02'),
+(6,4444,'jose@email.com','Jose','Linux','Salmeron', 'Moya', '2001-01-01', '1234', null, 1, 0, 1, '2023-05-07'),
+(7,5555,'gestor@email.com','Jose','Admin','Bruce', 'Wayne', '1986-02-05', '1234', null, 3, 1, 0, '2023-05-07'),
+(8,6666,'asistente1@email.com','Manuel','García','Jimenez', 'Jimenez', '1978-01-01', '1234', null, 5, 1, 0, '2023-05-07'),
+(9,7777,'asistente2@email.com','Dani','Asiste','Ramirez', 'Garcia', '1999-01-01', '1234', null, 5, 1, 0, '2023-05-07');
 --
 -- Dumping data for table `Usuario`
 --
