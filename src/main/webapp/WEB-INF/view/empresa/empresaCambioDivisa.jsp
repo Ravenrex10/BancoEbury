@@ -20,8 +20,8 @@
 </h1>
     <div class="container">
         <form:form method="post" action="/empresa/cambiarDivisa" modelAttribute="newDivisa">
-            Cuenta: <form:select path="cuentaId" items="${cuentaDTOS}" itemLabel="iban" itemValue="id"></form:select><br>
-            Divisa: <form:select path="divisaNombre" items="${divisas}"></form:select><br>
+            Cuenta: <form:select path="cuentaId" items="${cuentaDTOS}" itemLabel="iban" itemValue="id"></form:select><br><br>
+            Divisa: <form:select path="divisaNombre" items="${divisas}"></form:select><br><br>
             <form:button type="submit" value="Submit" class="btn btn-primary">Cambiar divisa</form:button>
         </form:form>
     </div>
