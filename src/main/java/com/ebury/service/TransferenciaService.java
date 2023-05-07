@@ -28,21 +28,33 @@ public class TransferenciaService {
     @Autowired
     protected UsuarioRepository usuarioRepository;
 
+    /***
+     * @author Lucas Colbert Eastgate
+     */
     public List<TransferenciaDTO> findAllByUsuarioOrigen(Integer id){
         List<TransferenciaEntity> transferenciaEntities = transferenciasRepository.findAllByUsuarioOrigen(id);
         return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
     }
 
+    /***
+     * @author Lucas Colbert Eastgate
+     */
     public List<TransferenciaDTO> findAllByUsuarioDestino(Integer id){
         List<TransferenciaEntity> transferenciaEntities = transferenciasRepository.findAllByUsuarioDestino(id);
         return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
     }
 
+    /***
+     * @author Lucas Colbert Eastgate
+     */
     public List<TransferenciaDTO> findAllTransferencias(Integer usuario) {
         List<TransferenciaEntity> transferenciaEntities = transferenciasRepository.findAllByUsuarioOrderByFechaDescendente(usuario);
         return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
     }
 
+    /***
+     * @author Lucas Colbert Eastgate
+     */
     public List<TransferenciaDTO> findAllTransferenciasOrdenadas(Integer usuario, String orden){
         List<TransferenciaEntity> transferenciaEntities;
         switch (orden){

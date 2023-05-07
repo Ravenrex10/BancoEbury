@@ -89,16 +89,13 @@ public class ChatEntity {
 
     /**
      * @author Daniel
-     * Devuelve la entidad Chat convertida a DTO:
-     * Nota: el atributo ultimoMensaje se asigna en el controller
+     * Devuelve la entidad Chat convertida a DTO
      */
     public ChatDTO toDTO() {
         ChatDTO dto = new ChatDTO();
         dto.setId(id);
         dto.setNombreUsuarioA(usuarioByClienteA.getEmail());
         dto.setNombreUsuarioB(usuarioByClienteB.getEmail());
-        // TODO: hay que inicializar correctamente estos atributos
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy HH:mm:ss");
         dto.setCerrado(this.getCerrado());
         return dto;
     }

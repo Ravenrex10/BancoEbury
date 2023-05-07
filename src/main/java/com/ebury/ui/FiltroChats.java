@@ -8,8 +8,6 @@ public class FiltroChats {
 
     private boolean mostrarCerrados;
 
-    private boolean ascendente;
-
     private boolean mostrarSoloPropios;
 
     private int filtroUsuario;
@@ -28,14 +26,6 @@ public class FiltroChats {
 
     public void setMostrarCerrados(boolean mostrarCerrados) {
         this.mostrarCerrados = mostrarCerrados;
-    }
-
-    public boolean isAscendente() {
-        return ascendente;
-    }
-
-    public void setAscendente(boolean ascendente) {
-        this.ascendente = ascendente;
     }
 
     public boolean isMostrarSoloPropios() {
