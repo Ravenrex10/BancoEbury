@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!--Juan Salmerón-->
 <%@ page import="com.ebury.dto.UsuarioDTO" %>
 <html>
 <head>
@@ -18,6 +19,7 @@
 <div class="container">
     <form:form method="post" action="/cajero/cambiarDivisa" modelAttribute="newDivisa">
         Cuenta: <form:select path="cuentaId" items="${cuentaDTOS}" itemLabel="iban" itemValue="id"></form:select>
+        <br>
         <br>
         Divisa: <form:select path="divisaNombre" items="${divisas}"></form:select>
         <br>

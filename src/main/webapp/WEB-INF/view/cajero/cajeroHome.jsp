@@ -22,7 +22,7 @@
     <br>
     <a href="/cajero/datos" class="link-primary">¿Quieres modificar tus datos? Haz click aquí</a>
     <br>
-    <a href="#" class="link-danger">¿Cuenta bloqueada? Haga click aquí para pedir su desbloqueo</a>
+    <a href="/cajero/desbloquearCuentas" class="link-danger">¿Cuenta bloqueada? Haga click aquí para pedir su desbloqueo</a>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

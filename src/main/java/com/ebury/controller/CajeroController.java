@@ -232,6 +232,23 @@ public class CajeroController {
         return("redirect:/cajero/efectivo");
     }
 
+    @GetMapping("/desbloquearCuentas")
+    public String getSolicitudDesbloqueo(HttpSession session, Model model) {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuarioActual);
+
+        List<CuentaDTO> cuentasUsuario = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
+        model.addAttribute("cuentasUsuario", cuentasUsuario);
+
+        return "cajero/cajeroDesbloqueo";
+    }
+
+    @GetMapping("/solicitarDesbloqueo")
+    public String doSolicitudDesbloqueo(@RequestParam("cuenta") Integer id) {
+        this.cuentaService.solicitarDesbloqueoCuenta(id);
+        return "redirect:/cajero/cajeroHome";
+    }
+
     @GetMapping("/logout")
     public String doLogOut() {
         return "redirect:/";

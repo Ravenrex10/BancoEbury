@@ -4,6 +4,10 @@ import java.util.Collection;
 import java.util.List;
 
 public class CuentaDTO {
+    /**
+     * @author 50% Lucas Colbert Eastgate
+     * @author 50% Diego
+     */
 
     private int id;
     private String iban;

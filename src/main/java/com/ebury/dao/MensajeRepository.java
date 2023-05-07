@@ -5,9 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+/**
+ * @author Daniel
+ */
 public interface MensajeRepository extends JpaRepository<MensajeEntity, Integer> {
-
-    @Query("SELECT m FROM MensajeEntity m WHERE m.chatByChat = :chatId ORDER BY m.id DESC LIMIT 1")
-    MensajeEntity findUltimoMensajeDeChat(@Param("chatId") int chatId);
+    
 
 }

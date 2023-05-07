@@ -1,5 +1,8 @@
 package com.ebury.ui;
 
+/**
+ * @author Lucas Colbert Eastgate
+ */
 public class FiltroUsuarios {
     private String filtro;
 

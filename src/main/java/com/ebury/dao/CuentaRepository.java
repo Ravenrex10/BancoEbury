@@ -22,7 +22,7 @@ public interface CuentaRepository extends JpaRepository<CuentaEntity, Integer> {
     @Query("select c from CuentaEntity c  where c.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa")
     List<CuentaEntity> findAllByEmpresaId(@Param("idEmpresa") Integer idEmpresa);
 
-    // Devuelve los socios y autorizados de una empresa que no tienen ninguna cuenta bloqueada
+    // Devuelve los socios y autorizados de una empresa que no tienen ninguna cuenta bloqueada @author Diego
     @Query("select c.usuarioByDuenyo from CuentaEntity c where c.estadoCuentaByEstado.id = 1 AND c.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa and (c.usuarioByDuenyo.rolByRol.id = 2 or c.usuarioByDuenyo.rolByRol.id = 6)")
     List<UsuarioEntity> findAllCuentasDeSociosYAutorizadosDeEmpresaIdNotBloqueado(@Param("idEmpresa") Integer idEmpresa);
 }

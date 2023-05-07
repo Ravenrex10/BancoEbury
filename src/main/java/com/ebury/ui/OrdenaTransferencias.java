@@ -3,6 +3,10 @@ package com.ebury.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Jaime
+ */
+
 public class OrdenaTransferencias {
     private String orden;
     private Integer usuarioId;
