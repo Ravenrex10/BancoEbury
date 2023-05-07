@@ -253,4 +253,8 @@ public class UsuarioService {
         }
         return usuariosInactivosConCuentasActivadas.stream().map(UsuarioEntity::toDTO).collect(Collectors.toList());
     }
+
+    public List<UsuarioDTO> findAllUsuariosQueParticipanEnChat() {
+        return usuarioRepository.findAllUsuariosQueParticipanEnChat().stream().map(UsuarioEntity::toDTO).toList();
+    }
 }

@@ -17,8 +17,14 @@
 %>
 <body>
 <div class="container">
-<h1>CENTRO DE AYUDA</h1>
-<table>
+<h1>Servicio de asistencia</h1>
+<h3>Necesitas ayuda? Solicita un chat con un asistente:</h3>
+<form action="/asistencia/asignarAsistente" method="post">
+    <button>Nuevo chat</button>
+</form>
+<br/>
+Mis chats
+<table class="table">
     <tr>
         <th>Asistente</th>
         <th>Fecha</th>
@@ -35,7 +41,6 @@
         </td>
     </tr>
     <% } %>
-    <h3>Necesitas ayuda? Solicita un chat con un asistente:</h3>
     <%-- <form action="/nuevoChat" method="post">
         <select name="chatUserId">
             <% for (UsuarioDTO usuario: usuarios) { %>
@@ -45,9 +50,6 @@
         <button>Nuevo chat</button>
     </form> --%>
 </table>
-<form action="/asistencia/asignarAsistente" method="post">
-    <button>Nuevo chat</button>
-</form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

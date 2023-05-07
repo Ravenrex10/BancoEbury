@@ -62,7 +62,11 @@ public class ChatService {
         nuevoChat.setUsuarioByClienteA(usuarioA);
         nuevoChat.setUsuarioByClienteB(usuarioB);
         nuevoChat.setCerrado(false);
+        usuarioA.getChatsById().add(nuevoChat);
+        usuarioB.getChatsById().add(nuevoChat);
         chatRepository.save(nuevoChat);
+        usuarioRepository.save(usuarioA);
+        usuarioRepository.save(usuarioB);
         return nuevoChat.toDTO();
     }
 
@@ -138,6 +142,7 @@ public class ChatService {
     public List<ChatDTO> filtrarChats(FiltroChats filtro, int usuarioId) {
         UsuarioEntity usuario = usuarioRepository.findById(usuarioId).orElse(null);
         List<ChatEntity> chats;
+        UsuarioEntity filtroUsuario = usuarioRepository.findById(filtro.getFiltroUsuario()).orElse(null);
 
         if (filtro.getCriterioOrdenacion().equals("ascendente")) {
             chats = chatRepository.findAllByOrderByIdAsc();
@@ -146,6 +151,7 @@ public class ChatService {
         }
 
         return chats.stream()
+                .filter(chat -> filtroUsuario == null || usuarioParticipaEnChat(filtroUsuario, chat))
                 .filter(chat -> filtro.isMostrarCerrados() || !chat.getCerrado())
                 .filter(chat -> !filtro.isMostrarSoloPropios() || usuarioParticipaEnChat(usuario, chat))
                 .map(ChatEntity::toDTO).toList();

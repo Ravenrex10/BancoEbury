@@ -12,6 +12,8 @@ public class FiltroChats {
 
     private boolean mostrarSoloPropios;
 
+    private int filtroUsuario;
+
     public String getCriterioOrdenacion() {
         return criterioOrdenacion;
     }
@@ -42,5 +44,13 @@ public class FiltroChats {
 
     public void setMostrarSoloPropios(boolean mostrarSoloPropios) {
         this.mostrarSoloPropios = mostrarSoloPropios;
+    }
+
+    public int getFiltroUsuario() {
+        return filtroUsuario;
+    }
+
+    public void setFiltroUsuario(int filtroUsuario) {
+        this.filtroUsuario = filtroUsuario;
     }
 }
