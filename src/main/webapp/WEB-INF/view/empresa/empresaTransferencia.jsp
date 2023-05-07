@@ -18,8 +18,8 @@
     </h1>
     <form:form modelAttribute="newTransferencia" method="post" action="/empresa/transferir">
        Cuenta origen: <form:select path="cuentaOrigen.id" itemLabel="iban" itemValue="id" items="${cuentasUsuario}"></form:select><br>
-        Cuenta destino: <form:select path="cuentaDestino.id" itemLabel="iban" itemValue="id" items="${cuentasDestino}"></form:select><br>
-        Cantidad: <form:input path="cantidad"></form:input><br>
+        Cuenta destino: <form:select path="cuentaDestino.id" itemLabel="iban" itemValue="id" items="${cuentasDestino}"></form:select><br><br>
+        Cantidad: <form:input path="cantidad"></form:input><br><br>
         <form:button type="submit" class="btn btn-primary">Transferir</form:button>
     </form:form>
 </div>
