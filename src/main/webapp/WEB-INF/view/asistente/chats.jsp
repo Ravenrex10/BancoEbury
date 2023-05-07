@@ -16,12 +16,26 @@
     List<ChatDTO> chats = (List<ChatDTO>) request.getAttribute("chats");
 %>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item ms-auto me-auto">
+                    <a class="nav-link" href="/logout">Cerrar sesión</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <div class="container">
 <h1>Panel de control de asistente</h1>
 <form:form action="/chats/filtrar" modelAttribute="filtro" method="post">
     Ordenar por: <form:select path="criterioOrdenacion">
-        <form:option value="ascendente">Fecha de creación ascendente</form:option>
-        <form:option value="descendente">Fecha de creación descendente</form:option>
+        <form:option value="ascendente">Más antiguos primero</form:option>
+        <form:option value="descendente">Más recientes primero</form:option>
     </form:select> <br/>
     Filtrar por usuario: <form:select path="filtroUsuario">
         <form:option value="-1" label="Todos">Todos</form:option>

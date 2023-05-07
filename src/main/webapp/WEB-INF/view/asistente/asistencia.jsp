@@ -16,6 +16,7 @@
     List<ChatDTO> chats = (List<ChatDTO>) request.getAttribute("chats");
 %>
 <body>
+<jsp:include page="../cliente/clienteHeader.jsp"/>
 <div class="container">
 <h1>Servicio de asistencia</h1>
 <h3>Necesitas ayuda? Solicita un chat con un asistente:</h3>
