@@ -9,6 +9,8 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 <body>
+<jsp:include page="cajeroHeader.jsp"></jsp:include>
+
 <% List<TransferenciaDTO> transferenciaDTO = (List<TransferenciaDTO>) request.getAttribute("transferencias"); %>
 <div class="container">
     <h1>Lista de transferencias</h1>

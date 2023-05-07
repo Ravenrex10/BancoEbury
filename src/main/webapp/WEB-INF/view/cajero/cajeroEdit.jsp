@@ -6,6 +6,7 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 <body>
+<jsp:include page="cajeroHeader.jsp"></jsp:include>
 
 <div class="container">
     <form:form method="post" action="/cajero/edit" modelAttribute="usuario">

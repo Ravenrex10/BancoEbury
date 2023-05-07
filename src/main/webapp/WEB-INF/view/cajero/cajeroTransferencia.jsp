@@ -8,6 +8,8 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 <body>
+<jsp:include page="cajeroHeader.jsp"></jsp:include>
+
 <% UsuarioDTO usuarioDTO = (UsuarioDTO) request.getAttribute("usuario"); %>
 <div class="container">
     <h1>
