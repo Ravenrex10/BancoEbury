@@ -7,10 +7,13 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 <body>
+<jsp:include page="cajeroHeader.jsp"></jsp:include>
+
 <% UsuarioDTO usuarioDTO = (UsuarioDTO) request.getAttribute("usuario");%>
 <div class="container">
     <h1> Bienvenido/a, <%=usuarioDTO.getPrimerNombre()%></h1>
-    <a class="btn btn-primary btn-lg" role="button">Sacar dinero</a>
+    <div class="container">
+    <a class="btn btn-primary btn-lg" href="/cajero/efectivo" role="button">Sacar dinero</a>
     <a class="btn btn-primary btn-lg" href="/cajero/transferencias" role="button">Realizar transferencia</a>
     <br>
     <a class="btn btn-primary btn-lg" href="/cajero/cambioDivisa" role="button">Cambiar divisas</a>
@@ -20,6 +23,7 @@
     <a href="/cajero/datos" class="link-primary">¿Quieres modificar tus datos? Haz click aquí</a>
     <br>
     <a href="#" class="link-danger">¿Cuenta bloqueada? Haga click aquí para pedir su desbloqueo</a>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

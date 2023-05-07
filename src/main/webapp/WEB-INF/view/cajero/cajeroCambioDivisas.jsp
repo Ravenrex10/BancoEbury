@@ -1,8 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.ebury.entity.EmpresaEntity" %>
-<%@ page import="com.ebury.dto.EmpresaDTO" %>
 <%@ page import="com.ebury.dto.UsuarioDTO" %>
-<%@ page import="com.ebury.dto.CuentaDTO" %>
 <html>
 <head>
     <title>Cambiar Divisas</title>
@@ -10,6 +7,8 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 <body>
+<jsp:include page="cajeroHeader.jsp"></jsp:include>
+
 <% UsuarioDTO usuarioDTO = (UsuarioDTO) request.getAttribute("usuario");%>
 <h1>
     <div class="container">

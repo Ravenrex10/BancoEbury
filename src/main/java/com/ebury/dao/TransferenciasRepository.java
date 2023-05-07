@@ -12,6 +12,22 @@ import java.util.List;
 @Repository
 public interface TransferenciasRepository extends JpaRepository<TransferenciaEntity, Integer> {
 
+    @Query("select t from TransferenciaEntity t where t.cuentaByCuentaOrigen.usuarioByDuenyo.id = :id " +
+            "OR t.cuentaByCuentaDestino.usuarioByDuenyo.id = :id order by t.fecha asc")
+    public List<TransferenciaEntity> findAllByUsuarioOrderByFechaAscendente(@Param("id") Integer id);
+
+    @Query("select t from TransferenciaEntity t where t.cuentaByCuentaOrigen.usuarioByDuenyo.id = :id " +
+            "OR t.cuentaByCuentaDestino.usuarioByDuenyo.id = :id order by t.fecha desc")
+    public List<TransferenciaEntity> findAllByUsuarioOrderByFechaDescendente(@Param("id") Integer id);
+
+    @Query("select t from TransferenciaEntity t where t.cuentaByCuentaOrigen.usuarioByDuenyo.id = :id " +
+            "OR t.cuentaByCuentaDestino.usuarioByDuenyo.id = :id order by t.cantidad asc")
+    public List<TransferenciaEntity>  findAllByUsuarioOrderByCantidadAscendente(@Param("id") Integer id);
+
+    @Query("select t from TransferenciaEntity t where t.cuentaByCuentaOrigen.usuarioByDuenyo.id = :id " +
+            "OR t.cuentaByCuentaDestino.usuarioByDuenyo.id = :id order by t.cantidad desc")
+    public List<TransferenciaEntity>  findAllByUsuarioOrderByCantidadDescendente(@Param("id") Integer id);
+
     @Query("select t from TransferenciaEntity t where t.cuentaByCuentaOrigen.usuarioByDuenyo.id = :id OR t.cuentaByCuentaDestino.usuarioByDuenyo.id = :id")
     public List<TransferenciaEntity> findAllByUsuario(@Param("id") Integer id);
 

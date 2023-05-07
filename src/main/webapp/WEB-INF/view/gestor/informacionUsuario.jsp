@@ -95,14 +95,28 @@
                         <table class="table">
                             <tr>
                                 <th><h3>Transferencias</h3></th>
-                                <form:form method="post" action="filtrarTransferencias" modelAttribute="filtroTransferencias">
-                                    <form:hidden path="usuario"></form:hidden>
-                                    <form:select path="filtro">
-                                        <form:option value="0" label=" " />
-                                        <form:options items="${filtroItems}" />
-                                    </form:select>
-                                    <form:button>Filtrar</form:button>
-                                </form:form>
+                                <td>
+                                    <form:form method="post" action="filtrarTransferencias" modelAttribute="filtroTransferencias">
+                                        <form:hidden path="usuario"></form:hidden>
+                                        <form:select path="filtro">
+                                            <form:option value="0" label=" " />
+                                            <form:options items="${filtroItems}" />
+                                        </form:select>
+                                        <form:button>Filtrar</form:button>
+                                    </form:form>
+                                </td>
+                                <td>
+                                    <form:form method="post" action="ordenar" modelAttribute="ordenTransferencias">
+                                        <form:hidden path="usuarioId"></form:hidden>
+                                        <form:select path="orden">
+                                            <form:option value="Fecha Descendente"></form:option>
+                                            <form:option value="Fecha Ascendente"></form:option>
+                                            <form:option value="Cantidad Ascendente"></form:option>
+                                            <form:option value="Cantidad Descendente"></form:option>
+                                        </form:select>
+                                        <form:button>Ordenar</form:button>
+                                    </form:form>
+                                </td>
                             </tr>
                             <%
                                 for(TransferenciaDTO transferencia : transferencias){
@@ -122,6 +136,7 @@
                                     <%
                                         }
                                     %>
+                                    <%=transferencia.getFecha()%>
 
                                 </td>
                             </tr>

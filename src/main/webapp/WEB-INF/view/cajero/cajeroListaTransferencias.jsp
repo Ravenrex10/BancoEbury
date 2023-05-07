@@ -9,6 +9,8 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 <body>
+<jsp:include page="cajeroHeader.jsp"></jsp:include>
+
 <% List<TransferenciaDTO> transferenciaDTO = (List<TransferenciaDTO>) request.getAttribute("transferencias"); %>
 <div class="container">
     <h1>Lista de transferencias</h1>
@@ -27,7 +29,7 @@
             <h5>Ordenar por fecha:</h5>
             <form:select path="ordenPorFecha" items="${orden}"></form:select><br><br>
 
-            <form:button class="btn btn-primary" type="submit">Filtrar</form:button>
+            <form:button class="btn btn-primary btn-lg" type="submit">Filtrar</form:button>
         </form:form>
     </div>
     <div class="container">
@@ -59,5 +61,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
-</html>
 </html>

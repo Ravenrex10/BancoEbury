@@ -39,7 +39,28 @@ public class TransferenciaService {
     }
 
     public List<TransferenciaDTO> findAllTransferencias(Integer usuario) {
-        List<TransferenciaEntity> transferenciaEntities = transferenciasRepository.findAllByUsuario(usuario);
+        List<TransferenciaEntity> transferenciaEntities = transferenciasRepository.findAllByUsuarioOrderByFechaDescendente(usuario);
+        return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
+    }
+
+    public List<TransferenciaDTO> findAllTransferenciasOrdenadas(Integer usuario, String orden){
+        List<TransferenciaEntity> transferenciaEntities;
+        switch (orden){
+            case "Fecha Ascendente": transferenciaEntities = transferenciasRepository.findAllByUsuarioOrderByFechaAscendente(usuario);
+                break;
+
+            case "Fecha Descendente": transferenciaEntities = transferenciasRepository.findAllByUsuarioOrderByFechaDescendente(usuario);
+                break;
+
+            case "Cantidad Ascendente": transferenciaEntities = transferenciasRepository.findAllByUsuarioOrderByCantidadAscendente(usuario);
+                break;
+
+            case "Cantidad Descendente": transferenciaEntities = transferenciasRepository.findAllByUsuarioOrderByCantidadDescendente(usuario);
+                break;
+
+            default: transferenciaEntities = transferenciasRepository.findAll();
+        }
+
         return transferenciaEntities.stream().map(TransferenciaEntity::toDTO).collect(Collectors.toList());
     }
 
