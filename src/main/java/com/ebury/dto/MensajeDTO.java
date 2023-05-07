@@ -12,7 +12,7 @@ public class MensajeDTO {
     private String fecha;
 
     /**
-     * True si el mensaje lo envió el usuario que está usando el chat (entonces se mostrará a la derecha)
+     * True si el mensaje lo envió el usuario que está usando el chat (entonces se mostrará en negrita)
      */
     private boolean enviadoPorUsuarioActual;
 
