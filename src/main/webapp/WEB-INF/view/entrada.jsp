@@ -26,29 +26,22 @@
                 <label>Usuario: </label><br>
                 <input type="text" name="usuario"><br>
                 <label>Contraseña: </label><br>
-                <input type="password" name="clave"><br>
-                <button type="submit">Enviar</button>
+                <input type="password" name="clave"><br><br>
+                <button class="btn btn-primary" type="submit">Iniciar sesión</button>
                 <br>
             </form>
         </div>
         <div class="col-md-3">
             <div class="container">
-                <h1>Registrarse</h1>
-                <ul>
-                    <li> Como usuario</li>
-                    <li><a href="/registerEmpresa">Como empresa</a></li>
+                <h1>Registrarse:</h1>
+                <br>
+                <ul class="list-group">
+                     <a class="list-group-item list-group-item-action" href="/registerUsuario"> Como usuario</a></li>
+                     <a class="list-group-item list-group-item-action" href="/registerEmpresa">Como empresa</a></li>
                 </ul>
             </div>
         </div>
     </div>
-</div>
-
-<div class="container">
-    <h1>Registrarse</h1>
-    <ul>
-        <li><a href="/registerUsuario"> Como usuario </a></li>
-        <li><a href="/registerEmpresa">Como empresa</a></li>
-    </ul>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
