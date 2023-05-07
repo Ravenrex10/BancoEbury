@@ -1,20 +1,14 @@
 package com.ebury.service;
 
 import com.ebury.dao.*;
-import com.ebury.dto.DireccionDTO;
-import com.ebury.dto.EmpresaDTO;
-import com.ebury.dto.TransferenciaDTO;
-import com.ebury.dto.UsuarioDTO;
+import com.ebury.dto.*;
 import com.ebury.entity.*;
 import com.ebury.ui.UsuarioWrapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +32,9 @@ public class UsuarioService {
 
     @Autowired
     EmpresaRepository empresaRepository;
+
+    @Autowired
+    CuentaService cuentaService;
 
     /**
      * @author Daniel
@@ -141,21 +138,22 @@ public class UsuarioService {
         usuario.setNif(u.getNif());
         usuario.setFechaNacimiento(u.getFechaNacimiento());
 
-        EmpresaEntity empresa = this.empresaRepository.findById(empresaId).orElse(null);
+        //EmpresaEntity empresa = this.empresaRepository.findById(empresaId).orElse(null);
 
         usuario.setRolByRol(this.rolRepository.findByNombre(u.getRolName()));
-        usuario.setEmpresaByEmpresa(empresa);
+        //usuario.setEmpresaByEmpresa(empresa);
         usuario.setAlta(false);
         usuario.setAltaSolicitada(true);
 
-        List<UsuarioEntity> usuarioEntityList = (List<UsuarioEntity>) empresa.getUsuariosById();
-        usuarioEntityList.add(usuario);
-        empresa.setUsuariosById(usuarioEntityList);
+        //List<UsuarioEntity> usuarioEntityList = (List<UsuarioEntity>) empresa.getUsuariosById();
+        //usuarioEntityList.add(usuario);
+        //empresa.setUsuariosById(usuarioEntityList);
 
-        this.empresaRepository.save(empresa);
+        //this.empresaRepository.save(empresa);
         this.usuarioRepository.save(usuario);
 
-        return ("redirect:/empresa/");
+        return ("redirect:/cliente/");
+
     }
 
     public String makeEdit(UsuarioDTO u, HttpSession session) {
@@ -247,5 +245,9 @@ public class UsuarioService {
 
     public List<UsuarioDTO> findAllUsuariosQueParticipanEnChat() {
         return usuarioRepository.findAllUsuariosQueParticipanEnChat().stream().map(UsuarioEntity::toDTO).toList();
+    }
+
+    public void solicitarActivacion(Integer id) {
+        cuentaService.solicitarDesbloqueoCuenta(id);
     }
 }

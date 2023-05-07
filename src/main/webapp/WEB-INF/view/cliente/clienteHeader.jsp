@@ -21,10 +21,7 @@
                     <a class="nav-link" href="/cliente/solicitarActivacionDesbloqueo">Solicitar Activacion/Desbloqueo</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link link-warning" href="/cajero">Acceder al cajero</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Bloquear Cuenta</a>
+                    <a class="nav-link link-warning" href="/cliente/cajero">Acceder al cajero</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/asistencia">Servicio de asistencia</a>

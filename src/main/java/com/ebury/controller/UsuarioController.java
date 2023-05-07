@@ -18,10 +18,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -273,8 +270,25 @@ public class UsuarioController {
 
     @GetMapping("/solicitarActivacionDesbloqueo")
     public String doSolicitarActivacionDesbloqueo(HttpSession session, Model model) {
-        model.addAttribute("usuario", session.getAttribute("usuario"));
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuarioActual);
+
+        List<CuentaDTO> cuentasUsuario = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
+        model.addAttribute("cuentasUsuario", cuentasUsuario);
         return "cliente/clienteSolicitarActivacionDesbloqueo";
+    }
+
+    @GetMapping("/solicitarActivacion")
+    public String doSolicitarActivacion(@RequestParam ("id") Integer id) {
+        usuarioService.solicitarActivacion(id);
+        return ("redirect:/cliente/");
+    }
+
+    @GetMapping("/cajero")
+    public String doIrCagero(HttpSession session, Model model) {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuarioActual);
+        return "cajero/cajeroHome";
     }
 
     @GetMapping("/logout")
