@@ -49,6 +49,7 @@ public interface TransferenciasRepository extends JpaRepository<TransferenciaEnt
     @Query("select t from TransferenciaEntity t where (t.cuentaByCuentaOrigen.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa OR t.cuentaByCuentaDestino.usuarioByDuenyo.empresaByEmpresa.id = :idEmpresa) AND (t.divisaByDivisaOrigen.nombre = :divisa) AND (t.cuentaByCuentaOrigen.id = :idCuenta OR t.cuentaByCuentaDestino.id = :idCuenta) ORDER BY t.fecha DESC ")
     List<TransferenciaEntity> findAllTransferenciasFromAEmpresaByDivisaAndUsuarioIdOrderDesc(@Param("idEmpresa") Integer idEmpresa, @Param("divisa") String divisa, @Param("idCuenta") Integer idCuenta);
 
+    // Busca todas las transfencias de un usuario ,una divisa y un usuario destino en orden de fecha descendente @author Jaime
     @Query("select t from TransferenciaEntity t where (t.cuentaByCuentaOrigen.usuarioByDuenyo.id = :idUser OR t.cuentaByCuentaDestino.usuarioByDuenyo.id = :idUser) AND (t.divisaByDivisaOrigen.nombre = :divisa) AND (t.cuentaByCuentaOrigen.id = :idCuenta OR t.cuentaByCuentaDestino.id = :idCuenta) ORDER BY t.fecha DESC ")
     List<TransferenciaEntity> findAllTransferenciasFromAnUserByDivisaAndUsuarioIdOrderDesc(@Param("idUser") Integer idUser, @Param("divisa") String divisa, @Param("idCuenta") Integer idCuenta);
 

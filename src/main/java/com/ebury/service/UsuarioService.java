@@ -156,6 +156,7 @@ public class UsuarioService {
 
     }
 
+    // @author Jaime
     public String makeEdit(UsuarioDTO u, HttpSession session) {
         UsuarioDTO userActual = (UsuarioDTO) session.getAttribute("usuario");
 

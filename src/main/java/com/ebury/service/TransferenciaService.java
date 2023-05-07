@@ -165,6 +165,9 @@ public class TransferenciaService {
         return res;
     }
 
+    /**
+     @author Jaime
+     */
     public List<TransferenciaDTO> findAllTransferenciasFromAnUser(Integer idUser)
     {
         List<TransferenciaDTO> res = new ArrayList<>();
@@ -206,6 +209,9 @@ public class TransferenciaService {
         return res;
     }
 
+    /**
+     @author Jaime
+     */
     public List<TransferenciaDTO> findAllTransferenciasFromAnUserByDivisaAndCuentaIdOrderDesc(Integer idUser, String divisa, Integer cuentaId) {
         List<TransferenciaDTO> res = new ArrayList<>();
         List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAnUserByDivisaAndUsuarioIdOrderDesc(idUser,divisa,cuentaId);
@@ -243,6 +249,9 @@ public class TransferenciaService {
         return res;
     }
 
+    /**
+     @author Jaime
+     */
     public List<TransferenciaDTO> findAllTransferenciasFromAnUserByDivisaOrderDesc(Integer idUser, String divisa) {
         List<TransferenciaDTO> res = new ArrayList<>();
         List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAnUserByDivisaOrderDesc(idUser,divisa);
@@ -279,6 +288,9 @@ public class TransferenciaService {
         return res;
     }
 
+    /**
+     @author Jaime
+     */
     public List<TransferenciaDTO> findAllTransferenciasFromAnUserByCuentaIdOrderDesc(Integer idUser, Integer cuentaId) {
         List<TransferenciaDTO> res = new ArrayList<>();
         List<TransferenciaEntity>  transferencias = this.transferenciasRepository.findAllTransferenciasFromAnUserByUsuarioIdOrderDesc(idUser,cuentaId);
