@@ -6,6 +6,7 @@ import com.ebury.dto.TransferenciaDTO;
 import com.ebury.dto.UsuarioDTO;
 import com.ebury.exceptions.DivisaException;
 import com.ebury.exceptions.NegativeImportException;
+import com.ebury.exceptions.NoCoinsException;
 import com.ebury.service.*;
 import com.ebury.ui.CuentaDivisaWrapper;
 import com.ebury.ui.FiltroTransferencias;
@@ -77,6 +78,37 @@ public class CajeroController {
             return this.getError(model, "Las divisas entre la cuenta de origen y destino son diferentes.", session);
         } catch (NegativeImportException exception) {
             return this.getError(model,"No se puede realizar importes menores o iguales a 0.",session);
+        }
+    }
+
+    @GetMapping("/efectivo")
+    public String getEfectivo(HttpSession session, Model model) {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuarioActual);
+
+        TransferenciaDTO transferenciaDTO = new TransferenciaDTO();
+        model.addAttribute("newTransferencia", transferenciaDTO);
+
+        List<CuentaDTO> cuentasUsuario = this.cuentaService.findAllCuentasByUsuario(usuarioActual.getId());
+        model.addAttribute("cuentasUsuario", cuentasUsuario);
+
+        return "cajero/cajeroEfectivo";
+    }
+
+    @PostMapping("/sacarEfectivo")
+    public String doSacarEfectivo(@ModelAttribute("newTransferencia") TransferenciaDTO transferenciaDTO, HttpSession session, Model model) {
+        UsuarioDTO usuarioActual = (UsuarioDTO) session.getAttribute("usuario");
+        CuentaDTO cuentaDTO = this.cuentaService.findCuentaByIdToDto(transferenciaDTO.getCuentaOrigen().getId());
+        if (!usuarioActual.getAlta() || !cuentaDTO.getEstado().equals("Activada")) {
+            return getError(model, "Tu cuenta está bloqueada", session);
+        }
+        try {
+            this.transferenciaService.sacarEfectivo(transferenciaDTO.getCuentaOrigen().getId(), transferenciaDTO.getCantidad());
+            return "redirect:/cajero/";
+        } catch (NegativeImportException exception) {
+            return this.getError(model,"No se puede realizar importes menores o iguales a 0.",session);
+        } catch (NoCoinsException exception) {
+            return this.getError(model,"No disponemos de monedas y billetes pequeños. Por favor, pruebe con un múltiplo de 10.",session);
         }
     }
     @GetMapping("/listaTransferencias")

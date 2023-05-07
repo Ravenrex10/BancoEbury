@@ -13,6 +13,15 @@
     <h1>
         Sacar Efectivo
     </h1>
+
+    <form:form modelAttribute="newTransferencia" method="post" action="/cajero/sacarEfectivo">
+        Cuenta origen: <form:select path="cuentaOrigen.id" itemLabel="iban" itemValue="id" items="${cuentasUsuario}"></form:select>
+        <br>
+        <br>
+        Cantidad: <form:input path="cantidad"></form:input>
+        <br>
+        <form:button type="submit" class="btn btn-primary btn-lg">Sacar Efectivo</form:button>
+    </form:form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

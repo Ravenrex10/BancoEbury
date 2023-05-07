@@ -5,6 +5,7 @@ import com.ebury.dto.TransferenciaDTO;
 import com.ebury.entity.*;
 import com.ebury.exceptions.DivisaException;
 import com.ebury.exceptions.NegativeImportException;
+import com.ebury.exceptions.NoCoinsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,6 +86,45 @@ public class TransferenciaService {
         this.saldoRepository.save(saldoOrigen);
         this.cuentaRepository.save(cuentaOrigen);
         this.cuentaRepository.save(cuentaDestino);
+        this.usuarioRepository.save(usuarioOrigen);
+
+    }
+
+    /**
+     Transfiere una cantidad de dinero desde una cuenta origen a una cuenta null
+     @author Juan Salmerón
+     */
+    public void sacarEfectivo(Integer origen, Double cantidad)
+    {
+        if(cantidad <= 0.0)
+        {
+            throw new NegativeImportException();
+        } else if (cantidad%10 != 0){
+            throw new NoCoinsException();
+        }
+        CuentaEntity cuentaOrigen = this.cuentaRepository.findById(origen).orElse(null);
+        CuentaEntity cuentaDestino = null;
+
+        SaldoEntity saldoOrigen = this.saldoRepository.findSaldoEntityByCuentaByCuenta_Id(cuentaOrigen.getId());
+
+        DivisaEntity divisaOrigen = saldoOrigen.getDivisaByDivisa();
+
+        saldoOrigen.setCantidad(saldoOrigen.getCantidad() - cantidad);
+
+        TransferenciaEntity newTransferencia = new TransferenciaEntity();
+        newTransferencia.setCantidad(cantidad);
+        newTransferencia.setFecha(new java.sql.Date(System.currentTimeMillis()));
+        newTransferencia.setCuentaByCuentaOrigen(cuentaOrigen);
+        newTransferencia.setCuentaByCuentaDestino(cuentaDestino);
+        newTransferencia.setDivisaByDivisaOrigen(divisaOrigen);
+        newTransferencia.setDivisaByDivisaDestino(divisaOrigen);
+
+        UsuarioEntity usuarioOrigen = this.usuarioRepository.findById(cuentaOrigen.getUsuarioByDuenyo().getId()).orElse(null);
+        usuarioOrigen.setFechaUltimaOperacion(newTransferencia.getFecha());
+
+        this.transferenciasRepository.save(newTransferencia);
+        this.saldoRepository.save(saldoOrigen);
+        this.cuentaRepository.save(cuentaOrigen);
         this.usuarioRepository.save(usuarioOrigen);
 
     }
