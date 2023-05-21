@@ -349,7 +349,7 @@ INSERT INTO `Usuario` VALUES
 (1,1234,'antonio@email.com','Antonio','Robles','Perez', 'Torres', '2002-01-01', '1234', null, 1, 1, 0, '2023-05-07'),
 (2,4321,'lucas@email.com','Lucas','Scott','Colbert', 'Eastgate', '2002-02-27', '1234', null, 1, 0, 1, '2023-05-01'),
 (3,1111,'diego@email.com','Diego','Delta','López', 'Reduello', '2002-04-20', '1234', null, 1, 0, 1, '2023-03-07'),
-(4,2222,'jaime@email.com','Jaime','Luis','Mesa', 'Víquez', '2002-09-01', '1234', null, 1, 0, 1, '2023-01-07'),
+(4,2222,'jaime@email.com','Jaime','Luis','Mesa', 'Víquez', '2002-09-01', '1234', null, 1, 0, 1, '2023-05-07'),
 (5,3333,'daniel@email.com','Daniel','Ramirez','De Lizaur', 'García', '2002-02-10', '1234', null, 1, 0, 1, '2023-05-02'),
 (6,4444,'jose@email.com','Jose','Linux','Salmeron', 'Moya', '2001-01-01', '1234', null, 1, 0, 1, '2023-05-07'),
 (7,5555,'gestor@email.com','Jose','Admin','Bruce', 'Wayne', '1986-02-05', '1234', null, 3, 1, 0, '2023-05-07'),
